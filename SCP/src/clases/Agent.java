@@ -1,5 +1,6 @@
 package clases;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -13,7 +14,7 @@ public class Agent extends Worker implements AgentController{
 		// TODO Auto-generated method stub
 		
 	}*/
-	
+
 	private String id_facility;
 	private String history;
 	
@@ -36,7 +37,7 @@ public class Agent extends Worker implements AgentController{
 	public void setHistory(String history) {
 		this.history = history;
 	}
-
+  
 	@Override
 	public void showAsignedFacility() {
 		// TODO Auto-generated method stub
