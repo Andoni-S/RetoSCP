@@ -2,5 +2,5 @@ package controller;
 
 public interface Loginable {
 
-	void logIn();
+	boolean logIn(String usernameUsuario, String passwordUsuario);
 }

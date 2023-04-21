@@ -14,7 +14,7 @@ public class Main {
 		//ControladorVista vista= new ControladorVista();
 		//vista.menu(datosProp);*/
 		
-		MainWindow vMain = new MainWindow();
+		LoginWindow vMain = new LoginWindow();
 		//vMain.pack();
 		vMain.setVisible(true);
 		

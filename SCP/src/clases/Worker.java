@@ -95,9 +95,37 @@ public class Worker implements Loginable{
 	}
 
 	@Override
-	public void logIn() {
-		// TODO Auto-generated method stub
-		
+	public boolean logIn(String usernameUsuario, String passwordUsuario) {
+		ResultSet rs = null;
+		con = conController.openConnection();
+
+		String OBTENERprop1 = "SELECT ID_Worker, password_Worker FROM Worker WHERE ID_Worker = ?";
+
+		try {
+			stmt = con.prepareStatement(OBTENERprop1);
+
+			stmt.setString(1, usernameUsuario);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				setId(rs.getString("ID_Worker"));
+				setPassword(rs.getString("Password_Worker"));
+			}
+
+			if (id != null || password != null) {
+				if (id.equals(usernameUsuario) && password.equals(passwordUsuario)) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
 	

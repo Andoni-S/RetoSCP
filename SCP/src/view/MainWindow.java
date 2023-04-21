@@ -19,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.toedter.calendar.JCalendar;
+
 import clases.Overseer;
 import clases.Worker;
 
@@ -59,8 +61,11 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JTextField textFieldBoss;
 	private JLabel lblLogo;
 	private JLabel lblProfileImg;
+	private JCalendar calendar;
 	
-	public MainWindow() {
+	private String userID;
+	
+	public MainWindow(String usernameUsuario) {
 			
 			
 		setBounds(100, 100, 1024, 768);
@@ -78,7 +83,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
-		
+		userID = usernameUsuario;
 		
 		//desabilita el cambiar a una tab expecifica
 		//tabbedPane.setEnabledAt(1, false);
@@ -215,7 +220,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	private void showInfoWindow() {
 
 		//id introducida previamente
-		String idWorker = "AGE-0002";
+		String idWorker = userID;
 		Worker wObj = new Worker();
 		wObj.showInfo(idWorker);
 			
@@ -285,6 +290,12 @@ public class MainWindow extends JFrame implements ActionListener {
 		textFieldBoss.setColumns(10);
 		textFieldBoss.setBounds(400, 321, 231, 30);
 		panel.add(textFieldBoss);
+		 
+		// Instanciar Componente
+		calendar = new JCalendar();	 
+		// Ubicar y agregar al panel
+		calendar.setBounds(600, 400, 350, 350);	 
+		panel.add(calendar);	
 		
 		tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
 	}
