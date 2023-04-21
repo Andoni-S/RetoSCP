@@ -25,6 +25,7 @@ import clases.Worker;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 
 public class MainWindow extends JFrame implements ActionListener {
 
@@ -48,19 +49,23 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JLabel lblName;
 	private JLabel lblDateEntry;
 	private JLabel lblActive;
+	private JLabel lblBoss;
 	private JLabel lblLevel;
 	private JTextField textFieldId;
 	private JTextField textFieldName;
 	private JTextField textFieldDate;
 	private JCheckBox checkBoxActive;
 	private JLabel lblLevelNumber;
+	private JTextField textFieldBoss;
+	private JLabel lblLogo;
+	private JLabel lblProfileImg;
 	
 	public MainWindow() {
 			
 			
 		setBounds(100, 100, 1024, 768);
 		//adapta la ventana a la pantalla
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		getContentPane().setLayout(new BorderLayout());
 		
@@ -127,6 +132,11 @@ public class MainWindow extends JFrame implements ActionListener {
 	        btnDeleteWorker.setBounds(292, 299, 227, 54);
 	        btnDeleteWorker.addActionListener(this);
 	        panel.add(btnDeleteWorker);
+	        
+	        lblLogo = new JLabel("logo");
+	        lblLogo.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/SCP_Foundation_logoSMALL.png")));
+	        lblLogo.setBounds(750, 0, 200, 200);
+	        panel.add(lblLogo);
 	        
 	        return panel;
 	    }
@@ -208,56 +218,74 @@ public class MainWindow extends JFrame implements ActionListener {
 		String idWorker = "AGE-0002";
 		Worker wObj = new Worker();
 		wObj.showInfo(idWorker);
-		
+			
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Info", null, panel, null);
 		panel.setLayout(null);
 		
+		lblLogo = new JLabel("logo");
+	    lblLogo.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/SCP_Foundation_logoSMALL.png")));
+	    lblLogo.setBounds(750, 0, 200, 200);
+	    panel.add(lblLogo);
+	    
+	    lblProfileImg = new JLabel("profile");
+	    lblProfileImg.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/profileSMALL.png")));
+	    lblProfileImg.setBounds(50, 50, 200, 200);
+	    panel.add(lblProfileImg);
+		
 		lblId = new JLabel("ID");
-		lblId.setBounds(56, 56, 132, 40);
+		lblId.setBounds(300, 56, 132, 40);
 		panel.add(lblId);
 		
 		lblName = new JLabel("NAME");
-		lblName.setBounds(56, 112, 132, 40);
+		lblName.setBounds(300, 112, 132, 40);
 		panel.add(lblName);
 		
 		lblDateEntry = new JLabel("DATE ENTRY");
-		lblDateEntry.setBounds(56, 163, 132, 40);
+		lblDateEntry.setBounds(300, 163, 132, 40);
 		panel.add(lblDateEntry);
 		
 		lblActive = new JLabel("ACTIVE");
-		lblActive.setBounds(56, 214, 132, 40);
+		lblActive.setBounds(300, 214, 132, 40);
 		panel.add(lblActive);
 		
 		lblLevel = new JLabel("LEVEL");
-		lblLevel.setBounds(56, 265, 132, 40);
+		lblLevel.setBounds(300, 265, 132, 40);
 		panel.add(lblLevel);
-
 		
+		lblBoss = new JLabel("BOSS ID");
+		lblBoss.setBounds(300, 321, 132, 40);
+		panel.add(lblBoss);
+
 		textFieldId = new JTextField(idWorker);
-		textFieldId.setBounds(198, 61, 231, 30);
+		textFieldId.setBounds(400, 61, 231, 30);
 		panel.add(textFieldId);
 		textFieldId.setColumns(10);
 		
 		textFieldName = new JTextField(wObj.getName());
 		textFieldName.setColumns(10);
-		textFieldName.setBounds(198, 117, 231, 30);
+		textFieldName.setBounds(400, 117, 231, 30);
 		panel.add(textFieldName);
 		
 		textFieldDate = new JTextField(wObj.getDate_Entry().toString());
 		textFieldDate.setColumns(10);
-		textFieldDate.setBounds(198, 168, 231, 30);
+		textFieldDate.setBounds(400, 168, 231, 30);
 		panel.add(textFieldDate);
 		
 		checkBoxActive = new JCheckBox();
 		checkBoxActive.setSelected(wObj.isActive());
-		checkBoxActive.setBounds(198, 214, 231, 30);
+		checkBoxActive.setBounds(400, 214, 231, 30);
 		panel.add(checkBoxActive);
 		
 		lblLevel = new JLabel(String.format("%d", wObj.getLevel()));
-		lblLevel.setBounds(198, 265, 132, 40);
+		lblLevel.setBounds(400, 265, 132, 40);
 		panel.add(lblLevel);
 		
-		 tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
+		textFieldBoss = new JTextField(wObj.getBossID());
+		textFieldBoss.setColumns(10);
+		textFieldBoss.setBounds(400, 321, 231, 30);
+		panel.add(textFieldBoss);
+		
+		tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
 	}
 }

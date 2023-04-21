@@ -20,7 +20,8 @@ public class Worker implements Loginable{
 	private boolean active;
 	private int level;
 	private String password;
-	
+	private String bossID;
+
 	private Connection con;
 	private PreparedStatement stmt;
 	private DBConnectionController conController = new DBConnectionController();
@@ -84,6 +85,14 @@ public class Worker implements Loginable{
 		this.password = password;
 	}
 
+	public String getBossID() {
+		return bossID;
+	}
+
+
+	public void setBossID(String bossID) {
+		this.bossID = bossID;
+	}
 
 	@Override
 	public void logIn() {
@@ -104,14 +113,14 @@ public class Worker implements Loginable{
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
 			
-			while (rs.next()) {
-				
+			while (rs.next()) {			
 				setId(rs.getString("ID_Worker"));
 				setName(rs.getString("Name_Worker"));
 				setDate_Entry(rs.getDate("Date_Entry"));
 				setActive(rs.getBoolean("Active_Worker"));
 				setLevel(rs.getInt("Level_Worker"));
 				setPassword(rs.getString("password_Worker"));
+				setBossID(rs.getString("ID_Boss"));
 			}
 			
 			
