@@ -43,7 +43,8 @@ public class LoginWindow extends JFrame implements ActionListener{
     private int usery;
     private int logoy;
 
-    private JLabel SCPLogo;
+    private JLabel scpLogo;
+    private JLabel background;
     
     private ActionListener labelAnim;
     private JTextField userField;
@@ -83,13 +84,15 @@ public class LoginWindow extends JFrame implements ActionListener{
         contentPane.setLayout(null);
 
         usernameLabel = new JLabel("Username");
-        usernameLabel.setFont(new Font("Monotxt_IV50", Font.PLAIN, 22));
-        usernameLabel.setBounds(300, 1000, 133, 32);
+        usernameLabel.setForeground(Color.WHITE);
+        usernameLabel.setFont(new Font("OCR A Extended", Font.PLAIN, 28));
+        usernameLabel.setBounds(250, 1000, 500, 32);
         contentPane.add(usernameLabel);
 
         passwordLabel = new JLabel("Password");
-        passwordLabel.setFont(new Font("Monotxt_IV50", Font.PLAIN, 22));
-        passwordLabel.setBounds(300, 1200, 133, 40);
+        passwordLabel.setForeground(Color.WHITE);
+        passwordLabel.setFont(new Font("OCR A Extended", Font.PLAIN, 28));
+        passwordLabel.setBounds(250, 1200, 500, 40);
         contentPane.add(passwordLabel);
 
         /*component = new JLabel("Click to Log In");
@@ -100,31 +103,33 @@ public class LoginWindow extends JFrame implements ActionListener{
         contentPane.add(component);*/
         
         userField = new JTextField();
-        userField.setBounds(450, 1000, 224, 32);
+        userField.setBounds(400, 1000, 300, 32);
         contentPane.add(userField);
         userField.setColumns(10);
         
         passwordField = new JPasswordField();
-        passwordField.setBounds(450, 1200, 224, 33);
+        passwordField.setBounds(400, 1200, 300, 33);
         contentPane.add(passwordField);
         
-        SCPLogo = new JLabel("scp");
-        SCPLogo.setIcon(new ImageIcon(LoginWindow.class.getResource("/resources/SCP_Foundation_logoMEDIUM.png")));
-        SCPLogo.setBounds(100, -550, 800, 800);
-        contentPane.add(SCPLogo);
+        scpLogo = new JLabel("scp");
+        scpLogo.setIcon(new ImageIcon(LoginWindow.class.getResource("/resources/MEDIUM_White.png")));
+        scpLogo.setBounds(100, -550, 800, 800);
+        contentPane.add(scpLogo);
         
-        background = new JLabel("scp");
+        background = new JLabel("bg");
         background.setIcon(new ImageIcon(LoginWindow.class.getResource("/resources/background.png")));
-        background.setBounds(100, -550, 800, 800);
+        background.setBounds(0, 0, 1024, 768);
         contentPane.add(background);
         
         labelAnim = new LabelAnim();
-        logoy = SCPLogo.getY();
+        logoy = scpLogo.getY();
         usery = usernameLabel.getY();
         timer = new Timer(1, labelAnim);
         
         btnLogIn = new JButton("Log In");
-		btnLogIn.setFont(new Font("Tahoma", Font.BOLD, 14));
+        btnLogIn.setForeground(Color.WHITE);
+        btnLogIn.setBackground(Color.BLACK);
+		btnLogIn.setFont(new Font("OCR A Extended", Font.BOLD, 20));
 		btnLogIn.setBounds(480, 566, 120, 45);
 		contentPane.add(btnLogIn);
 		btnLogIn.addActionListener(this);
@@ -138,12 +143,6 @@ public class LoginWindow extends JFrame implements ActionListener{
                 System.out.println("left" + (evt.getPoint()));            
                 timer.start();
             }
-            /*if ((evt.getModifiers() & InputEvent.BUTTON2_MASK) != 0) {
-                System.out.println("middle" + (evt.getPoint()));
-            }
-            if ((evt.getModifiers() & InputEvent.BUTTON3_MASK) != 0) {
-                System.out.println("right" + (evt.getPoint()));
-            }*/
         }
     }
     
@@ -179,7 +178,7 @@ public class LoginWindow extends JFrame implements ActionListener{
         private void moveLogo() {
 			// TODO Auto-generated method stub
         	logoy +=5;
-        	SCPLogo.setLocation(SCPLogo.getX(), logoy);
+        	scpLogo.setLocation(scpLogo.getX(), logoy);
         	/*if (logoy >= 50) {
                 timer.stop();
             }*/

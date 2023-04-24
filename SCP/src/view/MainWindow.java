@@ -42,12 +42,14 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JButton btnDeleteScp;
 	private JButton btnDeleteWorker;
 	
+	private JButton btnAsign;
 	private JButton btnAgent;
 	private JButton btnScientist;
 	private JButton btnOverseer;
 	
 	private Worker worker;
 	private JLabel lblId;
+	private JLabel lblIdSCP;
 	private JLabel lblName;
 	private JLabel lblDateEntry;
 	private JLabel lblActive;
@@ -56,6 +58,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JTextField textFieldId;
 	private JTextField textFieldName;
 	private JTextField textFieldDate;
+	private JTextField textFieldIDSCP;
 	private JCheckBox checkBoxActive;
 	private JLabel lblLevelNumber;
 	private JTextField textFieldBoss;
@@ -158,7 +161,7 @@ public class MainWindow extends JFrame implements ActionListener {
 			
 		}
 		if (e.getSource().equals(btnAsignScientist)){
-			
+			asignSCPScientistWindow();
 		}
 		if (e.getSource().equals(btnAsignAgent)){
 			
@@ -185,7 +188,42 @@ public class MainWindow extends JFrame implements ActionListener {
 		if (e.getSource().equals(btnOverseer)){
 			
 		}
+		if (e.getSource().equals(btnAsign)){
+			Overseer over = new Overseer();
+			over.asignSCPtoScientific(textFieldId.getText(), textFieldIDSCP.getText());
+		}
 		
+	}
+	private void asignSCPScientistWindow() {
+		
+		JPanel panelAsign = new JPanel();
+		tabbedPane.addTab("Asign SCP", null, panelAsign, null);
+		panelAsign.setLayout(null);
+		
+		btnAsign = new JButton("Asign");
+		btnAsign.setBounds(55, 100, 100, 54);
+		btnAsign.addActionListener(this);
+		panelAsign.add(btnAsign);
+		
+	    lblId = new JLabel("ID SCIENTIST");
+		lblId.setBounds(300, 56, 132, 40);
+		panelAsign.add(lblId);
+		
+		lblIdSCP = new JLabel("ID SCP");
+		lblIdSCP.setBounds(300, 112, 132, 40);
+		panelAsign.add(lblIdSCP);
+		
+		textFieldId = new JTextField();
+		textFieldId.setBounds(400, 61, 231, 30);
+		panelAsign.add(textFieldId);
+		textFieldId.setColumns(10);
+		
+		textFieldIDSCP = new JTextField();
+		textFieldIDSCP.setColumns(10);
+		textFieldIDSCP.setBounds(400, 117, 231, 30);
+		panelAsign.add(textFieldIDSCP);
+	    
+		tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
 	}
 	private void addWorkerWindow() {
 		btnAgent = new JButton();

@@ -40,7 +40,8 @@ public class Agent extends Worker implements AgentController{
   
 	@Override
 	public void showAsignedFacility() {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 

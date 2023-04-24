@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.mysql.cj.jdbc.CallableStatement;
+
 import controller.OverseerController;
 
 public class Overseer extends Worker implements OverseerController{
@@ -35,14 +37,29 @@ public class Overseer extends Worker implements OverseerController{
 	}
 
 	@Override
-	public void asignSCPtoScientific() {
-		// TODO Auto-generated method stub
+	public void asignSCPtoScientific(String id_scientist, String id_scp) {
+		
+		con = conController.openConnection();
+		
+		try {
+			CallableStatement cst = (CallableStatement) con.prepareCall("{CALL asignSCPtoScientific(?, ?)}");
+			cst.setString(1, id_scientist);
+			cst.setString(2, id_scp);
+			cst.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		conController.closeConnection(stmt, con);
 		
 	}
 
 	@Override
 	public void asignAgentToFacility() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
