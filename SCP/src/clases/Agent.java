@@ -3,6 +3,8 @@ package clases;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import controller.AgentController;
 import controller.Loginable;
@@ -37,11 +39,37 @@ public class Agent extends Worker implements AgentController{
 	public void setHistory(String history) {
 		this.history = history;
 	}
-  
+	
+	@Override
+	public Worker showInfo(String id) {
+		
+		super.showInfo(id);
+		
+		ResultSet rs = null;
+		con = conController.openConnection();
+				
+		String SELECTagent = "SELECT * FROM Agent WHERE ID_Agent = ?";
+		try {
+			stmt = con.prepareStatement(SELECTagent);		
+			stmt.setString(1, id);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {			
+				setId_facility(rs.getString("ID_Facility"));
+				setHistory(rs.getString("Record"));
+			}		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		conController.closeConnection(stmt, con);
+		
+		return this;
+	}
+	
 	@Override
 	public void showAsignedFacility() {
-		
-		
+		// TODO Auto-generated method stub
 		
 	}
 

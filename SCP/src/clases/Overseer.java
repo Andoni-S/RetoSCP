@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.mysql.cj.jdbc.CallableStatement;
-
+import acs.Containment;
+import acs.Continent;
 import controller.OverseerController;
 
 public class Overseer extends Worker implements OverseerController{
@@ -16,12 +16,20 @@ public class Overseer extends Worker implements OverseerController{
 	private Connection con;
 	private PreparedStatement stmt;
 	private DBConnectionController conController = new DBConnectionController();
-	
+	private Continent continent;
 	/*@Override
 	public void logIn() {
 		// TODO Auto-generated method stub
 		
 	}*/
+
+	public Continent getContinent() {
+		return continent;
+	}
+
+	public void setContinent(Continent continent) {
+		this.continent = continent;
+	}
 
 	@Override
 	public void addSCP() {
@@ -37,32 +45,42 @@ public class Overseer extends Worker implements OverseerController{
 	}
 
 	@Override
-	public void asignSCPtoScientific(String id_scientist, String id_scp) {
-		
-		con = conController.openConnection();
-		
-		try {
-			CallableStatement cst = (CallableStatement) con.prepareCall("{CALL asignSCPtoScientific(?, ?)}");
-			cst.setString(1, id_scientist);
-			cst.setString(2, id_scp);
-			cst.execute();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		conController.closeConnection(stmt, con);
+	public void asignSCPtoScientific() {
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void asignAgentToFacility() {
-		
+		// TODO Auto-generated method stub
 		
 	}
-
+	@Override
+	public Worker showInfo(String id) {
+		
+		super.showInfo(id);
+		
+		ResultSet rs = null;
+		con = conController.openConnection();
+				
+		String OBTENERprop = "SELECT Continent FROM Overseer WHERE ID_Overseer = ?";
+		try {
+			stmt = con.prepareStatement(OBTENERprop);		
+			stmt.setString(1, id);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {			
+				setContinent(Continent.valueOf(rs.getString("Continent")));
+			}		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		conController.closeConnection(stmt, con);
+		
+		return this;
+	}
 	@Override
 	public void levelUpWorker(Worker worker) {
 

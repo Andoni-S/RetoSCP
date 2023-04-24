@@ -96,6 +96,7 @@ public class Worker implements Loginable{
 
 	@Override
 	public boolean logIn(String usernameUsuario, String passwordUsuario) {
+		
 		ResultSet rs = null;
 		con = conController.openConnection();
 
@@ -109,7 +110,7 @@ public class Worker implements Loginable{
 
 			while (rs.next()) {
 				setId(rs.getString("ID_Worker"));
-				setPassword(rs.getString("Password_Worker"));
+				setPassword(rs.getString("password_Worker"));
 			}
 
 			if (id != null || password != null) {
@@ -127,8 +128,6 @@ public class Worker implements Loginable{
 
 		return false;
 	}
-
-	
 	public Worker showInfo(String id) {
 		
 		ResultSet rs = null;
@@ -149,9 +148,7 @@ public class Worker implements Loginable{
 				setLevel(rs.getInt("Level_Worker"));
 				setPassword(rs.getString("password_Worker"));
 				setBossID(rs.getString("ID_Boss"));
-			}
-			
-			
+			}		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

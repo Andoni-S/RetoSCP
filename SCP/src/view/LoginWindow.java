@@ -94,13 +94,6 @@ public class LoginWindow extends JFrame implements ActionListener{
         passwordLabel.setFont(new Font("OCR A Extended", Font.PLAIN, 28));
         passwordLabel.setBounds(250, 1200, 500, 40);
         contentPane.add(passwordLabel);
-
-        /*component = new JLabel("Click to Log In");
-        component.setFont(new Font("Monotxt_IV50", Font.PLAIN, 50));
-        component.setBackground(Color.BLACK);
-        component.setBounds(800, 400, 1000, 114);
-        component.addMouseListener(new MyMouseListener());
-        contentPane.add(component);*/
         
         userField = new JTextField();
         userField.setBounds(400, 1000, 300, 32);
@@ -127,9 +120,7 @@ public class LoginWindow extends JFrame implements ActionListener{
         timer = new Timer(1, labelAnim);
         
         btnLogIn = new JButton("Log In");
-        btnLogIn.setForeground(Color.WHITE);
-        btnLogIn.setBackground(Color.BLACK);
-		btnLogIn.setFont(new Font("OCR A Extended", Font.BOLD, 20));
+		btnLogIn.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnLogIn.setBounds(480, 566, 120, 45);
 		contentPane.add(btnLogIn);
 		btnLogIn.addActionListener(this);
@@ -137,14 +128,13 @@ public class LoginWindow extends JFrame implements ActionListener{
 		timer.start();
     }
 
-    class MyMouseListener extends MouseAdapter {
+    /*class MyMouseListener extends MouseAdapter {
         public void mouseClicked(MouseEvent evt) {
-            if ((InputEvent.MOUSE_EVENT_MASK) != 0) {
-                System.out.println("left" + (evt.getPoint()));            
+            if ((InputEvent.MOUSE_EVENT_MASK) != 0) {         
                 timer.start();
             }
         }
-    }
+    }*/
     
     @Override
 	public void actionPerformed(ActionEvent e) {
