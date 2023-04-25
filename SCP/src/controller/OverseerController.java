@@ -1,5 +1,7 @@
 package controller;
 
+import clases.Worker;
+
 public interface OverseerController {
 	
 	//ADD
@@ -11,5 +13,5 @@ public interface OverseerController {
 	void levelUpWorker();
 	//DELETE
 	void deleteSCP();
-	void deleteWorker();
+	public void deleteWorker();
 }

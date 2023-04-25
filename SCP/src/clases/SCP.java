@@ -80,6 +80,4 @@ public class SCP {
 	public void setScp_secondaryC(Enumeration scp_secondaryC) {
 		this.scp_secondaryC = scp_secondaryC;
 	}
-	
-	
 }
