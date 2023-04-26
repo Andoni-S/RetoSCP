@@ -11,142 +11,138 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
+
+import com.toedter.calendar.JCalendar;
 
 import clases.Agent;
-import clases.Facility;
+import clases.Overseer;
+import clases.Scientific;
 import clases.Worker;
 
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
-import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
 
 public class MainWindow extends JFrame implements ActionListener {
 
-	// private final JPanel contentPanel = new JPanel();
-	private JTabbedPane tabbedPane;
-	private JButton btnShowInfo;
-	private JButton btnAddScp;
-	private JButton btnAddWorker;
-	private JButton btnAssignScientist;
-	private JButton btnAssignAgent;
-	private JButton btnLevelUpWorker;
-	private JButton btnDeleteScp;
-	private JButton btnDeleteWorker;
-	private JButton btnShowAssignedFacility;
-	private JButton btnConfirmDeletion;
-	private DefaultTableModel model;
+	//private final JPanel contentPanel = new JPanel();
+	public JTabbedPane tabbedPane;
+	
+	//buttons tab
+	public JButton btnShowInfo,btnAddScp,btnAddWorker,btnAsignScientist,btnAsignAgent,btnLevelUpWorker,btnDeleteScp,btnDeleteWorker,btnAsigned;
 
-	private JLabel lblIdFacility;
-	private JLabel lblNameFacility;
-	private JLabel lblLevelFacility;
-	private JLabel lblWorker;
-	private JLabel lblPrueba;
-	private JTextField textWorker;
-	private JPanel contentPane;
-	private JTable tablaWorkers;
-
-	private String workerId;
-
+	//button Add Worker Overseer
+	private JButton btnAgent,btnScientist,btnOverseer;
+		
+	//Labels Info Worker
+	private JLabel lblId,lblName,lblDateEntry,lblActive,lblBoss,lblLevel,lblLevelNumber,lblStudies,lblFacility,lblHistory,lblContinent;
+	//Text Fields Info Worker
+	private JTextField textFieldId,textFieldName,textFieldDate,textFieldBoss;
+	private JCheckBox checkBoxActive;
+	
+	//Label Images
+	private JLabel lblLogo,lblProfileImg,lblWelcome,background;
+	//Calendar
+	private JCalendar calendar;	 
+	private String userTypeID,userType;
+	private Worker worker;
+	
 	public MainWindow(String usernameUsuario) {
-
+					
 		setBounds(100, 100, 1024, 768);
-		// adapta la ventana a la pantalla
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		//adapta la ventana a la pantalla
+		//setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
 		getContentPane().setLayout(new BorderLayout());
-
+		
 		tabbedPane = new JTabbedPane();
 
-		JComponent panel1 = makePanel1("Panel #1");
-		tabbedPane.addTab("Tab 1", null, panel1, "First Panel");
-
+		userTypeID = usernameUsuario.substring(0, 3);
+		userType = "undefined";
+		
+		JComponent panelOverseer = null;
+		//panelOverseer = makePanelOverseer("Panel Overseer");
+		panelOverseer = new PanelShowInfo(worker, usernameUsuario, tabbedPane, getContentPane());
+		tabbedPane.addTab("Tab", null, panelOverseer, "Panel");     
+		
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
-
+		
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-
-		workerId = usernameUsuario;
-		// desabilita el cambiar a una tab expecifica
-		// tabbedPane.setEnabledAt(1, false);
-		// hace invisible las tabs
-		// tabbedPane.setVisible(false);
+		
+		/*tabbedPane.setUI(new BasicTabbedPaneUI() {  
+		    @Override  
+		    protected int calculateTabAreaHeight(int tab_placement, int run_count, int max_tab_height) {  
+		        /*if (tabbedPane.getTabCount() > 1)
+		            return super.calculateTabAreaHeight(tab_placement, run_count, max_tab_height);  
+		        else  
+		            return 0;  
+		    }  
+		});*/  		
+		//desabilita el cambiar a una tab expecifica
+		//tabbedPane.setEnabledAt(1, false);
+		//hace invisible las tabs
+		//tabbedPane.setVisible(false);
 	}
-
-	protected JComponent makePanel1(String text) {
-		JPanel panel = new JPanel(false);
-		panel.setLayout(null);
-		JLabel filler = new JLabel("");
-		filler.setBounds(0, 0, 1003, 701);
-		filler.setHorizontalAlignment(JLabel.CENTER);
-		panel.add(filler);
-
-		btnShowInfo = new JButton("Show Info");
-		btnShowInfo.setBounds(55, 48, 227, 54);
-		btnShowInfo.addActionListener(this);
-		panel.add(btnShowInfo);
-
-		btnAddScp = new JButton("Add SCP");
-		btnAddScp.setBounds(55, 169, 227, 54);
-		btnAddScp.addActionListener(this);
-		panel.add(btnAddScp);
-
-		btnAddWorker = new JButton("Add Worker");
-		btnAddWorker.setBounds(292, 169, 227, 54);
-		btnAddWorker.addActionListener(this);
-		panel.add(btnAddWorker);
-
-		btnAssignScientist = new JButton("Assign Scientist");
-		btnAssignScientist.setBounds(55, 234, 227, 54);
-		btnAssignScientist.addActionListener(this);
-		panel.add(btnAssignScientist);
-
-		btnAssignAgent = new JButton("Assign Scientist");
-		btnAssignAgent.setBounds(292, 234, 227, 54);
-		btnAssignAgent.addActionListener(this);
-		panel.add(btnAssignAgent);
-
-		btnLevelUpWorker = new JButton("Level Up Worker");
-		btnLevelUpWorker.setBounds(529, 234, 227, 54);
-		btnLevelUpWorker.addActionListener(this);
-		panel.add(btnLevelUpWorker);
-
-		btnDeleteScp = new JButton("Delete SCP");
-		btnDeleteScp.setBounds(55, 299, 227, 54);
-		btnDeleteScp.addActionListener(this);
-		panel.add(btnDeleteScp);
-
-		btnDeleteWorker = new JButton("Delete Worker");
-		btnDeleteWorker.setBounds(292, 299, 227, 54);
-		btnDeleteWorker.addActionListener(this);
-		panel.add(btnDeleteWorker);
-
-		btnShowAssignedFacility = new JButton("Show Assigned Facility");
-		btnShowAssignedFacility.setBounds(529, 169, 227, 54);
-		btnShowAssignedFacility.addActionListener(this);
-		panel.add(btnShowAssignedFacility);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(358, 599, 220, -146);
-		panel.add(scrollPane);
-
-		return panel;
+	
+	private void addWorkerWindow() {
+		btnAgent = new JButton();
+		btnScientist = new JButton();
+		btnOverseer = new JButton();
+		
+		JPanel panelAdd = new JPanel();
+		tabbedPane.addTab("Add Worker", null, panelAdd, null);
+		panelAdd.setLayout(null);
+		
+		lblId = new JLabel("WORKER TYPE");
+		lblId.setBounds(56, 56, 200, 40);
+		panelAdd.add(lblId);
+		
+		btnAgent = new JButton("Agent");
+		btnAgent.setBounds(55, 100, 100, 54);
+		btnAgent.addActionListener(this);
+	    panelAdd.add(btnAgent);
+	    
+	    btnScientist = new JButton("Scientist");
+	    btnScientist.setBounds(255, 100, 100, 54);
+	    btnScientist.addActionListener(this);
+	    panelAdd.add(btnScientist);
+	    
+	    btnOverseer = new JButton("Overseer");
+	    btnOverseer.setBounds(455, 100, 100, 54);
+	    btnOverseer.addActionListener(this);
+	    panelAdd.add(btnOverseer);
+	    
+	    background = new JLabel("bg");
+        background.setIcon(new ImageIcon(LoginWindow.class.getResource("/resources/background.png")));
+        background.setBounds(0, 0, 1024, 768);
+        panelAdd.add(background);
+        
+	    tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+    if (e.getSource().equals(btnAddWorker)){
+			
+			//MainWindow mw;
+			JComponent panelCreateWorker = null;
+			panelCreateWorker = new CreateWorker();
+			tabbedPane.addTab("Tab", null, panelCreateWorker, "Panel");     
+			
+			getContentPane().add(tabbedPane, BorderLayout.CENTER);
+			
+			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);	
+		}
 		if (e.getSource().equals(btnShowInfo)) {
 			// showInfoWindow(workerId);
 		}
@@ -190,70 +186,6 @@ public class MainWindow extends JFrame implements ActionListener {
 			}
 		}
 	}
-
-	/*
-	 * private void showInfoWindow() {
-	 * 
-	 * 
-	 * //id introducida previamente String idWorker = userID; Worker wObj = new
-	 * Worker(); wObj.showInfo(idWorker);
-	 * 
-	 * JPanel panel = new JPanel(); tabbedPane.addTab("Info", null, panel, null);
-	 * panel.setLayout(null);
-	 * 
-	 * lblLogo = new JLabel("logo"); lblLogo.setIcon(new
-	 * ImageIcon(MainWindow.class.getResource(
-	 * "/resources/SCP_Foundation_logoSMALL.png"))); lblLogo.setBounds(750, 0, 200,
-	 * 200); panel.add(lblLogo);
-	 * 
-	 * lblProfileImg = new JLabel("profile"); lblProfileImg.setIcon(new
-	 * ImageIcon(MainWindow.class.getResource("/resources/profileSMALL.png")));
-	 * lblProfileImg.setBounds(50, 50, 200, 200); panel.add(lblProfileImg);
-	 * 
-	 * lblId = new JLabel("ID"); lblId.setBounds(300, 56, 132, 40);
-	 * panel.add(lblId);
-	 * 
-	 * lblName = new JLabel("NAME"); lblName.setBounds(300, 112, 132, 40);
-	 * panel.add(lblName);
-	 * 
-	 * lblDateEntry = new JLabel("DATE ENTRY"); lblDateEntry.setBounds(300, 163,
-	 * 132, 40); panel.add(lblDateEntry);
-	 * 
-	 * lblActive = new JLabel("ACTIVE"); lblActive.setBounds(300, 214, 132, 40);
-	 * panel.add(lblActive);
-	 * 
-	 * lblLevel = new JLabel("LEVEL"); lblLevel.setBounds(300, 265, 132, 40);
-	 * panel.add(lblLevel);
-	 * 
-	 * lblBoss = new JLabel("BOSS ID"); lblBoss.setBounds(300, 321, 132, 40);
-	 * panel.add(lblBoss);
-	 * 
-	 * textFieldId = new JTextField(idWorker); textFieldId.setBounds(400, 61, 231,
-	 * 30); panel.add(textFieldId); textFieldId.setColumns(10);
-	 * 
-	 * textFieldName = new JTextField(wObj.getName()); textFieldName.setColumns(10);
-	 * textFieldName.setBounds(400, 117, 231, 30); panel.add(textFieldName);
-	 * 
-	 * textFieldDate = new JTextField(wObj.getDate_Entry().toString());
-	 * textFieldDate.setColumns(10); textFieldDate.setBounds(400, 168, 231, 30);
-	 * panel.add(textFieldDate);
-	 * 
-	 * checkBoxActive = new JCheckBox();
-	 * checkBoxActive.setSelected(wObj.isActive()); checkBoxActive.setBounds(400,
-	 * 214, 231, 30); panel.add(checkBoxActive);
-	 * 
-	 * lblLevel = new JLabel(String.format("%d", wObj.getLevel()));
-	 * lblLevel.setBounds(400, 265, 132, 40); panel.add(lblLevel);
-	 * 
-	 * textFieldBoss = new JTextField(wObj.getBossID());
-	 * textFieldBoss.setColumns(10); textFieldBoss.setBounds(400, 321, 231, 30);
-	 * panel.add(textFieldBoss);
-	 * 
-	 * // Instanciar Componente calendar = new JCalendar(); // Ubicar y agregar al
-	 * panel calendar.setBounds(600, 400, 350, 350); panel.add(calendar);
-	 * 
-	 * tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1); }
-	 */
 
 	private void showAssignedFacility(String usernameUsuario) {
 		String idWorker = usernameUsuario;

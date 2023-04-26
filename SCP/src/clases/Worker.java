@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+
 import controller.Loginable;
 import clases.DBConnectionController;
 
@@ -29,7 +30,7 @@ public class Worker implements Loginable {
 	public String getId() {
 		return id;
 	}
-
+  
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -45,7 +46,7 @@ public class Worker implements Loginable {
 	public Date getDate_Entry() {
 		return date_Entry;
 	}
-
+  
 	public void setDate_Entry(Date date_Entry) {
 		this.date_Entry = date_Entry;
 	}
@@ -74,6 +75,15 @@ public class Worker implements Loginable {
 		this.password = password;
 	}
 
+	public String getBossID() {
+		return bossID;
+	}
+
+
+	public void setBossID(String bossID) {
+		this.bossID = bossID;
+	}
+
 	@Override
 	public boolean logIn(String usernameUsuario, String passwordUsuario) {
 		ResultSet rs = null;
@@ -89,7 +99,7 @@ public class Worker implements Loginable {
 
 			while (rs.next()) {
 				setId(rs.getString("ID_Worker"));
-				setPassword(rs.getString("Password_Worker"));
+				setPassword(rs.getString("password_Worker"));
 			}
 
 			if (id != null || password != null) {
@@ -107,34 +117,31 @@ public class Worker implements Loginable {
 
 		return false;
 	}
-
 	public Worker showInfo(String id) {
-
+		
 		ResultSet rs = null;
 		con = conController.openConnection();
-
+				
 		String OBTENERprop = "SELECT * FROM Worker WHERE ID_Worker = ?";
-
 		try {
 			stmt = con.prepareStatement(OBTENERprop);
-
+			
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-
+			
+			while (rs.next()) {			
 				setId(rs.getString("ID_Worker"));
 				setName(rs.getString("Name_Worker"));
 				setDate_Entry(rs.getDate("Date_Entry"));
-				// worker.setTelephone(rs.getString("telefono"));
-
-			}
-
+				setActive(rs.getBoolean("Active_Worker"));
+				setLevel(rs.getInt("Level_Worker"));
+				setPassword(rs.getString("password_Worker"));
+				setBossID(rs.getString("ID_Boss"));
+			}		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		conController.closeConnection(stmt, con);
 
 		return this;

@@ -1,8 +1,11 @@
 package controller;
 
+import java.util.ArrayList;
+import clases.SCP;
+
 public interface ScientificController {
 
-	void showAsignedSCP();
+	ArrayList<SCP> showAsignedSCP(String id);
 	void modifySCP();
 	
 }

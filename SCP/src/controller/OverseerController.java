@@ -10,8 +10,8 @@ public interface OverseerController {
 	//MODIFY
 	void asignSCPtoScientific();
 	void asignAgentToFacility();
-	void levelUpWorker();
+	void levelUpWorker(Worker worker);
 	//DELETE
 	void deleteSCP();
-	public void deleteWorker();
+	void deleteWorker();
 }
