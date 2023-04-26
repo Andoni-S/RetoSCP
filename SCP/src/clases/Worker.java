@@ -22,7 +22,8 @@ public class Worker implements Loginable {
 	protected boolean active;
 	protected int level;
 	protected String password;
-
+	protected String bossID;
+	
 	protected Connection con;
 	protected PreparedStatement stmt;
 	protected DBConnectionController conController = new DBConnectionController();

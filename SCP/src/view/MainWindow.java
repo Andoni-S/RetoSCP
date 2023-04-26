@@ -153,12 +153,12 @@ public class MainWindow extends JFrame implements ActionListener {
 		if (e.getSource().equals(btnAddWorker)) {
 
 		}
-		if (e.getSource().equals(btnAssignScientist)) {
+		/*if (e.getSource().equals(btnAssignScientist)) {
 
 		}
 		if (e.getSource().equals(btnAssignAgent)) {
 
-		}
+		}*/
 		if (e.getSource().equals(btnLevelUpWorker)) {
 
 		}
@@ -166,9 +166,9 @@ public class MainWindow extends JFrame implements ActionListener {
 
 		}
 		if (e.getSource().equals(btnDeleteWorker)) {
-			deleteWork();
+			//deleteWork();
 		}
-		if (e.getSource().equals(btnShowAssignedFacility)) {
+		/*if (e.getSource().equals(btnShowAssignedFacility)) {
 			showAssignedFacility(workerId);
 		}
 		if (e.getSource().equals(btnConfirmDeletion)) {
@@ -184,10 +184,10 @@ public class MainWindow extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(tablaWorkers, "Please insert an existing ID");
 				}
 			}
-		}
+		}*/
 	}
 
-	private void showAssignedFacility(String usernameUsuario) {
+	/*private void showAssignedFacility(String usernameUsuario) {
 		String idWorker = usernameUsuario;
 		Agent wAge = new Agent();
 		Facility fac;
@@ -213,9 +213,9 @@ public class MainWindow extends JFrame implements ActionListener {
 		panel.add(lblLevelFacility);
 
 		tabbedPane.setSelectedIndex(1);
-	}
+	}*/
 
-	private void deleteWork() {
+	/*private void deleteWork() {
 		Worker work = new Worker();
 		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
 
@@ -271,5 +271,5 @@ public class MainWindow extends JFrame implements ActionListener {
 
 			model.addRow(fila);
 		}
-	}
+	}*/
 }

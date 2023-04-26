@@ -17,16 +17,17 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import clases.Agent;
+import clases.Facility;
 import clases.Overseer;
 import clases.Scientific;
 import clases.Worker;
 
 public class PanelShowInfo extends JPanel implements ActionListener{
 
-	private JButton btnAddScp,btnAddWorker,btnAsignScientist,btnAsignAgent,btnLevelUpWorker,btnDeleteScp,btnDeleteWorker,btnAsigned;
+	private JButton btnAddScp,btnAddWorker,btnAsignScientist,btnAsignAgent,btnLevelUpWorker,btnDeleteScp,btnDeleteWorker,btnAsigned,btnAsignedFacility;
 	private JLabel lblId,lblName,lblDateEntry,lblActive,lblBoss,lblLevel,lblLevelNumber,lblStudies,lblFacility,lblHistory,lblContinent,lblLogo,lblWelcome,background,lblProfileImg;
 	private JTextField textFieldId,textFieldName,textFieldDate,textFieldBoss;
-	private String userTypeID,userType;
+	private String userTypeID,userType, userID;
 	private JCheckBox checkBoxActive;
 	private JTabbedPane tabbedPane;
 	private Container container;
@@ -57,7 +58,7 @@ public class PanelShowInfo extends JPanel implements ActionListener{
 		
 		worker.showInfo(usernameUsuario);
 		
-		//userID = usernameUsuario;
+		userID = usernameUsuario;
 		
 	    lblProfileImg = new JLabel("profile");
 	    lblProfileImg.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/profileSMALL.png")));
@@ -152,13 +153,13 @@ public class PanelShowInfo extends JPanel implements ActionListener{
         	lblHistory.setForeground(Color.WHITE);
 			add(lblHistory);
 			
-			btnAsigned = new JButton("ASIGNED FACILITY");
-			btnAsigned.setBounds(750, 30, 200, 40);
-			btnAsigned.setBackground(Color.black);
-			btnAsigned.setForeground(Color.white);
-			btnAsigned.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
-			btnAsigned.addActionListener(this);
-	        add(btnAsigned);
+			btnAsignedFacility = new JButton("ASIGNED FACILITY");
+			btnAsignedFacility.setBounds(750, 30, 200, 40);
+			btnAsignedFacility.setBackground(Color.black);
+			btnAsignedFacility.setForeground(Color.white);
+			btnAsignedFacility.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
+			btnAsignedFacility.addActionListener(this);
+	        add(btnAsignedFacility);
 			
 			
         }        	
@@ -234,9 +235,14 @@ public class PanelShowInfo extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/*if (e.getSource().equals(btnShowInfo)){
-			//showInfoWindow();
-		}*/
+		if (e.getSource().equals(btnAsignedFacility)){
+			JComponent panelShowFacility = null;
+			panelShowFacility = new ShowFacility(userID);
+			tabbedPane.addTab("Tab", null, panelShowFacility, "Panel");     
+			container.add(tabbedPane, BorderLayout.CENTER);			
+			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);		
+		}
 		if (e.getSource().equals(btnAddScp)){
 			
 		}
@@ -263,7 +269,12 @@ public class PanelShowInfo extends JPanel implements ActionListener{
 			
 		}
 		if (e.getSource().equals(btnDeleteWorker)){
-			
+			JComponent panelDeleteWorker = null;
+			panelDeleteWorker = new DeleteWorker();
+			tabbedPane.addTab("Tab", null, panelDeleteWorker, "Panel");     
+			container.add(tabbedPane, BorderLayout.CENTER);			
+			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
 		}		
 		
 		
