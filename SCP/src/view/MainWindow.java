@@ -177,7 +177,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		}
 		if (e.getSource().equals(btnConfirmDeletion)) {
 			if (textWorker.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(btnConfirmDeletion, "Empty field. Please enter an ID");
+				JOptionPane.showMessageDialog(tablaWorkers, "Empty field. Please enter an ID");
 			} else {
 				String workerDeletion = textWorker.getText();
 				Worker work = new Worker();
@@ -185,7 +185,7 @@ public class MainWindow extends JFrame implements ActionListener {
 				if (work.checkWorker(workerDeletion)) {
 
 				} else {
-					JOptionPane.showMessageDialog(btnConfirmDeletion, "Please insert an existing ID");
+					JOptionPane.showMessageDialog(tablaWorkers, "Please insert an existing ID");
 				}
 			}
 		}
@@ -296,15 +296,17 @@ public class MainWindow extends JFrame implements ActionListener {
 		panel.add(scrollPane);
 
 		tablaWorkers = new JTable();
-		
+
 		model = new DefaultTableModel();
 		tablaWorkers.setModel(model);
-		
+
 		model.addColumn("ID");
 		model.addColumn("Name");
 		model.addColumn("Date Entry");
-		
+
 		scrollPane.setViewportView(tablaWorkers);
+		
+		fillTable();
 
 		lblWorker = new JLabel("Insert the ID of the worker:");
 		lblWorker.setFont(new Font("OCR A Extended", Font.BOLD, 22));
@@ -324,13 +326,18 @@ public class MainWindow extends JFrame implements ActionListener {
 		btnConfirmDeletion.addActionListener(this);
 
 	}
-	
+
 	public void fillTable() {
 		Worker work = new Worker();
 		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
-		
+
 		for (Worker worker : arrayDeWorkers) {
-			
+			Object[] fila = new Object[3];
+			fila[0] = worker.getId();
+			fila[1] = worker.getName();
+			fila[2] = worker.getDate_Entry();
+
+			model.addRow(fila);
 		}
 	}
 }
