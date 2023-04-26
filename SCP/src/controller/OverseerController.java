@@ -10,6 +10,6 @@ public interface OverseerController {
 	void asignAgentToFacility();
 	void levelUpWorker();
 	//DELETE
-	void deleteSCP();
+	void deleteSCP(String id);
 	void deleteWorker();
 }

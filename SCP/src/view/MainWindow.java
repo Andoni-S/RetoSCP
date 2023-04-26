@@ -15,12 +15,17 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import clases.Agent;
+import clases.Facility;
+import clases.Overseer;
 import clases.Worker;
 
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
@@ -36,16 +41,22 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JButton btnLevelUpWorker;
 	private JButton btnDeleteScp;
 	private JButton btnDeleteWorker;
+	private JButton btnShowAssignedFacility;
 	
 	private Worker worker;
+	private Agent agent;
+	private Facility facility;
 	private JLabel lblId;
 	private JLabel lblName;
 	private JLabel lblDateEntry;
 	private JTextField textFieldId;
 	private JTextField textFieldName;
 	private JTextField textFieldDate;
+	private JTextArea textArea;
+	private JButton buttonDelete;
 	
 	private String workerId;
+	private String SCPId;
 	
 	public MainWindow(String usernameUsuario) {
 			
@@ -120,6 +131,11 @@ public class MainWindow extends JFrame implements ActionListener {
 	        btnDeleteWorker.addActionListener(this);
 	        panel.add(btnDeleteWorker);
 	        
+	        btnShowAssignedFacility = new JButton("Show Assigned Facility");
+	        btnShowAssignedFacility.setBounds(529, 169, 227, 54);
+	        btnShowAssignedFacility.addActionListener(this);
+	        panel.add(btnShowAssignedFacility);
+	        
 	        return panel;
 	    }
 	@Override
@@ -144,11 +160,62 @@ public class MainWindow extends JFrame implements ActionListener {
 			
 		}
 		if (e.getSource().equals(btnDeleteScp)){
-			
+			deleteSCP(SCPId);
+		}
+		if(e.getSource().equals(buttonDelete)) {
+			Overseer overseer = new Overseer();
+			if(textArea.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(textArea, "Enter an ID:");
+			}else {
+				overseer.deleteSCP(textArea.getText());
+			}
 		}
 		if (e.getSource().equals(btnDeleteWorker)){
 			
 		}
+		if (e.getSource().equals(btnShowAssignedFacility)){
+			showAssignedFacilityWindow();
+		}
+		
+	}
+	private void deleteSCP(String SCPid) {
+		
+		JPanel panel = new JPanel();
+		tabbedPane.addTab("Delete SCP", null, panel, null);
+		panel.setLayout(null);
+		
+		lblId = new JLabel("Enter an SCP ID:");
+		lblId.setBounds(56, 56, 132, 40);
+		panel.add(lblId);
+		
+		textArea = new JTextArea();
+		textArea.setBounds(198, 61, 231, 30);
+		panel.add(textArea);
+		textArea.setColumns(10);
+		
+		buttonDelete = new JButton("Confirm");
+		buttonDelete.setBounds(198, 117, 231, 30);
+		panel.add(buttonDelete);
+		buttonDelete.addActionListener(this);
+		
+		
+	}
+	
+	private void showAssignedFacilityWindow() {
+		Facility wFac = new Facility();
+		Agent wAg = new Agent();
+		wAg.showAsignedFacility();
+		
+		JPanel panel = new JPanel();
+		tabbedPane.addTab("Info", null, panel, null);
+		panel.setLayout(null);
+		
+		
+		
+		textArea = new JTextArea();
+		textArea.setBounds(198, 61, 231, 30);
+		panel.add(textArea);
+		textArea.setColumns(10);
 		
 	}
 	private void showInfoWindow(String usernameUsuario) {
