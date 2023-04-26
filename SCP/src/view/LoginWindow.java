@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -29,7 +31,7 @@ import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class LoginWindow extends JFrame implements ActionListener{
+public class LoginWindow extends JFrame implements ActionListener, KeyListener{
 
 	/**
 	 * 
@@ -99,9 +101,11 @@ public class LoginWindow extends JFrame implements ActionListener{
         userField.setBounds(400, 1000, 300, 32);
         contentPane.add(userField);
         userField.setColumns(10);
+        userField.setFocusable(true);
         
         passwordField = new JPasswordField();
         passwordField.setBounds(400, 1200, 300, 33);
+        passwordField.addKeyListener(this);
         contentPane.add(passwordField);
         
         scpLogo = new JLabel("scp");
@@ -124,6 +128,9 @@ public class LoginWindow extends JFrame implements ActionListener{
 		btnLogIn.setBounds(480, 566, 120, 45);
 		contentPane.add(btnLogIn);
 		btnLogIn.addActionListener(this);
+		
+		//contentPane.addKeyListener(this);
+		
 		
 		timer.start();
     }
@@ -187,4 +194,39 @@ public class LoginWindow extends JFrame implements ActionListener{
             }
         }
     }
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == e.VK_ENTER)
+		{
+			if (userField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(btnLogIn, "Username/Password is Empty");
+			} else {
+				String usernameUsuario = userField.getText();
+				String passwordUsuario = passwordField.getText();
+
+			Worker work = new Worker();
+				
+			if (work.logIn(usernameUsuario, passwordUsuario)) {
+				MainWindow vMain = new MainWindow(usernameUsuario);
+				//vMain.pack();
+				vMain.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(btnLogIn, "Username/Password Incorrect");
+			}
+		}	
+	}	
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		
+		
+	}
 }

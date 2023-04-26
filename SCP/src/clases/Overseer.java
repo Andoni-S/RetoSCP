@@ -40,19 +40,23 @@ public class Overseer extends Worker implements OverseerController{
 
 	@Override
 	public void addWorker() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void asignSCPtoScientific() {
-		// TODO Auto-generated method stub
+		
+		
+		
 		
 	}
 
 	@Override
 	public void asignAgentToFacility() {
-		// TODO Auto-generated method stub
+		
+		
+		
 		
 	}
 	@Override
