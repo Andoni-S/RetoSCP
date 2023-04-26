@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -25,6 +26,7 @@ import clases.Overseer;
 import clases.Worker;
 
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
@@ -60,10 +62,13 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JLabel lblLogo;
 	private JLabel lblProfileImg;
 	private JCalendar calendar;
-
+	private JTextArea level_scp;
+	private JTextArea facility_scp;
+	private JTextArea procedure_scp;
+	private JTextArea description_scp;
 	private String userID;
 
-	public MainWindow(String usernameUsuario) {
+	public MainWindow(String usernameUsuario)  {
 
 		setBounds(100, 100, 1024, 768);
 		// adapta la ventana a la pantalla
@@ -79,6 +84,9 @@ public class MainWindow extends JFrame implements ActionListener {
 		JComponent scientificPanel = makePanelScientific("Scientific");
 		tabbedPane.addTab("Tab 2", null, scientificPanel, "Second Panel");
 
+		JComponent scpPanel = new PanelShowScp();
+		tabbedPane.addTab("SCP", null, scpPanel, "Second Panel");
+		
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -156,7 +164,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		filler.setHorizontalAlignment(JLabel.CENTER);
 		scientificPanel.add(filler);
 
-		btnShowInfo = new JButton("Show Info");
+		btnShowInfo = new JButton("SHOW OWN INFO");
 		btnShowInfo.setBounds(55, 48, 227, 54);
 		btnShowInfo.addActionListener(this);
 		scientificPanel.add(btnShowInfo);
@@ -171,11 +179,12 @@ public class MainWindow extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		if (e.getSource().equals(btnShowInfo)) {
 			showInfoWindow();
 		}
 		if (e.getSource().equals(btnAddScp)) {
-
+			
 		}
 		if (e.getSource().equals(btnAddWorker)) {
 			addWorkerWindow();
@@ -208,6 +217,9 @@ public class MainWindow extends JFrame implements ActionListener {
 		}
 		if (e.getSource().equals(btnOverseer)) {
 
+		}
+		if(e.getSource().equals(btnShowSCP)) {
+			showScpinfo();
 		}
 
 	}
@@ -243,7 +255,14 @@ public class MainWindow extends JFrame implements ActionListener {
 		tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 	}
 
-
+	private void showScpinfo() {
+		
+		JPanel panel = new JPanel();
+		tabbedPane.addTab("SCP FILE", null, panel, null);
+		panel.setLayout(null);
+		
+		
+	}
 	private void showInfoWindow() {
 
 		// id introducida previamente
@@ -252,7 +271,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		wObj.showInfo(idWorker);
 
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("Info", null, panel, null);
+		tabbedPane.addTab("PROFILE", null, panel, null);
 		panel.setLayout(null);
 
 		lblLogo = new JLabel("logo");

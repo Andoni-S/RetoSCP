@@ -72,6 +72,25 @@ public class Scientific extends Worker implements ScientificController {
 	public void modifySCP() {
 		// TODO Auto-generated method stub
 
+		ResultSet rs = null;
+
+		con = conController.openConnection();
+
+		String UPDATESCP = "UPDATE SCP SET";
+
+		try {
+			stmt = con.prepareStatement(UPDATESCP);
+
+			// rs = stmt.executeQuery();
+
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		conController.closeConnection(stmt, con);
+
 	}
 
 }
