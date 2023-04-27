@@ -1,7 +1,11 @@
 package clases;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import acs.Containment;
-import acs.Discruption;
+import acs.Disruption;
 import acs.Risk;
 import acs.SecondaryC;
 
@@ -14,10 +18,12 @@ public class SCP {
 	private String scp_description;
 	private int scp_level;
 	private Containment containment;
-	private Discruption disruption;
+	private Disruption disruption;
 	private Risk risk;
 	private SecondaryC secondary;
-
+	private Connection con;
+	private PreparedStatement stmt;
+	private DBConnectionController conController = new DBConnectionController();
 	public String getScp_id() {
 		return scp_id;
 	}
@@ -82,11 +88,11 @@ public class SCP {
 		this.containment = containment;
 	}
 
-	public Discruption getDisruption() {
+	public Disruption getDisruption() {
 		return disruption;
 	}
 
-	public void setDisruption(Discruption disruption) {
+	public void setDisruption(Disruption disruption) {
 		this.disruption = disruption;
 	}
 
@@ -105,5 +111,39 @@ public class SCP {
 	public void setSecondary(SecondaryC secondary) {
 		this.secondary = secondary;
 	}
-
+	public SCP showInfo(String id_SCP){
+		ResultSet rs = null;
+		con = conController.openConnection();
+				
+		String OBTENERprop = "SELECT * FROM SCP WHERE ID_SCP = ?";
+		try {
+			stmt = con.prepareStatement(OBTENERprop);
+			
+			stmt.setString(1, id_SCP);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {		
+				setScp_id(rs.getString("ID_SCP"));
+				setScp_name(rs.getString("Name_SCP"));
+				setRelated_scp_id(rs.getString("ID_RelatedSCP"));
+				setFacility_id(rs.getString("ID_Facility"));
+				setScp_procedures(rs.getString("Procedures"));
+				setScp_description(rs.getString("Description_SCP"));
+				setScp_level(rs.getInt("Level_SCP"));
+				setContainment(Containment.valueOf(rs.getString("Containment")));
+				setDisruption(Disruption.valueOf(rs.getString("Disruption")));
+				setRisk(Risk.valueOf(rs.getString("Risk")));
+				setSecondary(SecondaryC.valueOf(rs.getString("SecondaryC")));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		conController.closeConnection(stmt, con);
+		
+		return this;
+	}
 }

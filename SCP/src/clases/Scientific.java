@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import acs.Containment;
-import acs.Discruption;
+import acs.Disruption;
 import acs.Risk;
 import acs.SecondaryC;
 import controller.ScientificController;
@@ -26,6 +26,35 @@ public class Scientific extends Worker implements ScientificController {
 	public void setStudies(String studies) {
 		this.studies = studies;
 	}
+	
+	
+	
+	@Override
+	public Worker showInfo(String id) {
+		
+		super.showInfo(id);
+		
+		ResultSet rs = null;
+		con = conController.openConnection();
+				
+		String OBTENERprop = "SELECT Studies FROM Scientist WHERE ID_Scientist = ?";
+		try {
+			stmt = con.prepareStatement(OBTENERprop);		
+			stmt.setString(1, id);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {			
+				setStudies(rs.getString("Studies"));
+			}		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		conController.closeConnection(stmt, con);
+		
+		return this;
+	}
 
 	@Override
 	public ArrayList<SCP> showAsignedSCP(String id) {
@@ -35,7 +64,7 @@ public class Scientific extends Worker implements ScientificController {
 		con = conController.openConnection();
 		ArrayList<SCP> scp_list = new ArrayList();
 		SCP scp = new SCP();
-		String OBTENER_SCP = "Select * from scp where ID_SCP in (Select ID_SCP from research where ID_Scientist LIKE ?";
+		String OBTENER_SCP = "Select * from scp where ID_SCP in (Select ID_SCP from research where ID_Scientist LIKE ?)";
 		try {
 			stmt = con.prepareStatement(OBTENER_SCP);
 
@@ -52,7 +81,7 @@ public class Scientific extends Worker implements ScientificController {
 				scp.setScp_procedures(rs.getString("Procedures"));
 				scp.setScp_level(rs.getInt("Level_SCP"));
 				scp.setContainment(Containment.valueOf(rs.getString("Containment")));
-				scp.setDisruption(Discruption.valueOf(rs.getString("Disruption")));
+				scp.setDisruption(Disruption.valueOf(rs.getString("Disruption")));
 				scp.setRisk(Risk.valueOf(rs.getString("Risk")));
 				scp.setSecondary(SecondaryC.valueOf(rs.getString("SecondaryC")));
 				scp_list.add(scp);
@@ -67,30 +96,11 @@ public class Scientific extends Worker implements ScientificController {
 		return scp_list;
 
 	}
-
 	@Override
 	public void modifySCP() {
 		// TODO Auto-generated method stub
-
-		ResultSet rs = null;
-
-		con = conController.openConnection();
-
-		String UPDATESCP = "UPDATE SCP SET";
-
-		try {
-			stmt = con.prepareStatement(UPDATESCP);
-
-			// rs = stmt.executeQuery();
-
-			stmt.executeUpdate();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		conController.closeConnection(stmt, con);
-
+    
 	}
+	
 
 }

@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -14,12 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
-
 import clases.Worker;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -29,7 +28,7 @@ import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class LoginWindow extends JFrame implements ActionListener{
+public class LoginWindow extends JFrame implements ActionListener, KeyListener{
 
 	/**
 	 * 
@@ -42,10 +41,8 @@ public class LoginWindow extends JFrame implements ActionListener{
     private JLabel component;
     private int usery;
     private int logoy;
-
     private JLabel scpLogo;
     private JLabel background;
-    
     private ActionListener labelAnim;
     private JTextField userField;
     private JPasswordField passwordField;
@@ -76,7 +73,6 @@ public class LoginWindow extends JFrame implements ActionListener{
         setBounds(100, 100, 1024, 768);
 		//adapta la ventana a la pantalla
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
-		
         contentPane = new JPanel();
         contentPane.setBackground(Color.WHITE);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -94,21 +90,16 @@ public class LoginWindow extends JFrame implements ActionListener{
         passwordLabel.setFont(new Font("OCR A Extended", Font.PLAIN, 28));
         passwordLabel.setBounds(250, 1200, 500, 40);
         contentPane.add(passwordLabel);
-
-        /*component = new JLabel("Click to Log In");
-        component.setFont(new Font("Monotxt_IV50", Font.PLAIN, 50));
-        component.setBackground(Color.BLACK);
-        component.setBounds(800, 400, 1000, 114);
-        component.addMouseListener(new MyMouseListener());
-        contentPane.add(component);*/
         
         userField = new JTextField();
         userField.setBounds(400, 1000, 300, 32);
         contentPane.add(userField);
         userField.setColumns(10);
+        userField.setFocusable(true);
         
         passwordField = new JPasswordField();
         passwordField.setBounds(400, 1200, 300, 33);
+        passwordField.addKeyListener(this);
         contentPane.add(passwordField);
         
         scpLogo = new JLabel("scp");
@@ -132,23 +123,19 @@ public class LoginWindow extends JFrame implements ActionListener{
 		contentPane.add(btnLogIn);
 		btnLogIn.addActionListener(this);
 		
+		//contentPane.addKeyListener(this);
+		
+		
 		timer.start();
     }
 
-    class MyMouseListener extends MouseAdapter {
+    /*class MyMouseListener extends MouseAdapter {
         public void mouseClicked(MouseEvent evt) {
-            if ((InputEvent.MOUSE_EVENT_MASK) != 0) {
-                System.out.println("left" + (evt.getPoint()));            
+            if ((InputEvent.MOUSE_EVENT_MASK) != 0) {         
                 timer.start();
             }
-            /*if ((evt.getModifiers() & InputEvent.BUTTON2_MASK) != 0) {
-                System.out.println("middle" + (evt.getPoint()));
-            }
-            if ((evt.getModifiers() & InputEvent.BUTTON3_MASK) != 0) {
-                System.out.println("right" + (evt.getPoint()));
-            }*/
         }
-    }
+    }*/
     
     @Override
 	public void actionPerformed(ActionEvent e) {
@@ -171,7 +158,6 @@ public class LoginWindow extends JFrame implements ActionListener{
 			}
 		}
 	}
-    
     class LabelAnim implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -183,6 +169,7 @@ public class LoginWindow extends JFrame implements ActionListener{
 			// TODO Auto-generated method stub
         	logoy +=5;
         	scpLogo.setLocation(scpLogo.getX(), logoy);
+          
         	/*if (logoy >= 50) {
                 timer.stop();
             }*/
@@ -201,4 +188,38 @@ public class LoginWindow extends JFrame implements ActionListener{
             }
         }
     }
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == e.VK_ENTER)
+		{
+			if (userField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(btnLogIn, "Username/Password is Empty");
+			} else {
+				String usernameUsuario = userField.getText();
+				String passwordUsuario = passwordField.getText();
+
+			Worker work = new Worker();
+				
+			if (work.logIn(usernameUsuario, passwordUsuario)) {
+				MainWindow vMain = new MainWindow(usernameUsuario);
+				//vMain.pack();
+				vMain.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(btnLogIn, "Username/Password Incorrect");
+			}
+		}	
+	}	
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		
+		
+	}
 }

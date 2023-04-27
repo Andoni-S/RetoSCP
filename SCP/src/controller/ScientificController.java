@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-
 import clases.SCP;
 
 public interface ScientificController {

@@ -10,7 +10,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -19,330 +19,257 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 import com.toedter.calendar.JCalendar;
 
+import clases.Agent;
 import clases.Overseer;
+import clases.Scientific;
 import clases.Worker;
 
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
 public class MainWindow extends JFrame implements ActionListener {
 
-	// private final JPanel contentPanel = new JPanel();
-	private JTabbedPane tabbedPane;
-	private JButton btnShowInfo;
-	private JButton btnAddScp;
-	private JButton btnAddWorker;
-	private JButton btnAsignScientist;
-	private JButton btnAsignAgent;
-	private JButton btnLevelUpWorker;
-	private JButton btnDeleteScp;
-	private JButton btnDeleteWorker;
-	private JButton btnAgent;
-	private JButton btnScientist;
-	private JButton btnOverseer,btnShowSCP;
-	private Worker worker;
-	private JLabel lblId;
-	private JLabel lblName;
-	private JLabel lblDateEntry;
-	private JLabel lblActive;
-	private JLabel lblBoss;
-	private JLabel lblLevel;
-	private JTextField textFieldId;
-	private JTextField textFieldName;
-	private JTextField textFieldDate;
+	//private final JPanel contentPanel = new JPanel();
+	public JTabbedPane tabbedPane;
+	
+	//buttons tab
+	public JButton btnShowInfo,btnAddScp,btnAddWorker,btnAsignScientist,btnAsignAgent,btnLevelUpWorker,btnDeleteScp,btnDeleteWorker,btnAsigned;
+
+	//button Add Worker Overseer
+	private JButton btnAgent,btnScientist,btnOverseer;
+		
+	//Labels Info Worker
+	private JLabel lblId,lblName,lblDateEntry,lblActive,lblBoss,lblLevel,lblLevelNumber,lblStudies,lblFacility,lblHistory,lblContinent;
+	//Text Fields Info Worker
+	private JTextField textFieldId,textFieldName,textFieldDate,textFieldBoss;
 	private JCheckBox checkBoxActive;
-	private JLabel lblLevelNumber;
-	private JTextField textFieldBoss;
-	private JLabel lblLogo;
-	private JLabel lblProfileImg;
-	private JCalendar calendar;
-	private JTextArea level_scp;
-	private JTextArea facility_scp;
-	private JTextArea procedure_scp;
-	private JTextArea description_scp;
-	private String userID;
-
-	public MainWindow(String usernameUsuario)  {
-
+	
+	//Label Images
+	private JLabel lblLogo,lblProfileImg,lblWelcome,background;
+	//Calendar
+	private JCalendar calendar;	 
+	private String userTypeID,userType;
+	private Worker worker;
+	
+	public MainWindow(String usernameUsuario) {
+					
 		setBounds(100, 100, 1024, 768);
-		// adapta la ventana a la pantalla
-		// setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+		//adapta la ventana a la pantalla
+		//setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
 		getContentPane().setLayout(new BorderLayout());
-
+		
 		tabbedPane = new JTabbedPane();
 
-		JComponent panel1 = makePanel1("Overseer");
-		tabbedPane.addTab("Tab 1", null, panel1, "First Panel");
-
-		JComponent scientificPanel = makePanelScientific("Scientific");
-		tabbedPane.addTab("Tab 2", null, scientificPanel, "Second Panel");
-
-		JComponent scpPanel = new PanelShowScp();
-		tabbedPane.addTab("SCP", null, scpPanel, "Second Panel");
+		userTypeID = usernameUsuario.substring(0, 3);
+		userType = "undefined";
+		
+		JComponent panelOverseer = null;
+		//panelOverseer = makePanelOverseer("Panel Overseer");
+		panelOverseer = new PanelShowInfo(worker, usernameUsuario, tabbedPane, getContentPane());
+		tabbedPane.addTab("Tab", null, panelOverseer, "Panel");     
 		
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
-
+		
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-
-		userID = usernameUsuario;
-
-		// desabilita el cambiar a una tab expecifica
-		// tabbedPane.setEnabledAt(1, false);
-		// hace invisible las tabs
-		// tabbedPane.setVisible(false);
-	}
-
-	protected JComponent makePanel1(String text) {
-		JPanel panel = new JPanel(false);
-		panel.setLayout(null);
-		JLabel filler = new JLabel("");
-		filler.setBounds(0, 0, 1003, 701);
-		filler.setHorizontalAlignment(JLabel.CENTER);
-		panel.add(filler);
-
-		btnShowInfo = new JButton("Show Info");
-		btnShowInfo.setBounds(55, 48, 227, 54);
-		btnShowInfo.addActionListener(this);
-		panel.add(btnShowInfo);
-
-		btnAddScp = new JButton("Add SCP");
-		btnAddScp.setBounds(55, 169, 227, 54);
-		btnAddScp.addActionListener(this);
-		panel.add(btnAddScp);
-
-		btnAddWorker = new JButton("Add Worker");
-		btnAddWorker.setBounds(292, 169, 227, 54);
-		btnAddWorker.addActionListener(this);
-		panel.add(btnAddWorker);
-
-		btnAsignScientist = new JButton("Asign Scientist");
-		btnAsignScientist.setBounds(55, 234, 227, 54);
-		btnAsignScientist.addActionListener(this);
-		panel.add(btnAsignScientist);
-
-		btnAsignAgent = new JButton("Asign Scientist");
-		btnAsignAgent.setBounds(292, 234, 227, 54);
-		btnAsignAgent.addActionListener(this);
-		panel.add(btnAsignAgent);
-
-		btnLevelUpWorker = new JButton("Level Up Worker");
-		btnLevelUpWorker.setBounds(529, 234, 227, 54);
-		btnLevelUpWorker.addActionListener(this);
-		panel.add(btnLevelUpWorker);
-
-		btnDeleteScp = new JButton("Delete SCP");
-		btnDeleteScp.setBounds(55, 299, 227, 54);
-		btnDeleteScp.addActionListener(this);
-		panel.add(btnDeleteScp);
-
-		btnDeleteWorker = new JButton("Delete Worker");
-		btnDeleteWorker.setBounds(292, 299, 227, 54);
-		btnDeleteWorker.addActionListener(this);
-		panel.add(btnDeleteWorker);
-
-		lblLogo = new JLabel("logo");
-		lblLogo.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/SCP_Foundation_logoSMALL.png")));
-		lblLogo.setBounds(750, 0, 200, 200);
-		panel.add(lblLogo);
-
-		return panel;
-	}
-
-	private JComponent makePanelScientific(String string) {
 		
-		JPanel scientificPanel = new JPanel(false);
-		scientificPanel.setLayout(null);
-		JLabel filler = new JLabel("");
-		filler.setBounds(0, 0, 1003, 701);
-		filler.setHorizontalAlignment(JLabel.CENTER);
-		scientificPanel.add(filler);
-
-		btnShowInfo = new JButton("SHOW OWN INFO");
-		btnShowInfo.setBounds(55, 48, 227, 54);
-		btnShowInfo.addActionListener(this);
-		scientificPanel.add(btnShowInfo);
+		/*tabbedPane.setUI(new BasicTabbedPaneUI() {  
+		    @Override  
+		    protected int calculateTabAreaHeight(int tab_placement, int run_count, int max_tab_height) {  
+		        /*if (tabbedPane.getTabCount() > 1)
+		            return super.calculateTabAreaHeight(tab_placement, run_count, max_tab_height);  
+		        else  
+		            return 0;  
+		    }  
+		});*/  		
+		//desabilita el cambiar a una tab expecifica
+		//tabbedPane.setEnabledAt(1, false);
+		//hace invisible las tabs
+		//tabbedPane.setVisible(false);
+	}
+	
+	private void addWorkerWindow() {
+		btnAgent = new JButton();
+		btnScientist = new JButton();
+		btnOverseer = new JButton();
 		
-		btnShowSCP = new JButton("SHOW SCP");
-		btnShowSCP.setBounds(55, 169, 227, 54);
-		btnShowSCP.addActionListener(this);
-		scientificPanel.add(btnShowSCP);
-
-		return scientificPanel;
+		JPanel panelAdd = new JPanel();
+		tabbedPane.addTab("Add Worker", null, panelAdd, null);
+		panelAdd.setLayout(null);
+		
+		lblId = new JLabel("WORKER TYPE");
+		lblId.setBounds(56, 56, 200, 40);
+		panelAdd.add(lblId);
+		
+		btnAgent = new JButton("Agent");
+		btnAgent.setBounds(55, 100, 100, 54);
+		btnAgent.addActionListener(this);
+	    panelAdd.add(btnAgent);
+	    
+	    btnScientist = new JButton("Scientist");
+	    btnScientist.setBounds(255, 100, 100, 54);
+	    btnScientist.addActionListener(this);
+	    panelAdd.add(btnScientist);
+	    
+	    btnOverseer = new JButton("Overseer");
+	    btnOverseer.setBounds(455, 100, 100, 54);
+	    btnOverseer.addActionListener(this);
+	    panelAdd.add(btnOverseer);
+	    
+	    background = new JLabel("bg");
+        background.setIcon(new ImageIcon(LoginWindow.class.getResource("/resources/background.png")));
+        background.setBounds(0, 0, 1024, 768);
+        panelAdd.add(background);
+        
+	    tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+    if (e.getSource().equals(btnAddWorker)){
+			
+			//MainWindow mw;
+			JComponent panelCreateWorker = null;
+			panelCreateWorker = new CreateWorker();
+			tabbedPane.addTab("Tab", null, panelCreateWorker, "Panel");     
+			
+			getContentPane().add(tabbedPane, BorderLayout.CENTER);
+			
+			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);	
+		}
 		if (e.getSource().equals(btnShowInfo)) {
-			showInfoWindow();
+			// showInfoWindow(workerId);
 		}
 		if (e.getSource().equals(btnAddScp)) {
-			
+			JPanel newPanel = new JPanel();
+			tabbedPane.addTab("Add SCP", newPanel);
 		}
 		if (e.getSource().equals(btnAddWorker)) {
-			addWorkerWindow();
 
 		}
-		if (e.getSource().equals(btnAsignScientist)) {
+		/*if (e.getSource().equals(btnAssignScientist)) {
 
 		}
-		if (e.getSource().equals(btnAsignAgent)) {
+		if (e.getSource().equals(btnAssignAgent)) {
 
-		}
+		}*/
 		if (e.getSource().equals(btnLevelUpWorker)) {
-			Overseer over = new Overseer();
-			over.showInfo("AGE-0003");
-			over.levelUpWorker((Worker) over);
+
 		}
 		if (e.getSource().equals(btnDeleteScp)) {
 
 		}
 		if (e.getSource().equals(btnDeleteWorker)) {
-
+			//deleteWork();
 		}
-
-		// Add Worker Buttons
-		if (e.getSource().equals(btnAgent)) {
-
+		/*if (e.getSource().equals(btnShowAssignedFacility)) {
+			showAssignedFacility(workerId);
 		}
-		if (e.getSource().equals(btnScientist)) {
+		if (e.getSource().equals(btnConfirmDeletion)) {
+			if (textWorker.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(tablaWorkers, "Empty field. Please enter an ID");
+			} else {
+				String workerDeletion = textWorker.getText();
+				Worker work = new Worker();
 
-		}
-		if (e.getSource().equals(btnOverseer)) {
+				if (work.checkWorker(workerDeletion)) {
 
-		}
-		if(e.getSource().equals(btnShowSCP)) {
-			showScpinfo();
-		}
-
+				} else {
+					JOptionPane.showMessageDialog(tablaWorkers, "Please insert an existing ID");
+				}
+			}
+		}*/
 	}
 
-	private void addWorkerWindow() {
-		btnAgent = new JButton();
-		btnScientist = new JButton();
-		btnOverseer = new JButton();
-
-		JPanel panelAdd = new JPanel();
-		tabbedPane.addTab("Add Worker", null, panelAdd, null);
-		panelAdd.setLayout(null);
-
-		lblId = new JLabel("WORKER TYPE");
-		lblId.setBounds(56, 56, 200, 40);
-		panelAdd.add(lblId);
-
-		btnAgent = new JButton("Agent");
-		btnAgent.setBounds(55, 100, 100, 54);
-		btnAgent.addActionListener(this);
-		panelAdd.add(btnAgent);
-
-		btnScientist = new JButton("Scientist");
-		btnScientist.setBounds(255, 100, 100, 54);
-		btnScientist.addActionListener(this);
-		panelAdd.add(btnScientist);
-
-		btnOverseer = new JButton("Overseer");
-		btnOverseer.setBounds(455, 100, 100, 54);
-		btnOverseer.addActionListener(this);
-		panelAdd.add(btnOverseer);
-
-		tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
-	}
-
-	private void showScpinfo() {
-		
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("SCP FILE", null, panel, null);
-		panel.setLayout(null);
-		
-		
-	}
-	private void showInfoWindow() {
-
-		// id introducida previamente
-		String idWorker = userID;
-		Worker wObj = new Worker();
-		wObj.showInfo(idWorker);
+	/*private void showAssignedFacility(String usernameUsuario) {
+		String idWorker = usernameUsuario;
+		Agent wAge = new Agent();
+		Facility fac;
+		fac = wAge.showAsignedFacility(idWorker);
 
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("PROFILE", null, panel, null);
+		tabbedPane.addTab("Facility Info.", null, panel, null);
 		panel.setLayout(null);
 
-		lblLogo = new JLabel("logo");
-		lblLogo.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/SCP_Foundation_logoSMALL.png")));
-		lblLogo.setBounds(750, 0, 200, 200);
-		panel.add(lblLogo);
+		lblIdFacility = new JLabel("ID Facility:           " + wAge.getID_Facility());
+		lblIdFacility.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+		lblIdFacility.setBounds(125, 155, 1500, 80);
+		panel.add(lblIdFacility);
 
-		lblProfileImg = new JLabel("profile");
-		lblProfileImg.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/profileSMALL.png")));
-		lblProfileImg.setBounds(50, 50, 200, 200);
-		panel.add(lblProfileImg);
+		lblNameFacility = new JLabel("Name Facility:         " + fac.getFacility_name());
+		lblNameFacility.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+		lblNameFacility.setBounds(125, 310, 1500, 80);
+		panel.add(lblNameFacility);
 
-		lblId = new JLabel("ID");
-		lblId.setBounds(300, 56, 132, 40);
-		panel.add(lblId);
+		lblLevelFacility = new JLabel("Level Facility:        " + String.format("%d", fac.getFacility_level()));
+		lblLevelFacility.setFont(new Font("OCR A Extended", Font.BOLD, 40));
+		lblLevelFacility.setBounds(125, 465, 1500, 80);
+		panel.add(lblLevelFacility);
 
-		lblName = new JLabel("NAME");
-		lblName.setBounds(300, 112, 132, 40);
-		panel.add(lblName);
+		tabbedPane.setSelectedIndex(1);
+	}*/
 
-		lblDateEntry = new JLabel("DATE ENTRY");
-		lblDateEntry.setBounds(300, 163, 132, 40);
-		panel.add(lblDateEntry);
+	/*private void deleteWork() {
+		Worker work = new Worker();
+		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
 
-		lblActive = new JLabel("ACTIVE");
-		lblActive.setBounds(300, 214, 132, 40);
-		panel.add(lblActive);
+		JPanel panel = new JPanel();
+		tabbedPane.addTab("Delete Worker", null, panel, null);
+		panel.setLayout(null);
 
-		lblLevel = new JLabel("LEVEL");
-		lblLevel.setBounds(300, 265, 132, 40);
-		panel.add(lblLevel);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(90, 100, 800, 359);
+		panel.add(scrollPane);
 
-		lblBoss = new JLabel("BOSS ID");
-		lblBoss.setBounds(300, 321, 132, 40);
-		panel.add(lblBoss);
+		tablaWorkers = new JTable();
 
-		textFieldId = new JTextField(idWorker);
-		textFieldId.setBounds(400, 61, 231, 30);
-		panel.add(textFieldId);
-		textFieldId.setColumns(10);
+		model = new DefaultTableModel();
+		tablaWorkers.setModel(model);
 
-		textFieldName = new JTextField(wObj.getName());
-		textFieldName.setColumns(10);
-		textFieldName.setBounds(400, 117, 231, 30);
-		panel.add(textFieldName);
+		model.addColumn("ID");
+		model.addColumn("Name");
+		model.addColumn("Date Entry");
 
-		textFieldDate = new JTextField(wObj.getDate_Entry().toString());
-		textFieldDate.setColumns(10);
-		textFieldDate.setBounds(400, 168, 231, 30);
-		panel.add(textFieldDate);
+		scrollPane.setViewportView(tablaWorkers);
+		
+		fillTable();
 
-		checkBoxActive = new JCheckBox();
-		checkBoxActive.setSelected(wObj.isActive());
-		checkBoxActive.setBounds(400, 214, 231, 30);
-		panel.add(checkBoxActive);
+		lblWorker = new JLabel("Insert the ID of the worker:");
+		lblWorker.setFont(new Font("OCR A Extended", Font.BOLD, 22));
+		lblWorker.setBounds(80, 600, 1500, 80);
+		panel.add(lblWorker);
 
-		lblLevel = new JLabel(String.format("%d", wObj.getLevel()));
-		lblLevel.setBounds(400, 265, 132, 40);
-		panel.add(lblLevel);
+		textWorker = new JTextField();
+		textWorker.setBounds(475, 627, 275, 25);
+		textWorker.setFont(new Font("OCR A Extended", Font.BOLD, 14));
+		panel.add(textWorker);
+		textWorker.setColumns(10);
 
-		textFieldBoss = new JTextField(wObj.getBossID());
-		textFieldBoss.setColumns(10);
-		textFieldBoss.setBounds(400, 321, 231, 30);
-		panel.add(textFieldBoss);
+		btnConfirmDeletion = new JButton("Show Info");
+		btnConfirmDeletion.setFont(new Font("OCR A Extended", Font.BOLD, 14));
+		btnConfirmDeletion.setBounds(775, 615, 120, 45);
+		panel.add(btnConfirmDeletion);
+		btnConfirmDeletion.addActionListener(this);
 
-		// Instanciar Componente
-		calendar = new JCalendar();
-		// Ubicar y agregar al panel
-		calendar.setBounds(600, 400, 350, 350);
-		panel.add(calendar);
-
-		tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 	}
+
+	public void fillTable() {
+		Worker work = new Worker();
+		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
+
+		for (Worker worker : arrayDeWorkers) {
+			Object[] fila = new Object[3];
+			fila[0] = worker.getId();
+			fila[1] = worker.getName();
+			fila[2] = worker.getDate_Entry();
+
+			model.addRow(fila);
+		}
+	}*/
 }
