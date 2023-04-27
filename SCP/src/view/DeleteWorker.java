@@ -1,10 +1,12 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,9 +28,14 @@ public class DeleteWorker extends JPanel implements ActionListener{
 	private JLabel lblWorker;
 	private JTextField textWorker;
 	private JButton btnConfirmDeletion;
+	private JButton btnDelete;
+	private JLabel background;
 	
 	public DeleteWorker() {
-		Worker work = new Worker();
+		setBounds(0, 0, 1024, 768);
+		setLayout(null);
+
+Worker work = new Worker();
 		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -39,6 +46,11 @@ public class DeleteWorker extends JPanel implements ActionListener{
 
 		model = new DefaultTableModel();
 		tablaWorkers.setModel(model);
+		tablaWorkers.setOpaque(false);
+		scrollPane.setOpaque(false); 
+		scrollPane.getViewport().setOpaque(false); 
+		tablaWorkers.setShowGrid(false); 
+		
 
 		model.addColumn("ID");
 		model.addColumn("Name");
@@ -49,21 +61,37 @@ public class DeleteWorker extends JPanel implements ActionListener{
 		fillTable();
 
 		lblWorker = new JLabel("Insert the ID of the worker:");
+		lblWorker.setForeground(new Color(255, 255, 255));
 		lblWorker.setFont(new Font("OCR A Extended", Font.BOLD, 22));
-		lblWorker.setBounds(80, 600, 1500, 80);
+		lblWorker.setBounds(80, 500, 1500, 80);
 		add(lblWorker);
 
 		textWorker = new JTextField();
-		textWorker.setBounds(475, 627, 275, 25);
+		textWorker.setBounds(475, 527, 275, 25);
 		textWorker.setFont(new Font("OCR A Extended", Font.BOLD, 14));
 		add(textWorker);
 		textWorker.setColumns(10);
 
 		btnConfirmDeletion = new JButton("Show Info");
-		btnConfirmDeletion.setFont(new Font("OCR A Extended", Font.BOLD, 14));
-		btnConfirmDeletion.setBounds(775, 615, 120, 45);
+		btnConfirmDeletion.setBackground(new Color(0, 0, 0));
+		btnConfirmDeletion.setForeground(new Color(255, 255, 255));
+		btnConfirmDeletion.setFont(new Font("OCR A Extended", Font.BOLD, 15));
+		btnConfirmDeletion.setBounds(775, 485, 120, 45);
 		add(btnConfirmDeletion);
 		btnConfirmDeletion.addActionListener(this);
+		
+		btnDelete = new JButton("Delete");
+		btnDelete.setForeground(new Color(255, 255, 255));
+		btnDelete.setBackground(new Color(0, 0, 0));
+		btnDelete.setFont(new Font("OCR A Extended", Font.BOLD, 16));
+		btnDelete.setBounds(775, 545, 120, 45);
+		add(btnDelete);
+		btnDelete.addActionListener(this);
+		
+		background = new JLabel("bg");
+		background.setIcon(new ImageIcon(ShowFacility.class.getResource("/resources/background.png")));
+		background.setBounds(0, 0, 1024, 768);
+		add(background);
 	}
 	
 	public void fillTable() {
@@ -97,6 +125,5 @@ public class DeleteWorker extends JPanel implements ActionListener{
 			}
 		}
 		
-	}
+	}}
 
-}

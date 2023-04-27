@@ -82,7 +82,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener{
         usernameLabel = new JLabel("Username");
         usernameLabel.setForeground(Color.WHITE);
         usernameLabel.setFont(new Font("OCR A Extended", Font.PLAIN, 28));
-        usernameLabel.setBounds(250, 1000, 500, 32);
+        usernameLabel.setBounds(250, 950, 500, 32);
         contentPane.add(usernameLabel);
 
         passwordLabel = new JLabel("Password");
@@ -93,6 +93,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener{
         
         userField = new JTextField();
         userField.setBounds(400, 1000, 300, 32);
+        userField.setFont(new Font("OCR A Extended", Font.BOLD, 14));
         contentPane.add(userField);
         userField.setColumns(10);
         userField.setFocusable(true);
@@ -118,8 +119,10 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener{
         timer = new Timer(1, labelAnim);
         
         btnLogIn = new JButton("Log In");
-		btnLogIn.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnLogIn.setBounds(480, 566, 120, 45);
+		btnLogIn.setFont(new Font("OCR A EXTENDED", Font.BOLD, 16));
+		btnLogIn.setBackground(new Color(0, 0, 0));
+		btnLogIn.setForeground(new Color(255, 255, 255));
+		btnLogIn.setBounds(480, 600, 120, 45);
 		contentPane.add(btnLogIn);
 		btnLogIn.addActionListener(this);
 		
