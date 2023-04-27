@@ -115,7 +115,21 @@ public class Overseer extends Worker implements OverseerController{
 
 	@Override
 	public void deleteSCP() {
-		// TODO Auto-generated method stub
+		ResultSet rs = null;
+		con = conController.openConnection();
+
+		String BORRARscp = "DELETE FROM SCP WHERE ID_SCP = ?";
+
+		try {
+			stmt = con.prepareStatement(BORRARscp);
+
+			stmt.setString(1, id);
+			rs = stmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		conController.closeConnection(stmt, con);
 		
 	}
 

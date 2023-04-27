@@ -106,4 +106,5 @@ public class SCP {
 	public void setSecondary(SecondaryC secondary) {
 		this.secondary = secondary;
 	}
+	
 }

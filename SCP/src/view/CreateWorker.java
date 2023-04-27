@@ -20,6 +20,7 @@ import com.toedter.calendar.JCalendar;
 import acs.Continent;
 import clases.Agent;
 import clases.Overseer;
+import clases.Scientific;
 import clases.Worker;
 
 import javax.swing.JTextField;
@@ -44,6 +45,7 @@ public class CreateWorker extends JPanel implements ActionListener{
 	private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 	private JTextArea textAreaHistory;
 	private JComboBox<Continent> comboBox;
+	private boolean isScientist = false, isAgent = false, isOverseer = false;
 	//private JXDatePicker datePicker;
 	
 	public CreateWorker() {
@@ -212,10 +214,36 @@ public class CreateWorker extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		//Add Worker Buttons
 		if (e.getSource().equals(btnCreate)){
-			Worker worker = new Worker();
+			Worker worker = null;		
+			if(isAgent)
+			{
+				worker = new Agent();
+				((Agent)worker).setHistory(textAreaHistory.getText());
+			}
+			else if(isScientist)
+			{
+				worker = new Scientific();
+				((Scientific)worker).setStudies(textAreaHistory.getText());
+			}
+			else if(isOverseer)
+			{
+				worker = new Overseer();
+				((Overseer)worker).setContinent(Continent.valueOf(comboBox.getSelectedItem().toString()));
+			}
+			//worker.setId(f);
+			worker.setName(fieldName.getText());
+			worker.setPassword(fieldPassword.getText());
+			worker.setLevel((int)spinnerLevel.getValue());
+			worker.setDate_Entry((Date)calendar.getDate());
+			worker.setBossID(fieldBoss.getText());
 			
+			worker.createWorker();
 		}
 		if (e.getSource().equals(btnReset)){
+			isAgent = false;
+			isAgent = false;
+			isAgent = false;
+			
 			fieldName.setText("");
 			fieldBoss.setText("");
 			chckbxActive.setSelected(false);
@@ -231,7 +259,7 @@ public class CreateWorker extends JPanel implements ActionListener{
 			btnScientist_1.setEnabled(true);
 		}
 		if (e.getSource().equals(btnAgent_1)){
-			
+			isAgent= true;
 			lblHistory.setText("Record");
 			lblHistory.setVisible(true);
 			textAreaHistory.setVisible(true);
@@ -239,7 +267,7 @@ public class CreateWorker extends JPanel implements ActionListener{
 			btnOverseer_1.setEnabled(false);
 		}
 		if (e.getSource().equals(btnScientist_1)){
-			
+			isScientist = true;
 			lblHistory.setText("Studies");
 			lblHistory.setVisible(true);
 			textAreaHistory.setVisible(true);
@@ -247,7 +275,7 @@ public class CreateWorker extends JPanel implements ActionListener{
 			btnOverseer_1.setEnabled(false);
 		}
 		if (e.getSource().equals(btnOverseer_1)){
-			
+			isOverseer = true;
 			lblHistory.setText("Continent");
 			lblHistory.setVisible(true);
 			comboBox.setVisible(true);

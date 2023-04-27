@@ -243,6 +243,9 @@ public class PanelShowInfo extends JPanel implements ActionListener{
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);		
 		}
+		if (e.getSource().equals(btnAsigned)){
+			
+		}
 		if (e.getSource().equals(btnAddScp)){
 			
 		}

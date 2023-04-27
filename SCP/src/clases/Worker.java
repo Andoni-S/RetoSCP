@@ -211,4 +211,36 @@ public class Worker implements Loginable {
 
 		return false;
 	}
+	public boolean createWorker() {
+		ResultSet rs = null;
+		con = conController.openConnection();
+
+		String OBTENERprop1 = "INSERT INTO Worker (ID_Worker, Name_Worker, Date_Entry,Active_Worker,Level_Worker,password_Worker,ID_Boss) VALUES (?,?,?,?,?,?,?)";
+
+		try {
+			stmt = con.prepareStatement(OBTENERprop1);
+
+			stmt.setString(1, id);
+			
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				setId(rs.getString("ID_Worker"));
+			}
+
+			if (id != null || password != null) {
+				if (id.equals(id)) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
 }
