@@ -24,7 +24,6 @@ public class ShowFacility extends JPanel {
 		Facility fac;
 		fac = wAge.showAsignedFacility(userID);
 		setLayout(null);
-		
 
 		lblIdFacility = new JLabel("ID Facility:           " + wAge.getId_facility());
 		lblIdFacility.setForeground(new Color(255, 255, 255));

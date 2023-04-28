@@ -17,62 +17,63 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import clases.Overseer;
+import clases.SCP;
 import clases.Worker;
 
-public class DeleteWorker extends JPanel implements ActionListener {
+public class DeleteSCP extends JPanel implements ActionListener {
 
 	/**
 	 * Create the panel.
 	 */
-	private JTable tablaWorkers;
+	private JTable tablaSCP;
 	private DefaultTableModel model;
-	private JLabel lblWorker;
-	private JTextField textWorker;
+	private JLabel lblSCP;
+	private JTextField textSCP;
 	private JButton btnShowInfo;
 	private JButton btnDelete;
 	private JLabel background;
 
-	public DeleteWorker() {
+	public DeleteSCP() {
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
 
-		Worker work = new Worker();
-		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
+		SCP scp = new SCP();
+		ArrayList<SCP> arrayDeSCP = scp.showAllSCP();
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(90, 100, 800, 359);
 		add(scrollPane);
 
-		tablaWorkers = new JTable();
+		tablaSCP = new JTable();
 
 		model = new DefaultTableModel();
-		tablaWorkers.setModel(model);
-		tablaWorkers.setOpaque(false);
+		tablaSCP.setModel(model);
+		tablaSCP.setOpaque(false);
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
-		tablaWorkers.setShowGrid(false);
+		tablaSCP.setShowGrid(false);
 
 		model.addColumn("ID");
 		model.addColumn("Name");
-		model.addColumn("Date Entry");
+		model.addColumn("Level");
 
-		scrollPane.setViewportView(tablaWorkers);
+		scrollPane.setViewportView(tablaSCP);
 
 		fillTable();
 
-		lblWorker = new JLabel("Insert the ID of the worker:");
-		lblWorker.setForeground(new Color(255, 255, 255));
-		lblWorker.setFont(new Font("OCR A Extended", Font.BOLD, 22));
-		lblWorker.setBounds(80, 500, 1500, 80);
-		add(lblWorker);
+		lblSCP = new JLabel("Insert the ID of the SCP:");
+		lblSCP.setForeground(new Color(255, 255, 255));
+		lblSCP.setFont(new Font("OCR A Extended", Font.BOLD, 22));
+		lblSCP.setBounds(80, 500, 1500, 80);
+		add(lblSCP);
 
-		textWorker = new JTextField();
-		textWorker.setBounds(475, 527, 275, 25);
-		textWorker.setFont(new Font("OCR A Extended", Font.BOLD, 14));
-		add(textWorker);
-		textWorker.setColumns(10);
+		textSCP = new JTextField();
+		textSCP.setBounds(475, 527, 275, 25);
+		textSCP.setFont(new Font("OCR A Extended", Font.BOLD, 14));
+		add(textSCP);
+		textSCP.setColumns(10);
 
-		btnShowInfo = new JButton("Show Info");
+		btnShowInfo= new JButton("Show Info");
 		btnShowInfo.setBackground(new Color(0, 0, 0));
 		btnShowInfo.setForeground(new Color(255, 255, 255));
 		btnShowInfo.setFont(new Font("OCR A Extended", Font.BOLD, 15));
@@ -95,54 +96,53 @@ public class DeleteWorker extends JPanel implements ActionListener {
 	}
 
 	public void fillTable() {
-		Worker work = new Worker();
-		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
+		SCP scp = new SCP();
+		ArrayList<SCP> arrayDeSCP = scp.showAllSCP();
 
-		for (Worker worker : arrayDeWorkers) {
+		for (SCP s : arrayDeSCP) {
 			Object[] fila = new Object[3];
-			fila[0] = worker.getId();
-			fila[1] = worker.getName();
-			fila[2] = worker.getDate_Entry();
+			fila[0] = s.getScp_id();
+			fila[1] = s.getScp_name();
+			fila[2] = s.getScp_level();
 
 			model.addRow(fila);
 		}
 
-		tablaWorkers.setDefaultEditor(Object.class, null);
+		tablaSCP.setDefaultEditor(Object.class, null);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnShowInfo)) {
-			if (textWorker.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(tablaWorkers, "Empty field. Please enter an ID");
+			if (textSCP.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(tablaSCP, "Empty field. Please enter an ID");
 			} else {
-				String workerDeletion = textWorker.getText();
-				Worker work = new Worker();
+				String scpDeletion = textSCP.getText();
+				SCP sc = new SCP();
 
-				if (work.checkWorker(workerDeletion)) {
+				if (sc.checkSCP(scpDeletion)) {
 					
 				} else {
-					JOptionPane.showMessageDialog(tablaWorkers, "Please insert an existing ID");
+					JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID");
 				}
 			}
 		}
 		
 		if (e.getSource().equals(btnDelete)) {
-			if (textWorker.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(tablaWorkers, "Empty field. Please enter an ID");
+			if (textSCP.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(tablaSCP, "Empty field. Please enter an ID");
 			} else {
-				String workerDeletion = textWorker.getText();
-				Worker work = new Worker();
-				
-				if (work.checkWorker(workerDeletion)) {
+				String SCPDeletion = textSCP.getText();
+				SCP sc = new SCP();
+
+				if (sc.checkSCP(SCPDeletion)) {
 					Overseer ove = new Overseer();
-					ove.deleteWorker(work.getId());
-					JOptionPane.showMessageDialog(tablaWorkers, "The worker has been deleted");
+					ove.deleteSCP(sc.getScp_id());
+					JOptionPane.showMessageDialog(tablaSCP, "The SCP has been deleted");
 				} else {
-					JOptionPane.showMessageDialog(tablaWorkers, "Please insert an existing ID");
+					JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID");
 				}
 			}
-		}
-
+		}			
 	}
 }
