@@ -1,10 +1,12 @@
 package clases;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 
 import acs.Containment;
 import acs.Discruption;
@@ -14,7 +16,9 @@ import controller.ScientificController;
 
 public class Scientific extends Worker implements ScientificController {
 
+	
 	private String studies;
+	
 	private Connection con;
 	private PreparedStatement stmt;
 	private DBConnectionController conController = new DBConnectionController();
@@ -101,5 +105,60 @@ public class Scientific extends Worker implements ScientificController {
 		// TODO Auto-generated method stub
     
 	}
+	@Override
+	public void createWorker() {
+		
+		ResultSet rs = null;
+		con = conController.openConnection();
 
+		try {
+			CallableStatement cst = con.prepareCall("{CALL insertScientist(?, ?, ?, ?, ?, ?, ? ,?)}");
+			
+			cst.setString(1,id);
+			cst.setString(2,name);
+			cst.setDate(3, date_Entry);
+			cst.setBoolean(4, active);
+			cst.setInt(5, level);
+			cst.setString(6, password);
+			cst.setString(7, bossID);
+			cst.setString(8, studies);
+			cst.execute();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		conController.closeConnection(stmt, con);
+	}
+
+	@Override
+	public String workerIDCreator() {
+		ResultSet rs = null;
+		con = conController.openConnection();
+		String id = "SCI-";
+		
+		String OBTENERprop = "select count(ID_Worker) FROM WORKER;";
+
+		try {
+			stmt = con.prepareStatement(OBTENERprop);
+
+			//.setString(1, id);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				int count = rs.getInt("count(ID_Worker)");
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		conController.closeConnection(stmt, con);
+
+		return id;
+	}
 }
+

@@ -230,6 +230,8 @@ public class CreateWorker extends JPanel implements ActionListener{
 				worker = new Overseer();
 				((Overseer)worker).setContinent(Continent.valueOf(comboBox.getSelectedItem().toString()));
 			}
+			
+			
 			//worker.setId(f);
 			worker.setName(fieldName.getText());
 			worker.setPassword(fieldPassword.getText());
@@ -238,6 +240,7 @@ public class CreateWorker extends JPanel implements ActionListener{
 			worker.setBossID(fieldBoss.getText());
 			
 			worker.createWorker();
+			
 		}
 		if (e.getSource().equals(btnReset)){
 			isAgent = false;

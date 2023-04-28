@@ -63,6 +63,8 @@ public class MainWindow extends JFrame implements ActionListener {
 		//adapta la ventana a la pantalla
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
+		//String RISK = "/resources/AMIDA.png";
+		
 		getContentPane().setLayout(new BorderLayout());
 		
 		tabbedPane = new JTabbedPane();

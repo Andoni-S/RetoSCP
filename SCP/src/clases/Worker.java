@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import com.mysql.cj.jdbc.CallableStatement;
 
 import controller.Loginable;
 import clases.DBConnectionController;
@@ -211,36 +212,36 @@ public class Worker implements Loginable {
 
 		return false;
 	}
-	public boolean createWorker() {
+	public void createWorker() {
+		
+	}
+	public String workerIDCreator() {
 		ResultSet rs = null;
 		con = conController.openConnection();
-
-		String OBTENERprop1 = "INSERT INTO Worker (ID_Worker, Name_Worker, Date_Entry,Active_Worker,Level_Worker,password_Worker,ID_Boss) VALUES (?,?,?,?,?,?,?)";
+		String id = null;
+		
+		String OBTENERprop = "SELECT * FROM Worker";
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop1);
+			stmt = con.prepareStatement(OBTENERprop);
 
-			stmt.setString(1, id);
-			
+			//.setString(1, id);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				setId(rs.getString("ID_Worker"));
+				Worker workie = new Worker();
+				workie.setId(rs.getString("ID_Worker"));
+				workie.setName(rs.getString("Name_Worker"));
+				workie.setDate_Entry(rs.getDate("Date_Entry"));
+
 			}
 
-			if (id != null || password != null) {
-				if (id.equals(id)) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return false;
+		conController.closeConnection(stmt, con);
+
+		return id;
 	}
 }
