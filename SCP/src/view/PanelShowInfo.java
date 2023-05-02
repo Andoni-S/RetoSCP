@@ -251,7 +251,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnDeleteWorker.addActionListener(this);
 			add(btnDeleteWorker);
 
-			btnAsignScientist = new JButton("Assign Scientist");
+			btnAsignScientist = new JButton("Assigned Facility");
 			btnAsignScientist.setBounds(750, 630, 200, 40);
 			btnAsignScientist.setBackground(Color.black);
 			btnAsignScientist.setForeground(Color.white);
@@ -299,9 +299,12 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource().equals(btnLevelUpWorker)) {
-			Overseer over = new Overseer();
-			over.showInfo("AGE-0003");
-			over.levelUpWorker((Worker) over);
+			JComponent panelLevelUp = null;
+			panelLevelUp = new LevelUpWorker();
+			tabbedPane.addTab("Tab", null, panelLevelUp, "Panel");
+			container.add(tabbedPane, BorderLayout.CENTER);
+			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 
 		if (e.getSource().equals(btnDeleteScp)) {

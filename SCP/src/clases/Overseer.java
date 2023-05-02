@@ -74,14 +74,14 @@ public class Overseer extends Worker implements OverseerController {
 	}
 
 	@Override
-	public void levelUpWorker(Worker worker) {
+	public void levelUpWorker(Worker work) {
 		ResultSet rs = null;
 		con = conController.openConnection();
 		String UPDATEworker = "UPDATE WORKER SET Level_Worker = Level_Worker + 1 WHERE ID_Worker=?";
 
 		try {
 			stmt = con.prepareStatement(UPDATEworker);
-			stmt.setString(1, worker.getId());
+			stmt.setString(1, work.getId());
 			stmt.executeUpdate();
 
 		} catch (SQLException e) {

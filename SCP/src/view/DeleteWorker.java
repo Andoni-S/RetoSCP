@@ -18,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
 
 import clases.Overseer;
 import clases.Worker;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class DeleteWorker extends JPanel implements ActionListener {
 
@@ -40,6 +42,12 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
 		scrollPane.setBounds(90, 100, 800, 359);
 		add(scrollPane);
 
@@ -93,6 +101,11 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		background.setBounds(0, 0, 1024, 768);
 		add(background);
 	}
+	
+	public void emptyTable() {
+		DefaultTableModel model = (DefaultTableModel) tablaWorkers.getModel();
+		model.setRowCount(0);
+	}
 
 	public void fillTable() {
 		Worker work = new Worker();
@@ -138,6 +151,8 @@ public class DeleteWorker extends JPanel implements ActionListener {
 					Overseer ove = new Overseer();
 					ove.deleteWorker(work.getId());
 					JOptionPane.showMessageDialog(tablaWorkers, "The worker has been deleted");
+					emptyTable();
+					fillTable();
 				} else {
 					JOptionPane.showMessageDialog(tablaWorkers, "Please insert an existing ID");
 				}

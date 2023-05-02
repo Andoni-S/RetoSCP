@@ -9,7 +9,7 @@ public interface OverseerController {
 	// MODIFY
 	void asignSCPtoScientific();
 	void asignAgentToFacility();
-	void levelUpWorker(Worker worker);
+	void levelUpWorker(Worker work);
 	// DELETE
 	void deleteWorker(String idWorker);
 	void deleteSCP(String idScp);
