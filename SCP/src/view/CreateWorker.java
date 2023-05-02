@@ -42,7 +42,7 @@ public class CreateWorker extends JPanel implements ActionListener{
 	private JCheckBox chckbxActive;
 	private JSpinner spinnerLevel;
 	private JCalendar calendar;
-	private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	private JTextArea textAreaHistory;
 	private JComboBox<Continent> comboBox;
 	private boolean isScientist = false, isAgent = false, isOverseer = false;
@@ -154,6 +154,7 @@ public class CreateWorker extends JPanel implements ActionListener{
      	calendar.setWeekdayForeground(Color.WHITE);
      	calendar.setWeekOfYearVisible(false);
      	calendar.setDecorationBackgroundColor(Color.BLACK);
+     	
      	// Ubicar y agregar al panel
      	calendar.setBounds(600, 100, 300, 300);   
      	calendar.getDayChooser().addPropertyChangeListener(new PropertyChangeListener() {
@@ -230,13 +231,23 @@ public class CreateWorker extends JPanel implements ActionListener{
 				worker = new Overseer();
 				((Overseer)worker).setContinent(Continent.valueOf(comboBox.getSelectedItem().toString()));
 			}
+		
+			String id = worker.workerIDCreator();
 			
-			
-			//worker.setId(f);
+			worker.setId(id);
+			worker.setActive(chckbxActive.isSelected());
 			worker.setName(fieldName.getText());
 			worker.setPassword(fieldPassword.getText());
 			worker.setLevel((int)spinnerLevel.getValue());
-			worker.setDate_Entry((Date)calendar.getDate());
+			
+			System.out.println((int)spinnerLevel.getValue());
+			System.out.println(fieldEntryDate.getText());
+			
+			java.sql.Date sqlDate = java.sql.Date.valueOf( fieldEntryDate.getText() );
+			//(Date)calendar.getDate()
+			
+			
+			worker.setDate_Entry(sqlDate);
 			worker.setBossID(fieldBoss.getText());
 			
 			worker.createWorker();

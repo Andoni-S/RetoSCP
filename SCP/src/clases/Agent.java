@@ -123,4 +123,33 @@ public class Agent extends Worker implements AgentController{
 		
 		conController.closeConnection(stmt, con);
 	}
+	@Override
+	public String workerIDCreator() {
+		ResultSet rs = null;
+		con = conController.openConnection();
+		String id = "AGE-";
+		
+		
+		String OBTENERprop = "select count(ID_Agent) AS count FROM AGENT;";
+
+		try {
+			stmt = con.prepareStatement(OBTENERprop);
+
+			//.setString(1, id);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				id = id+String.format("%04d", rs.getInt("count")+1);
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		conController.closeConnection(stmt, con);
+
+		System.out.println(id);
+		return id;
+	}
 }

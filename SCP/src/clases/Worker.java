@@ -216,32 +216,7 @@ public class Worker implements Loginable {
 		
 	}
 	public String workerIDCreator() {
-		ResultSet rs = null;
-		con = conController.openConnection();
-		String id = null;
-		
-		String OBTENERprop = "SELECT * FROM Worker";
-
-		try {
-			stmt = con.prepareStatement(OBTENERprop);
-
-			//.setString(1, id);
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				Worker workie = new Worker();
-				workie.setId(rs.getString("ID_Worker"));
-				workie.setName(rs.getString("Name_Worker"));
-				workie.setDate_Entry(rs.getDate("Date_Entry"));
-
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		conController.closeConnection(stmt, con);
-
-		return id;
+		//default Worker, not used
+		return "WOR-0000";
 	}
 }

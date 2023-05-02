@@ -179,4 +179,33 @@ public class Overseer extends Worker implements OverseerController{
 		
 		conController.closeConnection(stmt, con);
 	}
+  	@Override
+	public String workerIDCreator() {
+		ResultSet rs = null;
+		con = conController.openConnection();
+		String id = "OVE-";
+		
+		
+		String OBTENERprop = "select count(ID_Overseer) AS count FROM OVERSEER;";
+
+		try {
+			stmt = con.prepareStatement(OBTENERprop);
+
+			//.setString(1, id);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				id = id+String.format("%04d", rs.getInt("count")+1);
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		conController.closeConnection(stmt, con);
+
+		System.out.println(id);
+		return id;
+	}
 }

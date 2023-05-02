@@ -139,7 +139,8 @@ public class Scientific extends Worker implements ScientificController {
 		con = conController.openConnection();
 		String id = "SCI-";
 		
-		String OBTENERprop = "select count(ID_Worker) FROM WORKER;";
+		
+		String OBTENERprop = "select count(ID_Scientist) AS count FROM SCIENTIST";
 
 		try {
 			stmt = con.prepareStatement(OBTENERprop);
@@ -148,7 +149,7 @@ public class Scientific extends Worker implements ScientificController {
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				int count = rs.getInt("count(ID_Worker)");
+				id = id+String.format("%04d", rs.getInt("count")+1);
 				
 			}
 
@@ -158,6 +159,7 @@ public class Scientific extends Worker implements ScientificController {
 
 		conController.closeConnection(stmt, con);
 
+		System.out.println(id);
 		return id;
 	}
 }
