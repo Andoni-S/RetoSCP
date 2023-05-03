@@ -1,5 +1,6 @@
 package clases;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,10 +46,21 @@ public class Overseer extends Worker implements OverseerController{
 	}
 
 	@Override
-	public void asignSCPtoScientific() {
+	public void asignSCPtoScientific(String scientificID, String scpID) {
 		
+		PreparedStatement stmt = null;
+		con = conController.openConnection();
 		
-		
+		try{
+			stmt = con.prepareStatement("INSERT IGNORE INTO RESEARCH(ID_SCP, ID_Scientist) VALUES(?, ?)");
+			stmt.setString(1, scpID);
+			stmt.setString(2, scientificID);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		conController.closeConnection(stmt, con);
 		
 	}
 

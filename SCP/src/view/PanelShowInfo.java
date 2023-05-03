@@ -249,7 +249,9 @@ public class PanelShowInfo extends JPanel implements ActionListener{
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount()-1);
 		}
 		if (e.getSource().equals(btnAsignScientist)){
-			
+			JComponent panelAssignSCPtoScientist = null;
+			panelAssignSCPtoScientist = new AssignSCPtoScientist();
+			tabbedPane.addTab("Tab", null, panelAssignSCPtoScientist, "Panel");
 		}
 		if (e.getSource().equals(btnAsignAgent)){
 			
