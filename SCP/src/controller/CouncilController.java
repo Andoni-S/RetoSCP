@@ -1,15 +1,14 @@
 package controller;
 
 public interface CouncilController {
-	
-	//ADD
+	// ADD
 	void addSCP();
 	void addWorker();
-	//MODIFY
+	// MODIFY
 	void asignSCPtoScientific();
 	void asignAgentToFacility();
 	void levelUpWorker();
-	//DELETE
+	// DELETE
 	void deleteSCP();
 	void deleteWorker();
 }

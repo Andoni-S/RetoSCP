@@ -3,15 +3,14 @@ package controller;
 import clases.Worker;
 
 public interface OverseerController {
-	
-	//ADD
+	// ADD
 	void addSCP();
 	void addWorker();
-	//MODIFY
+	// MODIFY
 	void asignSCPtoScientific();
 	void asignAgentToFacility();
-	void levelUpWorker(Worker worker);
-	//DELETE
-	void deleteSCP();
-	void deleteWorker();
+	void levelUpWorker(Worker work);
+	// DELETE
+	void deleteWorker(String idWorker);
+	void deleteSCP(String idScp);
 }
