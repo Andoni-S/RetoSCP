@@ -35,6 +35,11 @@ import javax.swing.ImageIcon;
 
 public class MainWindow extends JFrame implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	//private final JPanel contentPanel = new JPanel();
 	public JTabbedPane tabbedPane;
 	

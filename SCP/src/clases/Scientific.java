@@ -26,33 +26,31 @@ public class Scientific extends Worker implements ScientificController {
 	public void setStudies(String studies) {
 		this.studies = studies;
 	}
-	
-	
-	
+
 	@Override
 	public Worker showInfo(String id) {
-		
+
 		super.showInfo(id);
-		
+
 		ResultSet rs = null;
 		con = conController.openConnection();
-				
+
 		String OBTENERprop = "SELECT Studies FROM Scientist WHERE ID_Scientist = ?";
 		try {
-			stmt = con.prepareStatement(OBTENERprop);		
+			stmt = con.prepareStatement(OBTENERprop);
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
-			
-			while (rs.next()) {			
+
+			while (rs.next()) {
 				setStudies(rs.getString("Studies"));
-			}		
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		conController.closeConnection(stmt, con);
-		
+
 		return this;
 	}
 
@@ -63,7 +61,7 @@ public class Scientific extends Worker implements ScientificController {
 		ResultSet rs = null;
 		con = conController.openConnection();
 		ArrayList<SCP> scp_list = new ArrayList();
-		SCP scp = new SCP();
+
 		String OBTENER_SCP = "Select * from scp where ID_SCP in (Select ID_SCP from research where ID_Scientist LIKE ?)";
 		try {
 			stmt = con.prepareStatement(OBTENER_SCP);
@@ -72,6 +70,7 @@ public class Scientific extends Worker implements ScientificController {
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
+				SCP scp = new SCP();
 
 				scp.setScp_id(rs.getString("ID_SCP"));
 				scp.setScp_name(rs.getString("Name_SCP"));
@@ -93,14 +92,34 @@ public class Scientific extends Worker implements ScientificController {
 		}
 
 		conController.closeConnection(stmt, con);
+
 		return scp_list;
 
 	}
+
 	@Override
-	public void modifySCP() {
+	public void modifySCP(SCP scp) {
 		// TODO Auto-generated method stub
-    
+		ResultSet rs = null;
+		con = conController.openConnection();
+
+		String MODIFYSCP = "UPDATE SCP SET ID_RelatedSCP= ?,ID_Facility=?,Procedures=?,Description_SCP=?,Level_SCP=? WHERE ID_SCP=?";
+
+		try {
+			stmt = con.prepareStatement(MODIFYSCP);
+			stmt.setString(1, scp.getRelated_scp_id());
+			stmt.setString(2, scp.getFacility_id());
+			stmt.setString(3, scp.getScp_procedures());
+			stmt.setString(4, scp.getScp_description());
+			stmt.setInt(5, scp.getScp_level());
+
+			stmt.executeUpdate();
+			conController.closeConnection(stmt, con);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
 
 }

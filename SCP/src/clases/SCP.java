@@ -24,6 +24,7 @@ public class SCP {
 	private Connection con;
 	private PreparedStatement stmt;
 	private DBConnectionController conController = new DBConnectionController();
+
 	public String getScp_id() {
 		return scp_id;
 	}
@@ -111,18 +112,19 @@ public class SCP {
 	public void setSecondary(SecondaryC secondary) {
 		this.secondary = secondary;
 	}
-	public SCP showInfo(String id_SCP){
+
+	public SCP showInfo(String id_SCP) {
 		ResultSet rs = null;
 		con = conController.openConnection();
-				
+
 		String OBTENERprop = "SELECT * FROM SCP WHERE ID_SCP = ?";
 		try {
 			stmt = con.prepareStatement(OBTENERprop);
-			
+
 			stmt.setString(1, id_SCP);
 			rs = stmt.executeQuery();
-			
-			while (rs.next()) {		
+
+			while (rs.next()) {
 				setScp_id(rs.getString("ID_SCP"));
 				setScp_name(rs.getString("Name_SCP"));
 				setRelated_scp_id(rs.getString("ID_RelatedSCP"));
@@ -135,15 +137,15 @@ public class SCP {
 				setRisk(Risk.valueOf(rs.getString("Risk")));
 				setSecondary(SecondaryC.valueOf(rs.getString("SecondaryC")));
 			}
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		conController.closeConnection(stmt, con);
-		
+
 		return this;
 	}
+
 }
