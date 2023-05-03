@@ -1,5 +1,6 @@
 package clases;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -86,5 +87,60 @@ public class Agent extends Worker implements AgentController {
 
 		return fac;
 	}
+	@Override
+	public void createWorker() {
+		
+		ResultSet rs = null;
+		con = conController.openConnection();
 
+		try {
+			CallableStatement cst = con.prepareCall("{CALL insertAgent(?, ?, ?, ?, ?, ?, ? ,?)}");
+			
+			cst.setString(1,id);
+			cst.setString(2,name);
+			cst.setDate(3, date_Entry);
+			cst.setBoolean(4, active);
+			cst.setInt(5, level);
+			cst.setString(6, password);
+			cst.setString(7, bossID);
+			cst.setString(8, history);
+			cst.execute();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		conController.closeConnection(stmt, con);
+	}
+	@Override
+	public String workerIDCreator() {
+		ResultSet rs = null;
+		con = conController.openConnection();
+		String id = "AGE-";
+		
+		
+		String OBTENERprop = "select count(ID_Agent) AS count FROM AGENT;";
+
+		try {
+			stmt = con.prepareStatement(OBTENERprop);
+
+			//.setString(1, id);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				id = id+String.format("%04d", rs.getInt("count")+1);
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		conController.closeConnection(stmt, con);
+
+		System.out.println(id);
+		return id;
+	}
 }

@@ -20,6 +20,7 @@ import com.toedter.calendar.JCalendar;
 import acs.Continent;
 import clases.Agent;
 import clases.Overseer;
+import clases.Scientific;
 import clases.Worker;
 
 import javax.swing.JTextField;
@@ -37,9 +38,12 @@ public class CreateWorker extends JPanel implements ActionListener {
 	private JCheckBox chckbxActive;
 	private JSpinner spinnerLevel;
 	private JCalendar calendar;
-	private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	private JTextArea textAreaHistory;
 	private JComboBox<Continent> comboBox;
+
+	private boolean isScientist = false, isAgent = false, isOverseer = false;
+	//private JXDatePicker datePicker;
 
 	public CreateWorker() {
 		setBounds(0, 0, 1024, 768);
@@ -204,12 +208,52 @@ public class CreateWorker extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// Add Worker Buttons
-		if (e.getSource().equals(btnCreate)) {
-			Worker worker = new Worker();
-		}
 
-		if (e.getSource().equals(btnReset)) {
+		//Add Worker Buttons
+		if (e.getSource().equals(btnCreate)){
+			Worker worker = null;		
+			if(isAgent)
+			{
+				worker = new Agent();
+				((Agent)worker).setHistory(textAreaHistory.getText());
+			}
+			else if(isScientist)
+			{
+				worker = new Scientific();
+				((Scientific)worker).setStudies(textAreaHistory.getText());
+			}
+			else if(isOverseer)
+			{
+				worker = new Overseer();
+				((Overseer)worker).setContinent(Continent.valueOf(comboBox.getSelectedItem().toString()));
+			}
+		
+			String id = worker.workerIDCreator();
+			
+			worker.setId(id);
+			worker.setActive(chckbxActive.isSelected());
+			worker.setName(fieldName.getText());
+			worker.setPassword(fieldPassword.getText());
+			worker.setLevel((int)spinnerLevel.getValue());
+			
+			System.out.println((int)spinnerLevel.getValue());
+			System.out.println(fieldEntryDate.getText());
+			
+			java.sql.Date sqlDate = java.sql.Date.valueOf( fieldEntryDate.getText() );
+			//(Date)calendar.getDate()
+			
+			
+			worker.setDate_Entry(sqlDate);
+			worker.setBossID(fieldBoss.getText());
+			
+			worker.createWorker();
+			
+		}
+		if (e.getSource().equals(btnReset)){
+			isAgent = false;
+			isAgent = false;
+			isAgent = false;
+			
 			fieldName.setText("");
 			fieldBoss.setText("");
 			chckbxActive.setSelected(false);
@@ -224,8 +268,9 @@ public class CreateWorker extends JPanel implements ActionListener {
 			btnAgent_1.setEnabled(true);
 			btnScientist_1.setEnabled(true);
 		}
-		if (e.getSource().equals(btnAgent_1)) {
 
+		if (e.getSource().equals(btnAgent_1)) {
+      isAgent= true;
 			lblHistory.setText("RECORD");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 385, 91, 46);
@@ -233,10 +278,11 @@ public class CreateWorker extends JPanel implements ActionListener {
 			textAreaHistory.setVisible(true);
 			btnScientist_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
+			btnCreate.setEnabled(true);
 		}
 
 		if (e.getSource().equals(btnScientist_1)) {
-
+      isScientist = true;
 			lblHistory.setText("STUDIES");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 385, 91, 46);
@@ -244,10 +290,11 @@ public class CreateWorker extends JPanel implements ActionListener {
 			textAreaHistory.setVisible(true);
 			btnAgent_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
+			btnCreate.setEnabled(true);
 		}
 
 		if (e.getSource().equals(btnOverseer_1)) {
-
+      isOverseer = true;
 			lblHistory.setText("CONTINENT");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 375, 91, 46);
@@ -255,6 +302,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 			comboBox.setVisible(true);
 			btnAgent_1.setEnabled(false);
 			btnScientist_1.setEnabled(false);
+			btnCreate.setEnabled(true);
 		}
 	}
 }

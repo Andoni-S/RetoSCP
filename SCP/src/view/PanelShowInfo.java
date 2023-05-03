@@ -202,8 +202,8 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			lblHistory.setBounds(300, 370, 500, 40);
 			lblHistory.setForeground(Color.WHITE);
 			add(lblHistory);
-
-			btnAddScp = new JButton("ADD SCP");
+			lblProfileImg.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/profileOverseer.gif")));
+			btnAddScp = new JButton("Add SCP");
 			btnAddScp.setBounds(750, 30, 200, 40);
 			btnAddScp.setBackground(Color.black);
 			btnAddScp.setForeground(Color.white);
@@ -276,9 +276,11 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
-
-		if (e.getSource().equals(btnAddScp)) {
-
+		if (e.getSource().equals(btnAsigned)){
+			
+		}
+		if (e.getSource().equals(btnAddScp)){
+			
 		}
 
 		if (e.getSource().equals(btnAddWorker)) {

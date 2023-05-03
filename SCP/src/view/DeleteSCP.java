@@ -22,9 +22,11 @@ import clases.Worker;
 
 public class DeleteSCP extends JPanel implements ActionListener {
 
+
 	/**
 	 * Create the panel.
 	 */
+
 	private JTable tablaSCP;
 	private DefaultTableModel model;
 	private JLabel lblSCP;
@@ -39,6 +41,7 @@ public class DeleteSCP extends JPanel implements ActionListener {
 
 		SCP scp = new SCP();
 		ArrayList<SCP> arrayDeSCP = scp.showAllSCP();
+
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(90, 100, 800, 359);

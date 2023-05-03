@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import com.mysql.cj.jdbc.CallableStatement;
+
 import controller.Loginable;
 import clases.DBConnectionController;
 
@@ -209,5 +211,12 @@ public class Worker implements Loginable {
 		}
 
 		return false;
+	}
+	public void createWorker() {
+		
+	}
+	public String workerIDCreator() {
+		//default Worker, not used
+		return "WOR-0000";
 	}
 }
