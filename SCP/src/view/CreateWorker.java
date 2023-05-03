@@ -181,6 +181,7 @@ public class CreateWorker extends JPanel implements ActionListener{
         btnCreate.setBackground(Color.BLACK);
         btnCreate.setBounds(800, 613, 100, 54);
         btnCreate.addActionListener(this);
+        btnCreate.setEnabled(false);
         add(btnCreate);
         
         lblHistory = new JLabel("");
@@ -193,6 +194,7 @@ public class CreateWorker extends JPanel implements ActionListener{
 		textAreaHistory = new JTextArea();
         textAreaHistory.setBounds(159, 388, 352, 202);
         textAreaHistory.setVisible(false);
+        textAreaHistory.setOpaque(false);
         add(textAreaHistory);
         
         comboBox = new JComboBox<>();
@@ -279,6 +281,7 @@ public class CreateWorker extends JPanel implements ActionListener{
 			textAreaHistory.setVisible(true);
 			btnScientist_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
+			btnCreate.setEnabled(true);
 		}
 		if (e.getSource().equals(btnScientist_1)){
 			isScientist = true;
@@ -287,6 +290,7 @@ public class CreateWorker extends JPanel implements ActionListener{
 			textAreaHistory.setVisible(true);
 			btnAgent_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
+			btnCreate.setEnabled(true);
 		}
 		if (e.getSource().equals(btnOverseer_1)){
 			isOverseer = true;
@@ -295,6 +299,7 @@ public class CreateWorker extends JPanel implements ActionListener{
 			comboBox.setVisible(true);
 			btnAgent_1.setEnabled(false);
 			btnScientist_1.setEnabled(false);
+			btnCreate.setEnabled(true);
 		}
 		
 	}

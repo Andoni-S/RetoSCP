@@ -42,17 +42,11 @@ public class Overseer extends Worker implements OverseerController{
 	}
 
 	@Override
-	public void addWorker() {
-		
-		
-	}
-
-	@Override
 	public void asignSCPtoScientific() {
 		
 		
 		
-		
+	
 	}
 
 	@Override
@@ -159,7 +153,7 @@ public class Overseer extends Worker implements OverseerController{
 		con = conController.openConnection();
 
 		try {
-			CallableStatement cst = con.prepareCall("{CALL insertScientist(?, ?, ?, ?, ?, ?, ? ,?)}");
+			CallableStatement cst = con.prepareCall("{CALL insertOverseer(?, ?, ?, ?, ?, ?, ? ,?)}");
 			
 			cst.setString(1,id);
 			cst.setString(2,name);
@@ -207,5 +201,11 @@ public class Overseer extends Worker implements OverseerController{
 
 		System.out.println(id);
 		return id;
+	}
+
+	@Override
+	public void addWorker() {
+		// TODO Auto-generated method stub
+		
 	}
 }

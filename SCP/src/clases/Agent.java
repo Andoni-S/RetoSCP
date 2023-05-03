@@ -103,7 +103,7 @@ public class Agent extends Worker implements AgentController{
 		con = conController.openConnection();
 
 		try {
-			CallableStatement cst = con.prepareCall("{CALL insertScientist(?, ?, ?, ?, ?, ?, ? ,?)}");
+			CallableStatement cst = con.prepareCall("{CALL insertAgent(?, ?, ?, ?, ?, ?, ? ,?)}");
 			
 			cst.setString(1,id);
 			cst.setString(2,name);

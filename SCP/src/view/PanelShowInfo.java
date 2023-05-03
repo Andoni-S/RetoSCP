@@ -96,6 +96,8 @@ public class PanelShowInfo extends JPanel implements ActionListener{
 		add(lblBoss);
 
 		textFieldId = new JTextField(usernameUsuario);
+		textFieldId.setBackground(Color.BLACK);
+		textFieldId.setForeground(Color.WHITE);
 		textFieldId.setBounds(400, 61, 231, 30);
 		add(textFieldId);
 		textFieldId.setColumns(10);
@@ -113,6 +115,7 @@ public class PanelShowInfo extends JPanel implements ActionListener{
 		checkBoxActive = new JCheckBox();
 		checkBoxActive.setSelected(worker.isActive());
 		checkBoxActive.setBounds(400, 214, 32, 30);
+		checkBoxActive.setBackground(new Color(0,0,0,0));
 		add(checkBoxActive);
 		
 		lblLevelNumber = new JLabel(String.format("%d", worker.getLevel()));
@@ -131,7 +134,8 @@ public class PanelShowInfo extends JPanel implements ActionListener{
 			lblStudies.setBounds(300, 370, 500, 40);
 			lblStudies.setForeground(Color.WHITE);
 			add(lblStudies);
-			
+			lblProfileImg.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/profileScientific.gif")));
+			 
 			btnAsigned = new JButton("ASIGNED SCP");
 			btnAsigned.setBounds(750, 30, 200, 40);
 			btnAsigned.setBackground(Color.black);
@@ -147,7 +151,7 @@ public class PanelShowInfo extends JPanel implements ActionListener{
         	lblHistory.setBounds(300, 370, 500, 40);
         	lblHistory.setForeground(Color.WHITE);
 			add(lblHistory);
-			
+			lblProfileImg.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/profileAgent.gif")));
 			lblHistory = new JLabel("Asigned Facility:    "+((Agent)worker).getId_facility());
         	lblHistory.setBounds(300, 460, 500, 40);
         	lblHistory.setForeground(Color.WHITE);
@@ -169,7 +173,7 @@ public class PanelShowInfo extends JPanel implements ActionListener{
         	lblHistory.setBounds(300, 370, 500, 40);
         	lblHistory.setForeground(Color.WHITE);
 			add(lblHistory);
-			
+			lblProfileImg.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/profileOverseer.gif")));
 			btnAddScp = new JButton("Add SCP");
 			btnAddScp.setBounds(750, 30, 200, 40);
 			btnAddScp.setBackground(Color.black);
