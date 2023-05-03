@@ -46,94 +46,94 @@ public class CreateWorker extends JPanel implements ActionListener {
 		setLayout(null);
 
 		lblId = new JLabel("WORKER TYPE");
-		lblId.setBounds(54, 49, 200, 40);
-		lblId.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblId.setBounds(27, 53, 159, 37);
+		lblId.setFont(new Font("OCR A Extended", Font.BOLD, 18));
 		lblId.setForeground(Color.WHITE);
 		add(lblId);
 
-		btnAgent_1 = new JButton("Agent");
-		btnAgent_1.setBounds(20, 110, 150, 54);
+		btnAgent_1 = new JButton("AGENT");
+		btnAgent_1.setBounds(20, 111, 150, 54);
 		btnAgent_1.setBackground(Color.black);
 		btnAgent_1.setForeground(Color.white);
-		btnAgent_1.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
+		btnAgent_1.setFont(new Font("OCR A Extended", Font.BOLD, 15));
 		btnAgent_1.addActionListener(this);
 		add(btnAgent_1);
 
-		btnScientist_1 = new JButton("Scientist");
-		btnScientist_1.setBounds(20, 175, 150, 54);
+		btnScientist_1 = new JButton("SCIENTIST");
+		btnScientist_1.setBounds(20, 210, 150, 54);
 		btnScientist_1.setBackground(Color.black);
 		btnScientist_1.setForeground(Color.white);
-		btnScientist_1.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
+		btnScientist_1.setFont(new Font("OCR A Extended", Font.BOLD, 15));
 		btnScientist_1.addActionListener(this);
 		add(btnScientist_1);
 
-		btnOverseer_1 = new JButton("Overseer");
-		btnOverseer_1.setBounds(20, 240, 150, 54);
+		btnOverseer_1 = new JButton("OVERSEER");
+		btnOverseer_1.setBounds(20, 306, 150, 54);
 		btnOverseer_1.setBackground(Color.black);
 		btnOverseer_1.setForeground(Color.white);
-		btnOverseer_1.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
+		btnOverseer_1.setFont(new Font("OCR A Extended", Font.BOLD, 15));
 		btnOverseer_1.addActionListener(this);
 		add(btnOverseer_1);
 
-		lblName = new JLabel("Name");
-		lblName.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblName.setBounds(203, 116, 130, 40);
+		lblName = new JLabel("NAME");
+		lblName.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		lblName.setBounds(203, 116, 71, 49);
 		lblName.setForeground(new Color(255, 255, 255));
 		add(lblName);
 
-		lblActive = new JLabel("Active");
+		lblActive = new JLabel("ACTIVE");
 		lblActive.setForeground(Color.WHITE);
-		lblActive.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblActive.setBounds(203, 167, 130, 40);
+		lblActive.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		lblActive.setBounds(203, 167, 77, 46);
 		add(lblActive);
 
 		lblEntryDate = new JLabel("Entry Date");
 		lblEntryDate.setForeground(Color.WHITE);
-		lblEntryDate.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblEntryDate.setBounds(600, 50, 130, 40);
+		lblEntryDate.setFont(new Font("OCR A Extended", Font.BOLD, 16));
+		lblEntryDate.setBounds(692, 53, 130, 40);
 		add(lblEntryDate);
 
-		lblLevel = new JLabel("Level");
+		lblLevel = new JLabel("LEVEL");
 		lblLevel.setForeground(Color.WHITE);
-		lblLevel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblLevel.setBounds(203, 218, 91, 40);
+		lblLevel.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		lblLevel.setBounds(203, 218, 91, 46);
 		add(lblLevel);
 
-		lblBossID = new JLabel("Boss ID");
+		lblBossID = new JLabel("BOSS ID");
 		lblBossID.setForeground(Color.WHITE);
-		lblBossID.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblBossID.setBounds(203, 269, 130, 40);
+		lblBossID.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		lblBossID.setBounds(203, 269, 71, 40);
 		add(lblBossID);
 
 		fieldName = new JTextField();
-		fieldName.setBounds(294, 123, 217, 33);
+		fieldName.setBounds(284, 123, 227, 33);
 		add(fieldName);
 		fieldName.setColumns(10);
 
 		fieldEntryDate = new JTextField();
 		fieldEntryDate.setColumns(10);
-		fieldEntryDate.setBounds(600, 411, 159, 33);
+		fieldEntryDate.setBounds(600, 430, 300, 33);
 		add(fieldEntryDate);
 
 		fieldBoss = new JTextField();
 		fieldBoss.setColumns(10);
-		fieldBoss.setBounds(294, 276, 217, 33);
+		fieldBoss.setBounds(284, 276, 227, 33);
 		add(fieldBoss);
 
 		chckbxActive = new JCheckBox("");
 		chckbxActive.setBackground(new Color(255, 255, 255, 0));
-		chckbxActive.setBounds(294, 179, 97, 23);
+		chckbxActive.setBounds(284, 178, 97, 23);
 		add(chckbxActive);
 
 		fieldPassword = new JTextField();
 		fieldPassword.setColumns(10);
-		fieldPassword.setBounds(294, 327, 217, 33);
+		fieldPassword.setBounds(284, 327, 227, 33);
 		add(fieldPassword);
 
-		lblPassword = new JLabel("Password");
+		lblPassword = new JLabel("PASSWORD");
 		lblPassword.setForeground(Color.WHITE);
-		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblPassword.setBounds(203, 320, 130, 40);
+		lblPassword.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		lblPassword.setBounds(203, 320, 130, 46);
 		add(lblPassword);
 
 		spinnerLevel = new JSpinner();
@@ -158,31 +158,31 @@ public class CreateWorker extends JPanel implements ActionListener {
 
 		add(calendar);
 
-		btnReset = new JButton("Reset");
+		btnReset = new JButton("RESET");
 		btnReset.setForeground(Color.WHITE);
-		btnReset.setFont(new Font("Dialog", Font.PLAIN, 15));
+		btnReset.setFont(new Font("OCR A EXTENDED", Font.BOLD, 15));
 		btnReset.setBackground(Color.BLACK);
-		btnReset.setBounds(600, 613, 100, 54);
+		btnReset.setBounds(600, 536, 110, 54);
 		btnReset.addActionListener(this);
 		add(btnReset);
 
-		btnCreate = new JButton("Create");
+		btnCreate = new JButton("CREATE");
 		btnCreate.setForeground(Color.WHITE);
-		btnCreate.setFont(new Font("Dialog", Font.PLAIN, 15));
+		btnCreate.setFont(new Font("OCR A EXTENDED", Font.BOLD, 15));
 		btnCreate.setBackground(Color.BLACK);
-		btnCreate.setBounds(800, 613, 100, 54);
+		btnCreate.setBounds(790, 536, 110, 54);
 		btnCreate.addActionListener(this);
 		add(btnCreate);
 
 		lblHistory = new JLabel("");
 		lblHistory.setBounds(54, 377, 130, 40);
-		lblHistory.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblHistory.setFont(new Font("OCR A EXTENDED", Font.BOLD, 18));
 		lblHistory.setForeground(Color.WHITE);
 		lblHistory.setVisible(false);
 		add(lblHistory);
 
 		textAreaHistory = new JTextArea();
-		textAreaHistory.setBounds(159, 388, 352, 202);
+		textAreaHistory.setBounds(284, 388, 227, 202);
 		textAreaHistory.setVisible(false);
 		add(textAreaHistory);
 
@@ -190,7 +190,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 		for (Continent cont : Continent.values()) {
 			comboBox.addItem(cont);
 		}
-		comboBox.setBounds(159, 388, 352, 20);
+		comboBox.setBounds(284, 388, 227, 20);
 		comboBox.setVisible(false);
 		comboBox.setSelectedIndex(-1);
 		add(comboBox);
@@ -226,7 +226,9 @@ public class CreateWorker extends JPanel implements ActionListener {
 		}
 		if (e.getSource().equals(btnAgent_1)) {
 
-			lblHistory.setText("Record");
+			lblHistory.setText("RECORD");
+			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			lblHistory.setBounds(203, 385, 91, 46);
 			lblHistory.setVisible(true);
 			textAreaHistory.setVisible(true);
 			btnScientist_1.setEnabled(false);
@@ -235,7 +237,9 @@ public class CreateWorker extends JPanel implements ActionListener {
 
 		if (e.getSource().equals(btnScientist_1)) {
 
-			lblHistory.setText("Studies");
+			lblHistory.setText("STUDIES");
+			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			lblHistory.setBounds(203, 385, 91, 46);
 			lblHistory.setVisible(true);
 			textAreaHistory.setVisible(true);
 			btnAgent_1.setEnabled(false);
@@ -244,7 +248,9 @@ public class CreateWorker extends JPanel implements ActionListener {
 
 		if (e.getSource().equals(btnOverseer_1)) {
 
-			lblHistory.setText("Continent");
+			lblHistory.setText("CONTINENT");
+			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			lblHistory.setBounds(203, 375, 91, 46);
 			lblHistory.setVisible(true);
 			comboBox.setVisible(true);
 			btnAgent_1.setEnabled(false);

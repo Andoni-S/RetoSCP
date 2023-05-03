@@ -203,7 +203,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			lblHistory.setForeground(Color.WHITE);
 			add(lblHistory);
 
-			btnAddScp = new JButton("Add SCP");
+			btnAddScp = new JButton("ADD SCP");
 			btnAddScp.setBounds(750, 30, 200, 40);
 			btnAddScp.setBackground(Color.black);
 			btnAddScp.setForeground(Color.white);
@@ -211,7 +211,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnAddScp.addActionListener(this);
 			add(btnAddScp);
 
-			btnAddWorker = new JButton("Add Worker");
+			btnAddWorker = new JButton("ADD WORKER");
 			btnAddWorker.setBounds(750, 130, 200, 40);
 			btnAddWorker.setBackground(Color.black);
 			btnAddWorker.setForeground(Color.white);
@@ -219,7 +219,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnAddWorker.addActionListener(this);
 			add(btnAddWorker);
 
-			btnAsignAgent = new JButton("Assign Scientist");
+			btnAsignAgent = new JButton("ASSIGN SCIENTIST");
 			btnAsignAgent.setBounds(750, 230, 200, 40);
 			btnAsignAgent.setBackground(Color.black);
 			btnAsignAgent.setForeground(Color.white);
@@ -227,7 +227,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnAsignAgent.addActionListener(this);
 			add(btnAsignAgent);
 
-			btnLevelUpWorker = new JButton("Level Up Worker");
+			btnLevelUpWorker = new JButton("LEVEL UP WORKER");
 			btnLevelUpWorker.setBounds(750, 330, 200, 40);
 			btnLevelUpWorker.setBackground(Color.black);
 			btnLevelUpWorker.setForeground(Color.white);
@@ -235,7 +235,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnLevelUpWorker.addActionListener(this);
 			add(btnLevelUpWorker);
 
-			btnDeleteScp = new JButton("Delete SCP");
+			btnDeleteScp = new JButton("DELETE SCP");
 			btnDeleteScp.setBounds(750, 430, 200, 40);
 			btnDeleteScp.setBackground(Color.black);
 			btnDeleteScp.setForeground(Color.white);
@@ -243,7 +243,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnDeleteScp.addActionListener(this);
 			add(btnDeleteScp);
 
-			btnDeleteWorker = new JButton("Delete Worker");
+			btnDeleteWorker = new JButton("DELETE WORKER");
 			btnDeleteWorker.setBounds(750, 530, 200, 40);
 			btnDeleteWorker.setBackground(Color.black);
 			btnDeleteWorker.setForeground(Color.white);
@@ -251,7 +251,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnDeleteWorker.addActionListener(this);
 			add(btnDeleteWorker);
 
-			btnAsignScientist = new JButton("Assigned Facility");
+			btnAsignScientist = new JButton("ASSIGN FACILITY");
 			btnAsignScientist.setBounds(750, 630, 200, 40);
 			btnAsignScientist.setBackground(Color.black);
 			btnAsignScientist.setForeground(Color.white);

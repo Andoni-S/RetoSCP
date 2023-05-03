@@ -68,12 +68,12 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		add(lblSCP);
 
 		textSCP = new JTextField();
-		textSCP.setBounds(475, 527, 275, 25);
+		textSCP.setBounds(450, 527, 275, 25);
 		textSCP.setFont(new Font("OCR A Extended", Font.BOLD, 14));
 		add(textSCP);
 		textSCP.setColumns(10);
 
-		btnShowInfo= new JButton("Show Info");
+		btnShowInfo = new JButton("Show Info");
 		btnShowInfo.setBackground(new Color(0, 0, 0));
 		btnShowInfo.setForeground(new Color(255, 255, 255));
 		btnShowInfo.setFont(new Font("OCR A Extended", Font.BOLD, 15));
@@ -93,6 +93,11 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		background.setIcon(new ImageIcon(ShowFacility.class.getResource("/resources/background.png")));
 		background.setBounds(0, 0, 1024, 768);
 		add(background);
+	}
+
+	public void emptyTable() {
+		DefaultTableModel model = (DefaultTableModel) tablaSCP.getModel();
+		model.setRowCount(0);
 	}
 
 	public void fillTable() {
@@ -121,28 +126,37 @@ public class DeleteSCP extends JPanel implements ActionListener {
 				SCP sc = new SCP();
 
 				if (sc.checkSCP(scpDeletion)) {
-					
+
 				} else {
 					JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID");
 				}
 			}
 		}
-		
+
 		if (e.getSource().equals(btnDelete)) {
 			if (textSCP.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(tablaSCP, "Empty field. Please enter an ID");
 			} else {
-				String SCPDeletion = textSCP.getText();
-				SCP sc = new SCP();
+				int n = JOptionPane.showConfirmDialog(null, "Do you want to delete this worker?", "Confirmation",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
-				if (sc.checkSCP(SCPDeletion)) {
-					Overseer ove = new Overseer();
-					ove.deleteSCP(sc.getScp_id());
-					JOptionPane.showMessageDialog(tablaSCP, "The SCP has been deleted");
-				} else {
-					JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID");
+				if (n == JOptionPane.YES_OPTION) {
+					String SCPDeletion = textSCP.getText();
+					SCP sc = new SCP();
+
+					if (sc.checkSCP(SCPDeletion)) {
+						Overseer ove = new Overseer();
+						ove.deleteSCP(sc.getScp_id());
+						JOptionPane.showMessageDialog(tablaSCP, "The SCP has been deleted");
+						emptyTable();
+						fillTable();
+						fillTable();
+						textSCP.setText("");
+					} else {
+						JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID");
+					}
 				}
 			}
-		}			
+		}
 	}
 }

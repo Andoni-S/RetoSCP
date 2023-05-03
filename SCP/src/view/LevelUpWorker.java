@@ -193,6 +193,10 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 					lblDato5.setText("2");
 				else if (work.getLevel() == 3)
 					lblDato5.setText("3");
+				else if (work.getLevel() == 4)
+					lblDato5.setText("4");
+				else if (work.getLevel() == 5)
+					lblDato5.setText("5");
 				lblDato5.setVisible(true);
 				lblDato6.setText(work.getBossID());
 				lblDato6.setVisible(true);
@@ -206,9 +210,15 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 			Worker work = new Worker();
 
 			if (work.checkWorker(workerDeletion)) {
-				Overseer ove = new Overseer();
-				ove.levelUpWorker(work);
-				JOptionPane.showMessageDialog(comboBox, "The worker has been leveled up");
+
+				int n = JOptionPane.showConfirmDialog(null, "Do you want to level up this worker?", "Confirmation",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+				if (n == JOptionPane.YES_OPTION) {
+					Overseer ove = new Overseer();
+					ove.levelUpWorker(work);
+					JOptionPane.showMessageDialog(null, "The worker has been leveled up");
+				}
 			}
 		}
 	}

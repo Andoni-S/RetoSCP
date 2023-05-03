@@ -20,6 +20,7 @@ import clases.Overseer;
 import clases.Worker;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class DeleteWorker extends JPanel implements ActionListener {
 
@@ -45,7 +46,7 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		scrollPane.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 			}
 		});
 		scrollPane.setBounds(90, 100, 800, 359);
@@ -59,6 +60,17 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
 		tablaWorkers.setShowGrid(false);
+		tablaWorkers.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(final MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					final JTable jTable = (JTable) e.getSource();
+					final int row = jTable.getSelectedRow();
+					final String valueInCell = (String) jTable.getValueAt(row, 0);
+					textWorker.setText(valueInCell);
+				}
+			}
+		});
 
 		model.addColumn("ID");
 		model.addColumn("Name");
@@ -101,7 +113,7 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		background.setBounds(0, 0, 1024, 768);
 		add(background);
 	}
-	
+
 	public void emptyTable() {
 		DefaultTableModel model = (DefaultTableModel) tablaWorkers.getModel();
 		model.setRowCount(0);
@@ -125,36 +137,43 @@ public class DeleteWorker extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		if (e.getSource().equals(btnShowInfo)) {
 			if (textWorker.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(tablaWorkers, "Empty field. Please enter an ID");
+				JOptionPane.showMessageDialog(null, "Empty field. Please enter an ID");
 			} else {
 				String workerDeletion = textWorker.getText();
 				Worker work = new Worker();
 
 				if (work.checkWorker(workerDeletion)) {
-					
+
 				} else {
-					JOptionPane.showMessageDialog(tablaWorkers, "Please insert an existing ID");
+					JOptionPane.showMessageDialog(null, "Please insert an existing ID");
 				}
 			}
 		}
-		
+
 		if (e.getSource().equals(btnDelete)) {
 			if (textWorker.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(tablaWorkers, "Empty field. Please enter an ID");
+				JOptionPane.showMessageDialog(null, "Empty field. Please enter an ID");
 			} else {
-				String workerDeletion = textWorker.getText();
-				Worker work = new Worker();
-				
-				if (work.checkWorker(workerDeletion)) {
-					Overseer ove = new Overseer();
-					ove.deleteWorker(work.getId());
-					JOptionPane.showMessageDialog(tablaWorkers, "The worker has been deleted");
-					emptyTable();
-					fillTable();
-				} else {
-					JOptionPane.showMessageDialog(tablaWorkers, "Please insert an existing ID");
+				int n = JOptionPane.showConfirmDialog(null, "Do you want to delete this worker?", "Confirmation",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+				if (n == JOptionPane.YES_OPTION) {
+					String workerDeletion = textWorker.getText();
+					Worker work = new Worker();
+
+					if (work.checkWorker(workerDeletion)) {
+						Overseer ove = new Overseer();
+						ove.deleteWorker(work.getId());
+						JOptionPane.showMessageDialog(null, "The worker has been deleted");
+						emptyTable();
+						fillTable();
+						textWorker.setText("");
+					} else {
+						JOptionPane.showMessageDialog(null, "Please insert an existing ID");
+					}
 				}
 			}
 		}
