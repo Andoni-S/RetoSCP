@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import clases.Worker;
 import javax.swing.JLabel;
@@ -47,9 +48,10 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener{
     private JTextField userField;
     private JPasswordField passwordField;
     private JButton btnLogIn;
-    /**
-     * Launch the application.
-     */
+    
+    private UIManager UI = new UIManager();
+	
+	
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -67,6 +69,10 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener{
      * Create the frame.
      */
     public LoginWindow() {
+    	
+    	UI.put("OptionPane.background", Color.black);
+    	UI.put("Panel.backgroub", Color.black);
+    	
     	setIconImage(Toolkit.getDefaultToolkit().getImage(LoginWindow.class.getResource("/resources/icon.png")));
     	     
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -211,6 +217,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener{
 				//vMain.pack();
 				vMain.setVisible(true);
 			} else {
+				
 				JOptionPane.showMessageDialog(btnLogIn, "Username/Password Incorrect");
 			}
 		}	

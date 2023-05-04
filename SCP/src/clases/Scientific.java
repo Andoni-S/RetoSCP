@@ -12,7 +12,7 @@ import acs.Risk;
 import acs.SecondaryC;
 import controller.ScientificController;
 
-public class Scientific extends Worker implements ScientificController {
+public class Scientific extends Worker implements ScientificController  {
 
 	private String studies;
 	private Connection con;
@@ -60,7 +60,7 @@ public class Scientific extends Worker implements ScientificController {
 
 		ResultSet rs = null;
 		con = conController.openConnection();
-		ArrayList<SCP> scp_list = new ArrayList();
+		ArrayList<SCP> scp_list = new ArrayList<SCP>();
 
 		String OBTENER_SCP = "Select * from scp where ID_SCP in (Select ID_SCP from research where ID_Scientist LIKE ?)";
 		try {
@@ -98,13 +98,11 @@ public class Scientific extends Worker implements ScientificController {
 	}
 
 	@Override
-	public void modifySCP(SCP scp) {
+	public boolean  modifySCP(SCP scp) {
 		// TODO Auto-generated method stub
-		ResultSet rs = null;
+		final String MODIFYSCP = "UPDATE SCP SET ID_RelatedSCP= ?,ID_Facility=?,Procedures=?,Description_SCP=?,Level_SCP=? WHERE ID_SCP=?";
+		boolean correcto = false;
 		con = conController.openConnection();
-
-		String MODIFYSCP = "UPDATE SCP SET ID_RelatedSCP= ?,ID_Facility=?,Procedures=?,Description_SCP=?,Level_SCP=? WHERE ID_SCP=?";
-
 		try {
 			stmt = con.prepareStatement(MODIFYSCP);
 			stmt.setString(1, scp.getRelated_scp_id());
@@ -112,14 +110,17 @@ public class Scientific extends Worker implements ScientificController {
 			stmt.setString(3, scp.getScp_procedures());
 			stmt.setString(4, scp.getScp_description());
 			stmt.setInt(5, scp.getScp_level());
+			stmt.setString(6, scp.getScp_id());
 
-			stmt.executeUpdate();
+			int valor = stmt.executeUpdate();
 			conController.closeConnection(stmt, con);
-
+			if (valor == 1)
+				correcto = true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	return correcto;
 	}
 
 }

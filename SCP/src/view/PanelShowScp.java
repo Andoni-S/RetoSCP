@@ -2,10 +2,14 @@ package view;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import clases.SCP;
 import clases.Scientific;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.Color;
@@ -41,7 +45,7 @@ public class PanelShowScp extends JPanel {
 	JLabel lbRisk;
 	String containment;
 	String disruption;
-	JComboBox cbRelatedSCP;
+	JComboBox<String> cbRelatedSCP;
 	String risk;
 	String secondary;
 	String path = "/resources/";
@@ -51,7 +55,7 @@ public class PanelShowScp extends JPanel {
 	ArrayList<SCP> scp_list;
 
 	public PanelShowScp(ArrayList<SCP> scp_list_) {
-		
+
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
 
@@ -187,7 +191,16 @@ public class PanelShowScp extends JPanel {
 		description_scp.setOpaque(false);
 		add(description_scp);
 
-		cbRelatedSCP = new JComboBox();
+		cbRelatedSCP = new JComboBox<String>();
+		cbRelatedSCP.setForeground(new Color(255, 255, 255));
+		cbRelatedSCP.setBackground(new Color(0, 0, 0));
+		for(SCP scp: scp_list) {
+			cbRelatedSCP.addItem(scp.getScp_id());
+		}
+		cbRelatedSCP.setSelectedItem(scp_1.getRelated_scp_id());
+		cbRelatedSCP.getEditor().getEditorComponent().setBackground(Color.BLACK);
+		JTextField text = ((JTextField) cbRelatedSCP.getEditor().getEditorComponent());
+        text.setBackground(Color.YELLOW);
 		cbRelatedSCP.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
 		cbRelatedSCP.setBounds(697, 166, 270, 27);
 		cbRelatedSCP.setEnabled(false);
@@ -300,12 +313,21 @@ public class PanelShowScp extends JPanel {
 		lbGuardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				boolean correcto = false;
+
+				Scientific senor = new Scientific();
+				updateSCP();
+				correcto = senor.modifySCP(scp_1);
+
+				if (correcto) {
+					JOptionPane.showMessageDialog(null, "The SCP was successfully modified");
+				}
+				Update();
 				// cambiar los botones
 				CambiarBotones();
 				// Llama al metodo de modificar
 				NoEditable();
-			Scientific señor = new Scientific();
-			señor.modifySCP(scp_1);
+
 			}
 
 		});
@@ -345,7 +367,7 @@ public class PanelShowScp extends JPanel {
 				lbMoveOn.setEnabled(false);
 				lbGoBack.setVisible(false);
 				lbGoBack.setEnabled(false);
-
+				
 				// Hacer editables los cuadros de texto
 
 				level_scp.setEditable(true);
@@ -357,6 +379,7 @@ public class PanelShowScp extends JPanel {
 				description_scp.setEditable(true);
 				description_scp.setEnabled(true);
 				cbRelatedSCP.setEnabled(true);
+				cbRelatedSCP.getEditor().getEditorComponent().setBackground(Color.BLACK);
 			}
 		});
 		lbModify.setIcon(new ImageIcon(PanelShowScp.class.getResource("/resources/icons8-pencil-64.png")));
@@ -373,6 +396,16 @@ public class PanelShowScp extends JPanel {
 
 	}
 
+	public void updateSCP() {
+
+		scp_1.setScp_level(Integer.valueOf(level_scp.getText()));
+		scp_1.setFacility_id(facility_scp.getText());
+		scp_1.setScp_procedures(procedure_scp.getText());
+		scp_1.setScp_description(description_scp.getText());
+		scp_1.setRelated_scp_id((String) cbRelatedSCP.getSelectedItem());
+
+	}
+
 	public void Update() {
 
 		scp_1 = scp_list.get(index);
@@ -383,6 +416,8 @@ public class PanelShowScp extends JPanel {
 		facility_scp.setText(scp_1.getFacility_id());
 		procedure_scp.setText(scp_1.getScp_procedures());
 		description_scp.setText(scp_1.getScp_description());
+		cbRelatedSCP.setSelectedItem(scp_1.getRelated_scp_id());
+
 
 		containment = path + scp_1.getContainment() + png;
 		lbContainment.setIcon(new ImageIcon(PanelShowScp.class.getResource(containment)));
@@ -417,24 +452,23 @@ public class PanelShowScp extends JPanel {
 		lbGuardar.setEnabled(false);
 		lbModify.setVisible(true);
 		lbModify.setEnabled(true);
-		if (scp_list.size() > 0) {
-			lbMoveOn.setVisible(true);
-			lbMoveOn.setEnabled(true);
-		} else {
+		
+		if (index >= scp_list.size() - 1) {
 			lbMoveOn.setVisible(false);
+		} else {
+			lbMoveOn.setVisible(true);
 
 		}
-		if (scp_list.size() != 0) {
+		if (index > 0) {
 			lbGoBack.setVisible(true);
-			lbGoBack.setEnabled(true);
 		} else {
 			lbGoBack.setVisible(false);
 
 		}
 	}
-	
+
 	public void NoEditable() {
-		
+
 		level_scp.setEditable(false);
 		level_scp.setEnabled(false);
 		facility_scp.setEditable(false);
