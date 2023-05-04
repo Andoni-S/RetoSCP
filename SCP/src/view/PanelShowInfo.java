@@ -147,6 +147,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			lblRecord.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblRecord.setBounds(300, 390, 132, 40);
 			lblRecord.setForeground(Color.WHITE);
+			lblProfileImg.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/profileScientific.gif")));
 			add(lblRecord);
 
 			txtFieldAge = new JTextArea(((Scientific) worker).getStudies());
@@ -171,6 +172,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			lblRecord.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblRecord.setBounds(300, 390, 132, 40);
 			lblRecord.setForeground(Color.WHITE);
+			lblProfileImg.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/profileAgent.gif")));
 			add(lblRecord);
 
 			txtFieldAge = new JTextArea(((Agent) worker).getHistory());

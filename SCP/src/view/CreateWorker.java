@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -34,13 +35,14 @@ public class CreateWorker extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JButton btnAgent_1, btnOverseer_1, btnScientist_1, btnReset, btnCreate;
 	private JLabel lblId, background, lblName, lblActive, lblEntryDate, lblLevel, lblBossID, lblPassword, lblHistory;
-	private JTextField fieldName, fieldEntryDate, fieldBoss, fieldPassword;
+	private JTextField fieldName, fieldEntryDate, fieldPassword;
 	private JCheckBox chckbxActive;
 	private JSpinner spinnerLevel;
 	private JCalendar calendar;
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	private JTextArea textAreaHistory;
 	private JComboBox<Continent> comboBox;
+	private JComboBox<String> comboBoxBoss;
 
 	private boolean isScientist = false, isAgent = false, isOverseer = false;
 	//private JXDatePicker datePicker;
@@ -119,16 +121,24 @@ public class CreateWorker extends JPanel implements ActionListener {
 		fieldEntryDate.setBounds(600, 430, 300, 33);
 		add(fieldEntryDate);
 
-		fieldBoss = new JTextField();
-		fieldBoss.setColumns(10);
-		fieldBoss.setBounds(284, 276, 227, 33);
-		add(fieldBoss);
-
 		chckbxActive = new JCheckBox("");
 		chckbxActive.setBackground(new Color(255, 255, 255, 0));
 		chckbxActive.setBounds(284, 178, 97, 23);
 		add(chckbxActive);
 
+		Overseer ove = new Overseer();
+		ArrayList<String> bossList = ove.getOverseerIDs();
+		
+		comboBoxBoss = new JComboBox<>();
+		for (String id : bossList) {
+			comboBoxBoss.addItem(id);
+		}
+		comboBoxBoss.setSelectedIndex(-1);
+		comboBoxBoss.setBounds(284, 269, 227, 31);
+		add(comboBoxBoss);
+		
+		
+		
 		fieldPassword = new JTextField();
 		fieldPassword.setColumns(10);
 		fieldPassword.setBounds(284, 327, 227, 33);
@@ -194,6 +204,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 		for (Continent cont : Continent.values()) {
 			comboBox.addItem(cont);
 		}
+		
 		comboBox.setBounds(284, 388, 227, 20);
 		comboBox.setVisible(false);
 		comboBox.setSelectedIndex(-1);
@@ -244,7 +255,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 			
 			
 			worker.setDate_Entry(sqlDate);
-			worker.setBossID(fieldBoss.getText());
+			worker.setBossID((String)comboBoxBoss.getSelectedItem());
 			
 			worker.createWorker();
 			
@@ -255,7 +266,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 			isAgent = false;
 			
 			fieldName.setText("");
-			fieldBoss.setText("");
+			comboBoxBoss.setSelectedIndex(-1);
 			chckbxActive.setSelected(false);
 			spinnerLevel.setValue(0);
 			fieldPassword.setText("");

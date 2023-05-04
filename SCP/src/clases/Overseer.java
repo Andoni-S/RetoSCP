@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -189,8 +190,28 @@ public class Overseer extends Worker implements OverseerController {
 	}
 
 	@Override
-	public void addWorker() {
-		// TODO Auto-generated method stub
+	public ArrayList<String> getOverseerIDs() {
+		ResultSet rs = null;
+		con = conController.openConnection();
+		String OBTAINids = "SELECT ID_Overseer FROM Overseer";
+
+		ArrayList<String> idList = new ArrayList();
+		
+		try {
+			stmt = con.prepareStatement(OBTAINids);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {				
+				idList.add(rs.getString("ID_Overseer"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		conController.closeConnection(stmt, con);
+
+		return idList;
 		
 	}
 }

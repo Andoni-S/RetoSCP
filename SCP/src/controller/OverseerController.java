@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import clases.Worker;
 
 public interface OverseerController {
@@ -13,4 +15,7 @@ public interface OverseerController {
 	// DELETE
 	void deleteWorker(String idWorker);
 	void deleteSCP(String idScp);
+	
+	//Additional
+	ArrayList<String> getOverseerIDs();
 }
