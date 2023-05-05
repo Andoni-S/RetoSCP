@@ -1,6 +1,9 @@
 package controller;
 
-public interface AgentController {
+import clases.Agent;
+import clases.Facility;
 
-	void showAsignedFacility();
+public interface AgentController {
+	
+	Facility showAsignedFacility(String idWorker);
 }
