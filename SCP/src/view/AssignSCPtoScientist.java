@@ -60,14 +60,14 @@ public class AssignSCPtoScientist extends JPanel implements ActionListener {
 	    
 	    lblIdSCP = new JLabel("SCPs");
 	    lblIdSCP.setForeground(new Color(255, 255, 255));
-        lblIdSCP.setFont(new Font("OCR A Extended", Font.PLAIN, 14));
-	    lblIdSCP.setBounds(750, 75, 42, 14);
+        lblIdSCP.setFont(new Font("OCR A Extended", Font.BOLD, 19));
+	    lblIdSCP.setBounds(750, 75, 100, 19);
 	    add(lblIdSCP);
 
 	    lblIdScientist = new JLabel("Scientists");
 	    lblIdScientist.setForeground(new Color(255, 255, 255));
-        lblIdScientist.setFont(new Font("OCR A Extended", Font.PLAIN, 14));
-	    lblIdScientist.setBounds(225, 75, 89, 14);
+        lblIdScientist.setFont(new Font("OCR A Extended", Font.BOLD, 19));
+	    lblIdScientist.setBounds(225, 75, 100, 19);
 	    add(lblIdScientist);
 	    
 	    fieldIDScientist = new JTextField();
@@ -88,7 +88,11 @@ public class AssignSCPtoScientist extends JPanel implements ActionListener {
 	    model1 = new DefaultTableModel();
 	    model1.addColumn("ID_Scientist");
 	    model1.addColumn("Studies");
-	    table1.setModel(model1);
+	    table1.setBackground(new Color(0,0,0));
+	    table1.setForeground(new Color(255,255,255));
+		table1.setOpaque(false);
+		table1.setShowGrid(false);
+		table1.setModel(model1);
 	    table1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(final MouseEvent e) {
@@ -103,7 +107,11 @@ public class AssignSCPtoScientist extends JPanel implements ActionListener {
 	    
 	    scrollPane1 = new JScrollPane();
 	    scrollPane1.setBounds(50,125,400,400);
+	    scrollPane1.setBackground(new Color(0,0,0));
+	    scrollPane1.setForeground(new Color(255,255,255));
 	    add(scrollPane1);
+		scrollPane1.setOpaque(false);
+		scrollPane1.getViewport().setOpaque(false);
 	    scrollPane1.setViewportView(table1);
 	    
 	    fillTable1();
@@ -112,6 +120,10 @@ public class AssignSCPtoScientist extends JPanel implements ActionListener {
 	    model2 = new DefaultTableModel();
 	    model2.addColumn("ID_SCP");
 	    model2.addColumn("Name_SCP");
+	    table2.setBackground(new Color(0,0,0));
+	    table2.setForeground(new Color(255,255,255));
+		table2.setOpaque(false);
+		table2.setShowGrid(false);
 	    table2.setModel(model2);
 	    table2.addMouseListener(new MouseAdapter() {
 			@Override
@@ -128,6 +140,8 @@ public class AssignSCPtoScientist extends JPanel implements ActionListener {
 	    scrollPane2 = new JScrollPane();
 	    scrollPane2.setBounds(550,125,400,400);
 	    add(scrollPane2);
+	    scrollPane2.setOpaque(false);
+		scrollPane2.getViewport().setOpaque(false);
 	    scrollPane2.setViewportView(table2);
 	    
 	    fillTable2();
