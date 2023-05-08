@@ -18,8 +18,8 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import clases.Worker;
-import controller.LoginableFactory;
 import exceptions.LoginException;
+import main.LoginableFactory;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

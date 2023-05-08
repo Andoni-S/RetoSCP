@@ -22,6 +22,9 @@ import clases.Facility;
 import clases.Overseer;
 import clases.Scientific;
 import clases.Worker;
+import main.AgentFactory;
+import main.OverseerFactory;
+import main.ScientificFactory;
 
 public class PanelShowInfo extends JPanel implements ActionListener {
 
@@ -49,14 +52,12 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		userType = "undefined";
 
 		if (userTypeID.equalsIgnoreCase("SCI")) {
-			worker = new Scientific();
+			worker = ScientificFactory.getScientificDB().showInfo(usernameUsuario);			
 		} else if (userTypeID.equalsIgnoreCase("AGE")) {
-			worker = new Agent();
+			worker = AgentFactory.getAgentDB().showInfo(usernameUsuario);
 		} else if (userTypeID.equalsIgnoreCase("OVE")) {
-			worker = new Overseer();
+			worker = OverseerFactory.getOverseerDB().showInfo(usernameUsuario);
 		}
-
-		worker.showInfo(usernameUsuario);
 
 		userID = usernameUsuario;
 

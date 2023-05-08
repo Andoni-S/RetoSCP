@@ -23,6 +23,9 @@ import clases.Agent;
 import clases.Overseer;
 import clases.Scientific;
 import clases.Worker;
+import main.AgentFactory;
+import main.OverseerFactory;
+import main.ScientificFactory;
 
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
@@ -126,8 +129,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 		chckbxActive.setBounds(284, 178, 97, 23);
 		add(chckbxActive);
 
-		Overseer ove = new Overseer();
-		ArrayList<String> bossList = ove.getOverseerIDs();
+		ArrayList<String> bossList = OverseerFactory.getOverseerDB().getOverseerIDs();
 		
 		comboBoxBoss = new JComboBox<>();
 		for (String id : bossList) {
@@ -257,7 +259,12 @@ public class CreateWorker extends JPanel implements ActionListener {
 			worker.setDate_Entry(sqlDate);
 			worker.setBossID((String)comboBoxBoss.getSelectedItem());
 			
-			worker.createWorker();
+			if(isAgent)
+				AgentFactory.getAgentDB().createWorker((Agent)worker);
+			else if(isScientist)
+				ScientificFactory.getScientificDB().createWorker((Scientific)worker);			
+			else if(isOverseer) 
+				OverseerFactory.getOverseerDB().createWorker((Overseer)worker);
 			
 		}
 		if (e.getSource().equals(btnReset)){

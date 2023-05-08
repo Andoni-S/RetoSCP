@@ -6,10 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import controller.AgentController;
+import controller.AgentControllable;
 import controller.Loginable;
 
-public class Agent extends Worker implements AgentController {
+public class Agent extends Worker {
 	private String id_facility;
 	private String history;
 
@@ -33,7 +33,7 @@ public class Agent extends Worker implements AgentController {
 		this.history = history;
 	}
 
-	@Override
+	/*@Override
 	public Worker showInfo(String id) {
 		super.showInfo(id);
 
@@ -57,9 +57,9 @@ public class Agent extends Worker implements AgentController {
 		conController.closeConnection(stmt, con);
 
 		return this;
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public Facility showAsignedFacility(String ID_Worker) {
 		Facility fac = null;
 
@@ -86,8 +86,9 @@ public class Agent extends Worker implements AgentController {
 		conController.closeConnection(stmt, con);
 
 		return fac;
-	}
-	@Override
+	}*/
+	
+	/*@Override
 	public void createWorker() {
 		
 		ResultSet rs = null;
@@ -113,7 +114,7 @@ public class Agent extends Worker implements AgentController {
 		}
 		
 		conController.closeConnection(stmt, con);
-	}
+	}*/
 	@Override
 	public String workerIDCreator() {
 		ResultSet rs = null;

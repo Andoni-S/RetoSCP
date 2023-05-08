@@ -13,14 +13,14 @@ import java.util.Set;
 
 import acs.Containment;
 import acs.Continent;
-import controller.OverseerController;
+import controller.OverseerControllable;
 
-public class Overseer extends Worker implements OverseerController {
+public class Overseer extends Worker {
 
 	private Connection con;
 	private PreparedStatement stmt;
 	private DBConnectionController conController = new DBConnectionController();
-	private Continent continent;
+	public Continent continent;
 
 	public Continent getContinent() {
 		return continent;
@@ -30,7 +30,7 @@ public class Overseer extends Worker implements OverseerController {
 		this.continent = continent;
 	}
 
-	@Override
+	/*@Override
 	public void addSCP() {
 
 	}
@@ -48,9 +48,9 @@ public class Overseer extends Worker implements OverseerController {
 	@Override
 	public void asignAgentToFacility() {
 
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public Worker showInfo(String id) {
 		super.showInfo(id);
 
@@ -73,9 +73,9 @@ public class Overseer extends Worker implements OverseerController {
 		conController.closeConnection(stmt, con);
 
 		return this;
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public void levelUpWorker(Worker work) {
 		ResultSet rs = null;
 		con = conController.openConnection();
@@ -91,9 +91,9 @@ public class Overseer extends Worker implements OverseerController {
 		}
 		conController.closeConnection(stmt, con);
 
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public void deleteSCP(String idScp) {
 		ResultSet rs = null;
 		con = conController.openConnection();
@@ -111,9 +111,9 @@ public class Overseer extends Worker implements OverseerController {
 		}
 
 		conController.closeConnection(stmt, con);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public void deleteWorker(String idWorker) {
 		ResultSet rs = null;
 		con = conController.openConnection();
@@ -131,8 +131,8 @@ public class Overseer extends Worker implements OverseerController {
 
 		conController.closeConnection(stmt, con);
 
-  }
-  @Override
+  }*/
+  /*@Override
 	public void createWorker() {
 		
 		ResultSet rs = null;
@@ -158,7 +158,7 @@ public class Overseer extends Worker implements OverseerController {
 		}
 		
 		conController.closeConnection(stmt, con);
-	}
+	}*/
   	@Override
 	public String workerIDCreator() {
 		ResultSet rs = null;
@@ -189,7 +189,7 @@ public class Overseer extends Worker implements OverseerController {
 		return id;
 	}
 
-	@Override
+	/*@Override
 	public ArrayList<String> getOverseerIDs() {
 		ResultSet rs = null;
 		con = conController.openConnection();
@@ -213,5 +213,17 @@ public class Overseer extends Worker implements OverseerController {
 
 		return idList;
 		
+	}*/
+
+	/*@Override
+	public Worker showInfo(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public void createWorker(Overseer ove) {
+		// TODO Auto-generated method stub
+		
+	}*/
 }

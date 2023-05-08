@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 
 import clases.Agent;
 import clases.Facility;
+import main.AgentFactory;
+
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -21,8 +23,9 @@ public class ShowFacility extends JPanel {
 	public ShowFacility(String userID) {
 
 		Agent wAge = new Agent();
-		Facility fac;
-		fac = wAge.showAsignedFacility(userID);
+		Facility fac = null;
+		
+		fac = AgentFactory.getAgentDB().showAsignedFacility(userID);
 		setLayout(null);
 
 		lblIdFacility = new JLabel("ID Facility:           " + wAge.getId_facility());

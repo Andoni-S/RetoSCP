@@ -18,6 +18,9 @@ import javax.swing.table.DefaultTableModel;
 
 import clases.Overseer;
 import clases.Worker;
+import main.LoginableFactory;
+import main.OverseerFactory;
+
 import javax.swing.JComboBox;
 
 public class LevelUpWorker extends JPanel implements ActionListener {
@@ -44,7 +47,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		setBounds(0, 0, 1024, 768);
 
 		Worker work = new Worker();
-		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
+		ArrayList<Worker> arrayDeWorkers = LoginableFactory.getLoginable().showAllWorkers();
 		setLayout(null);
 
 		lblWorker = new JLabel("Select the worker:");
@@ -160,8 +163,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 	}
 
 	private void cargarWorkers() {
-		Worker worky = new Worker();
-		ArrayList<Worker> elArray = worky.showAllWorkers();
+		ArrayList<Worker> elArray = LoginableFactory.getLoginable().showAllWorkers();
 
 		for (Worker w : elArray) {
 			comboBox.addItem(w.getId());
@@ -172,10 +174,11 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnShowInfo)) {
 			String workerDeletion = (String) comboBox.getSelectedItem();
-			Worker work = new Worker();
+			Worker work = null;
 
-			if (work.checkWorker(workerDeletion)) {
-				work = work.showInfo(workerDeletion);
+			
+			if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
+				work = LoginableFactory.getLoginable().showInfoDefault(workerDeletion);
 				lblDato1.setText(workerDeletion);
 				lblDato1.setVisible(true);
 				lblDato2.setText(work.getName());
@@ -209,14 +212,13 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 			String workerDeletion = (String) comboBox.getSelectedItem();
 			Worker work = new Worker();
 
-			if (work.checkWorker(workerDeletion)) {
+			if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
 
 				int n = JOptionPane.showConfirmDialog(null, "Do you want to level up this worker?", "Confirmation",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				if (n == JOptionPane.YES_OPTION) {
-					Overseer ove = new Overseer();
-					ove.levelUpWorker(work);
+					OverseerFactory.getOverseerDB().levelUpWorker(work);
 					JOptionPane.showMessageDialog(null, "The worker has been leveled up");
 				}
 			}

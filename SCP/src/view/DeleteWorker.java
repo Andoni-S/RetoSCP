@@ -18,6 +18,9 @@ import javax.swing.table.DefaultTableModel;
 
 import clases.Overseer;
 import clases.Worker;
+import main.LoginableFactory;
+import main.OverseerFactory;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -40,7 +43,7 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		setLayout(null);
 
 		Worker work = new Worker();
-		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
+		ArrayList<Worker> arrayDeWorkers = LoginableFactory.getLoginable().showAllWorkers();
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.addMouseListener(new MouseAdapter() {
@@ -121,7 +124,7 @@ public class DeleteWorker extends JPanel implements ActionListener {
 
 	public void fillTable() {
 		Worker work = new Worker();
-		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
+		ArrayList<Worker> arrayDeWorkers = LoginableFactory.getLoginable().showAllWorkers();
 
 		for (Worker worker : arrayDeWorkers) {
 			Object[] fila = new Object[3];
@@ -145,7 +148,8 @@ public class DeleteWorker extends JPanel implements ActionListener {
 				String workerDeletion = textWorker.getText();
 				Worker work = new Worker();
 
-				if (work.checkWorker(workerDeletion)) {
+				
+				if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Please insert an existing ID");
@@ -164,9 +168,9 @@ public class DeleteWorker extends JPanel implements ActionListener {
 					String workerDeletion = textWorker.getText();
 					Worker work = new Worker();
 
-					if (work.checkWorker(workerDeletion)) {
-						Overseer ove = new Overseer();
-						ove.deleteWorker(work.getId());
+					if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
+						
+						OverseerFactory.getOverseerDB().deleteWorker(work.getId());
 						JOptionPane.showMessageDialog(null, "The worker has been deleted");
 						emptyTable();
 						fillTable();

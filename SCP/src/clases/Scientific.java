@@ -12,9 +12,9 @@ import acs.Containment;
 import acs.Discruption;
 import acs.Risk;
 import acs.SecondaryC;
-import controller.ScientificController;
+import controller.ScientificControllable;
 
-public class Scientific extends Worker implements ScientificController {
+public class Scientific extends Worker{
 
 	private String studies;
 	
@@ -30,21 +30,28 @@ public class Scientific extends Worker implements ScientificController {
 		this.studies = studies;
 	}
 
-	@Override
+	/*@Override
 	public Worker showInfo(String id) {
-		super.showInfo(id);
 
 		ResultSet rs = null;
 		con = conController.openConnection();
-		String OBTAINstudies = "SELECT Studies FROM Scientist WHERE ID_Scientist = ?";
+		String OBTAINstudies = "select * from worker w, scientist swhere w.ID_Worker = s.ID_Scientist and ID_Worker = ?";
 
+		Scientific sci= new Scientific();
 		try {
 			stmt = con.prepareStatement(OBTAINstudies);
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				setStudies(rs.getString("Studies"));
+				sci.setId(rs.getString("ID_Worker"));
+				sci.setName(rs.getString("Name_Worker"));
+				sci.setDate_Entry(rs.getDate("Date_Entry"));
+				sci.setActive(rs.getBoolean("Active_Worker"));
+				sci.setLevel(rs.getInt("Level_Worker"));
+				sci.setPassword(rs.getString("password_Worker"));
+				sci.setBossID(rs.getString("ID_Boss"));
+				sci.setStudies(rs.getString("Studies"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -53,9 +60,9 @@ public class Scientific extends Worker implements ScientificController {
 		conController.closeConnection(stmt, con);
 
 		return this;
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public ArrayList<SCP> showAsignedSCP(String id) {
 		ArrayList<SCP> scp_list = new ArrayList<SCP>();
 
@@ -91,13 +98,13 @@ public class Scientific extends Worker implements ScientificController {
 		conController.closeConnection(stmt, con);
 		return scp_list;
 
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public void modifySCP() {
 
-	}
-	@Override
+	}*/
+	/*@Override
 	public void createWorker() {
 		
 		ResultSet rs = null;
@@ -123,7 +130,7 @@ public class Scientific extends Worker implements ScientificController {
 		}
 		
 		conController.closeConnection(stmt, con);
-	}
+	}*/
 
 	@Override
 	public String workerIDCreator() {

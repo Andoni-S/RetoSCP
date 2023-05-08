@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import clases.Overseer;
 import clases.SCP;
 import clases.Worker;
+import main.OverseerFactory;
 
 public class DeleteSCP extends JPanel implements ActionListener {
 
@@ -148,8 +149,7 @@ public class DeleteSCP extends JPanel implements ActionListener {
 					SCP sc = new SCP();
 
 					if (sc.checkSCP(SCPDeletion)) {
-						Overseer ove = new Overseer();
-						ove.deleteSCP(sc.getScp_id());
+						OverseerFactory.getOverseerDB().deleteSCP(sc.getScp_id());
 						JOptionPane.showMessageDialog(tablaSCP, "The SCP has been deleted");
 						emptyTable();
 						fillTable();
