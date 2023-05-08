@@ -1,6 +1,10 @@
 package controller;
 
+import clases.Worker;
+import exceptions.LoginException;
+import exceptions.ServerException;
+
 public interface Loginable {
 
-	boolean logIn(String usernameUsuario, String passwordUsuario);
+	public Worker logIn(String usernameUsuario, String passwordUsuario) throws LoginException, ServerException;
 }

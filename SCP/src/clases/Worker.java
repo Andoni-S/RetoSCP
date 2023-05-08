@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import com.mysql.cj.jdbc.CallableStatement;
 
 import controller.Loginable;
+import exceptions.LoginException;
+import exceptions.ServerException;
 import clases.DBConnectionController;
 
 public class Worker implements Loginable {
@@ -86,39 +88,40 @@ public class Worker implements Loginable {
 	}
 
 	@Override
-	public boolean logIn(String usernameUsuario, String passwordUsuario) {
+	public Worker logIn(String usernameUsuario, String passwordUsuario) throws LoginException, ServerException{
 		ResultSet rs = null;
 		con = conController.openConnection();
-
-		String OBTENERprop1 = "SELECT ID_Worker, password_Worker FROM Worker WHERE ID_Worker = ?";
+		Worker worker = null;
+		
+		String OBTENERprop1 = "SELECT * FROM Worker WHERE ID_Worker = ? and password_Worker = ?";
 
 		try {
 			stmt = con.prepareStatement(OBTENERprop1);
 
 			stmt.setString(1, usernameUsuario);
+			stmt.setString(2, passwordUsuario);
 			rs = stmt.executeQuery();
 
-			while (rs.next()) {
-				setId(rs.getString("ID_Worker"));
-				setPassword(rs.getString("password_Worker"));
+			if (rs.next()) {
+				worker = new Worker();
+				worker.setId(rs.getString("ID_Worker"));
+				worker.setPassword(rs.getString("password_Worker"));
+				worker.setActive(rs.getBoolean("Active_Worker"));
+				worker.setDate_Entry(rs.getDate("Date_Entry"));
+				worker.setLevel(rs.getInt("Level_Worker"));
+				worker.setPassword(rs.getString("password_Worker"));
+				worker.setBossID(rs.getString("ID_Boss"));
 			}
-
-			if (id != null || password != null) {
-				if (id.equals(usernameUsuario) && password.equals(passwordUsuario)) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return false;
+			else {
+				throw new LoginException("Error in Login");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ServerException(e.getMessage());
 		}
 
-		return false;
+		return worker;
 	}
-
 	public Worker showInfo(String id) {
 
 		ResultSet rs = null;

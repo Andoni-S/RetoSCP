@@ -18,6 +18,9 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import clases.Worker;
+import controller.LoginableFactory;
+import exceptions.LoginException;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Color;
@@ -124,24 +127,16 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnLogIn)) {
-			if (userField.getText().isEmpty() || passwordField.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(btnLogIn, "Username/Password is Empty");
-			} else {
-				String usernameUsuario = userField.getText();
-				String passwordUsuario = passwordField.getText();
-
-				Worker work = new Worker();
-
-				if (work.logIn(usernameUsuario, passwordUsuario)) {
-					MainWindow vMain = new MainWindow(usernameUsuario);
-					vMain.setVisible(true);
-				} else {
-					JOptionPane.showMessageDialog(btnLogIn, "Username/Password Incorrect");
-				}
-			}
+			login();
 		}
 	}
-
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == e.VK_ENTER) {
+			login();
+		}
+	}
 	class LabelAnim implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -176,30 +171,33 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 	public void keyTyped(KeyEvent e) {
 
 	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == e.VK_ENTER) {
-			if (userField.getText().isEmpty() || passwordField.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(btnLogIn, "Username/Password is Empty");
-			} else {
-				String usernameUsuario = userField.getText();
-				String passwordUsuario = passwordField.getText();
-
-				Worker work = new Worker();
-
-				if (work.logIn(usernameUsuario, passwordUsuario)) {
-					MainWindow vMain = new MainWindow(usernameUsuario);
-					vMain.setVisible(true);
-				} else {
-					JOptionPane.showMessageDialog(btnLogIn, "Username/Password Incorrect");
-				}
-			}
-		}
-	}
-
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
 
+	}
+	public void login(){
+		try {
+			if (userField.getText().isEmpty() || passwordField.getText().isEmpty()) 
+				throw new Exception("nombre y/o contraseña vacios");
+				
+			String usernameUsuario = userField.getText();
+			String passwordUsuario = passwordField.getText();
+
+			Worker worker = LoginableFactory.getLoginable().logIn(usernameUsuario, passwordUsuario);
+			MainWindow vMain = new MainWindow(worker.getId());
+			vMain.setVisible(true);
+			
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(btnLogIn, e.getMessage());
+		
+		
+			/*{
+				MainWindow vMain = new MainWindow(usernameUsuario);
+				vMain.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(btnLogIn, "Username/Password Incorrect");
+			}*/
+		}
 	}
 }
