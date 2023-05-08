@@ -251,7 +251,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnDeleteWorker.addActionListener(this);
 			add(btnDeleteWorker);
 
-			btnAsignScientist = new JButton("ASSIGN FACILITY");
+			btnAsignScientist = new JButton("ASSIGN Scientist");
 			btnAsignScientist.setBounds(750, 630, 200, 40);
 			btnAsignScientist.setBackground(Color.black);
 			btnAsignScientist.setForeground(Color.white);
@@ -296,10 +296,9 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			JComponent panelAssignSCPtoScientist = null;
 			panelAssignSCPtoScientist = new AssignSCPtoScientist();
 			tabbedPane.addTab("Tab", null, panelAssignSCPtoScientist, "Panel");
-
-			if (e.getSource().equals(btnAsignScientist)) {
-
-			}
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+		}
+		
 
 			if (e.getSource().equals(btnAsignAgent)) {
 
@@ -333,4 +332,4 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			}
 		}
 	}
-}
+

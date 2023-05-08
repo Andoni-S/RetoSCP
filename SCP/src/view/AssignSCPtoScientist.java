@@ -3,11 +3,14 @@ package view;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -67,11 +70,36 @@ public class AssignSCPtoScientist extends JPanel implements ActionListener {
 	    lblIdScientist.setBounds(225, 75, 89, 14);
 	    add(lblIdScientist);
 	    
+	    fieldIDScientist = new JTextField();
+	    fieldIDScientist.setBackground(new Color(0,0,0));
+	    fieldIDScientist.setForeground(new Color(255, 255, 255));
+        fieldIDScientist.setFont(new Font("OCR A Extended", Font.PLAIN, 14));
+        fieldIDScientist.setBounds(200, 570, 100, 50);
+	    add(fieldIDScientist);
+	    
+	    fieldIDSCP = new JTextField();
+	    fieldIDSCP.setBackground(new Color(0,0,0));
+	    fieldIDSCP.setForeground(new Color(255, 255, 255));
+        fieldIDSCP.setFont(new Font("OCR A Extended", Font.PLAIN, 14));
+        fieldIDSCP.setBounds(680, 570, 100, 50);
+	    add(fieldIDSCP);
+        
 	    table1 = new JTable();
 	    model1 = new DefaultTableModel();
 	    model1.addColumn("ID_Scientist");
 	    model1.addColumn("Studies");
 	    table1.setModel(model1);
+	    table1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(final MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					final JTable jTable = (JTable) e.getSource();
+					final int row = jTable.getSelectedRow();
+					final String valueInCell = (String) jTable.getValueAt(row, 0);
+					fieldIDScientist.setText(valueInCell);
+				}
+			}
+		});
 	    
 	    scrollPane1 = new JScrollPane();
 	    scrollPane1.setBounds(50,125,400,400);
@@ -85,6 +113,17 @@ public class AssignSCPtoScientist extends JPanel implements ActionListener {
 	    model2.addColumn("ID_SCP");
 	    model2.addColumn("Name_SCP");
 	    table2.setModel(model2);
+	    table2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(final MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					final JTable jTable = (JTable) e.getSource();
+					final int row = jTable.getSelectedRow();
+					final String valueInCell = (String) jTable.getValueAt(row, 0);
+					fieldIDSCP.setText(valueInCell);
+				}
+			}
+		});
 	    
 	    scrollPane2 = new JScrollPane();
 	    scrollPane2.setBounds(550,125,400,400);
@@ -135,6 +174,7 @@ public class AssignSCPtoScientist extends JPanel implements ActionListener {
 			Overseer overseer = new Overseer();
 			overseer.asignSCPtoScientific(fieldIDScientist.getText(), fieldIDSCP.getText());
 			btnIDSCP.setEnabled(false);
+			JOptionPane.showMessageDialog(btnIDSCP, fieldIDScientist.getText() + " assigned to " + fieldIDSCP.getText());
 		}
 		
 	}

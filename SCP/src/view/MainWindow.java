@@ -153,7 +153,7 @@ public class MainWindow extends JFrame implements ActionListener {
 			tabbedPane.addTab("Add SCP", newPanel);
 		}
 		if (e.getSource().equals(btnAddWorker)) {
-
+			
 		}
 		/*if (e.getSource().equals(btnAssignScientist)) {
 
