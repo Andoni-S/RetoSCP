@@ -102,6 +102,8 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		add(lblBoss);
 
 		textFieldId = new JTextField(usernameUsuario);
+		textFieldId.setForeground(new Color(255, 255, 255));
+		textFieldId.setBackground(new Color(0, 0, 0));
 		textFieldId.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
 		textFieldId.setEditable(false);
 		textFieldId.setBounds(400, 55, 231, 30);
@@ -109,6 +111,8 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		textFieldId.setColumns(10);
 
 		textFieldName = new JTextField(worker.getName());
+		textFieldName.setForeground(new Color(255, 255, 255));
+		textFieldName.setBackground(new Color(0, 0, 0));
 		textFieldName.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
 		textFieldName.setEditable(false);
 		textFieldName.setColumns(10);
@@ -116,6 +120,8 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		add(textFieldName);
 
 		textFieldDate = new JTextField(worker.getDate_Entry().toString());
+		textFieldDate.setForeground(new Color(255, 255, 255));
+		textFieldDate.setBackground(new Color(0, 0, 0));
 		textFieldDate.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
 		textFieldDate.setEditable(false);
 		textFieldDate.setColumns(10);
@@ -136,6 +142,8 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		add(lblLevelNumber);
 
 		textFieldBoss = new JTextField(worker.getBossID());
+		textFieldBoss.setForeground(new Color(255, 255, 255));
+		textFieldBoss.setBackground(new Color(0, 0, 0));
 		textFieldBoss.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
 		textFieldBoss.setEditable(false);
 		textFieldBoss.setColumns(10);
@@ -278,7 +286,12 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource().equals(btnAddScp)) {
-
+			JComponent panelCreateWorker = null;
+			panelCreateWorker = new CreateSCP();
+			tabbedPane.addTab("Tab", null, panelCreateWorker, "Panel");
+			container.add(tabbedPane, BorderLayout.CENTER);
+			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 
 		if (e.getSource().equals(btnAddWorker)) {

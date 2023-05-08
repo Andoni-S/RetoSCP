@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -52,6 +54,17 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
 		tablaSCP.setShowGrid(false);
+		tablaSCP.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(final MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					final JTable jTable = (JTable) e.getSource();
+					final int row = jTable.getSelectedRow();
+					final String valueInCell = (String) jTable.getValueAt(row, 0);
+					textSCP.setText(valueInCell);
+				}
+			}
+		});
 
 		model.addColumn("ID");
 		model.addColumn("Name");
@@ -68,6 +81,8 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		add(lblSCP);
 
 		textSCP = new JTextField();
+		textSCP.setForeground(new Color(255, 255, 255));
+		textSCP.setBackground(new Color(0, 0, 0));
 		textSCP.setBounds(450, 527, 275, 25);
 		textSCP.setFont(new Font("OCR A Extended", Font.BOLD, 14));
 		add(textSCP);
@@ -137,7 +152,7 @@ public class DeleteSCP extends JPanel implements ActionListener {
 			if (textSCP.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(tablaSCP, "Empty field. Please enter an ID");
 			} else {
-				int n = JOptionPane.showConfirmDialog(null, "Do you want to delete this worker?", "Confirmation",
+				int n = JOptionPane.showConfirmDialog(null, "Do you want to delete this SCP?", "Confirmation",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				if (n == JOptionPane.YES_OPTION) {
@@ -147,13 +162,12 @@ public class DeleteSCP extends JPanel implements ActionListener {
 					if (sc.checkSCP(SCPDeletion)) {
 						Overseer ove = new Overseer();
 						ove.deleteSCP(sc.getScp_id());
-						JOptionPane.showMessageDialog(tablaSCP, "The SCP has been deleted");
+						JOptionPane.showMessageDialog(null, "The SCP has been deleted");
 						emptyTable();
-						fillTable();
 						fillTable();
 						textSCP.setText("");
 					} else {
-						JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID");
+						JOptionPane.showMessageDialog(null, "Please, insert an existing ID");
 					}
 				}
 			}

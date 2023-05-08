@@ -106,16 +106,25 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(lblBossID);
 
 		fieldName = new JTextField();
+		fieldName.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		fieldName.setForeground(new Color(255, 255, 255));
+		fieldName.setBackground(new Color(0, 0, 0));
 		fieldName.setBounds(284, 123, 227, 33);
 		add(fieldName);
 		fieldName.setColumns(10);
 
 		fieldEntryDate = new JTextField();
+		fieldEntryDate.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		fieldEntryDate.setForeground(new Color(255, 255, 255));
+		fieldEntryDate.setBackground(new Color(0, 0, 0));
 		fieldEntryDate.setColumns(10);
 		fieldEntryDate.setBounds(600, 430, 300, 33);
 		add(fieldEntryDate);
 
 		fieldBoss = new JTextField();
+		fieldBoss.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		fieldBoss.setForeground(new Color(255, 255, 255));
+		fieldBoss.setBackground(new Color(0, 0, 0));
 		fieldBoss.setColumns(10);
 		fieldBoss.setBounds(284, 276, 227, 33);
 		add(fieldBoss);
@@ -126,6 +135,9 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(chckbxActive);
 
 		fieldPassword = new JTextField();
+		fieldPassword.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		fieldPassword.setForeground(new Color(255, 255, 255));
+		fieldPassword.setBackground(new Color(0, 0, 0));
 		fieldPassword.setColumns(10);
 		fieldPassword.setBounds(284, 327, 227, 33);
 		add(fieldPassword);
@@ -137,6 +149,8 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(lblPassword);
 
 		spinnerLevel = new JSpinner();
+		spinnerLevel.setForeground(new Color(255, 255, 255));
+		spinnerLevel.setBackground(new Color(0, 0, 0));
 		spinnerLevel.setModel(new SpinnerNumberModel(0, 0, 3, 1));
 		spinnerLevel.setBounds(294, 231, 30, 20);
 		add(spinnerLevel);
@@ -182,6 +196,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(lblHistory);
 
 		textAreaHistory = new JTextArea();
+		textAreaHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textAreaHistory.setBounds(284, 388, 227, 202);
 		textAreaHistory.setVisible(false);
 		add(textAreaHistory);

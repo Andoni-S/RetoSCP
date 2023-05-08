@@ -80,7 +80,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		add(lblIdWorker);
 
 		lblDato1 = new JLabel();
-		lblDato1.setForeground(new Color(125, 125, 200));
+		lblDato1.setForeground(new Color(255, 255, 255));
 		lblDato1.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato1.setBounds(500, 120, 1500, 43);
 		lblDato1.setVisible(false);
@@ -93,7 +93,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		add(lblNameWorker);
 
 		lblDato2 = new JLabel();
-		lblDato2.setForeground(new Color(125, 125, 200));
+		lblDato2.setForeground(new Color(255, 255, 255));
 		lblDato2.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato2.setBounds(500, 200, 796, 43);
 		lblDato2.setVisible(false);
@@ -106,7 +106,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		add(lblDateEntry);
 
 		lblDato3 = new JLabel();
-		lblDato3.setForeground(new Color(125, 125, 200));
+		lblDato3.setForeground(new Color(255, 255, 255));
 		lblDato3.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato3.setBounds(500, 280, 595, 43);
 		lblDato3.setVisible(false);
@@ -119,7 +119,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		add(lblActive);
 
 		lblDato4 = new JLabel();
-		lblDato4.setForeground(new Color(125, 125, 200));
+		lblDato4.setForeground(new Color(255, 255, 255));
 		lblDato4.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato4.setBounds(500, 360, 595, 43);
 		lblDato4.setVisible(false);
@@ -132,7 +132,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		add(lblLevel);
 
 		lblDato5 = new JLabel();
-		lblDato5.setForeground(new Color(125, 125, 200));
+		lblDato5.setForeground(new Color(255, 255, 255));
 		lblDato5.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato5.setBounds(500, 440, 595, 43);
 		lblDato5.setVisible(false);
@@ -145,7 +145,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		add(lblIdBoss);
 
 		lblDato6 = new JLabel();
-		lblDato6.setForeground(new Color(125, 125, 200));
+		lblDato6.setForeground(new Color(255, 255, 255));
 		lblDato6.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato6.setBounds(500, 520, 595, 43);
 		lblDato6.setVisible(false);
@@ -218,6 +218,36 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 					Overseer ove = new Overseer();
 					ove.levelUpWorker(work);
 					JOptionPane.showMessageDialog(null, "The worker has been leveled up");
+
+					String workerDeletions = (String) comboBox.getSelectedItem();
+
+					if (work.checkWorker(workerDeletion)) {
+						work = work.showInfo(workerDeletion);
+						lblDato1.setText(workerDeletion);
+						lblDato1.setVisible(true);
+						lblDato2.setText(work.getName());
+						lblDato2.setVisible(true);
+						lblDato3.setText(work.getDate_Entry().toString());
+						lblDato3.setVisible(true);
+						if (work.isActive())
+							lblDato4.setText("YES");
+						else
+							lblDato4.setText("NO");
+						lblDato4.setVisible(true);
+						if (work.getLevel() == 1)
+							lblDato5.setText("1");
+						else if (work.getLevel() == 2)
+							lblDato5.setText("2");
+						else if (work.getLevel() == 3)
+							lblDato5.setText("3");
+						else if (work.getLevel() == 4)
+							lblDato5.setText("4");
+						else if (work.getLevel() == 5)
+							lblDato5.setText("5");
+						lblDato5.setVisible(true);
+						lblDato6.setText(work.getBossID());
+						lblDato6.setVisible(true);
+					}
 				}
 			}
 		}

@@ -1,6 +1,8 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,10 +10,12 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -34,6 +38,9 @@ public class DeleteWorker extends JPanel implements ActionListener {
 	private JButton btnShowInfo;
 	private JButton btnDelete;
 	private JLabel background;
+	
+	private JTabbedPane tabbedPane = new JTabbedPane();
+	private Container container = new Container();
 
 	public DeleteWorker() {
 		setBounds(0, 0, 1024, 768);
@@ -53,6 +60,7 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		add(scrollPane);
 
 		tablaWorkers = new JTable();
+		
 
 		model = new DefaultTableModel();
 		tablaWorkers.setModel(model);
@@ -87,6 +95,8 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		add(lblWorker);
 
 		textWorker = new JTextField();
+		textWorker.setForeground(new Color(255, 255, 255));
+		textWorker.setBackground(new Color(0, 0, 0));
 		textWorker.setBounds(475, 527, 275, 25);
 		textWorker.setFont(new Font("OCR A Extended", Font.BOLD, 14));
 		add(textWorker);
@@ -146,7 +156,13 @@ public class DeleteWorker extends JPanel implements ActionListener {
 				Worker work = new Worker();
 
 				if (work.checkWorker(workerDeletion)) {
-
+					JComponent show = null;
+					show = new ShowInfo2();
+					tabbedPane.addTab("Tab", null, show, "Panel");
+					container.add(tabbedPane, BorderLayout.CENTER);
+					tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+					tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "Please insert an existing ID");
 				}
@@ -177,6 +193,5 @@ public class DeleteWorker extends JPanel implements ActionListener {
 				}
 			}
 		}
-
 	}
 }
