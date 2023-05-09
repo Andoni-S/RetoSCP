@@ -21,6 +21,10 @@ import clases.Worker;
 import javax.swing.JComboBox;
 
 public class LevelUpWorker extends JPanel implements ActionListener {
+	// This class will display a window for upgrading a worker when logged in as an
+	// overseer
+
+	// First, we declare all the labels and buttons we want to display in our window
 	private JLabel lblWorker;
 	private JButton btnShowInfo;
 	private JButton btnLevelUp;
@@ -43,6 +47,8 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 	public LevelUpWorker() {
 		setBounds(0, 0, 1024, 768);
 
+		// We load all the workers from the database to be able to display them in the
+		// combobox
 		Worker work = new Worker();
 		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
 		setLayout(null);
@@ -159,6 +165,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		add(background);
 	}
 
+	// This is the method to fill the combobox options with workers
 	private void cargarWorkers() {
 		Worker worky = new Worker();
 		ArrayList<Worker> elArray = worky.showAllWorkers();
@@ -170,6 +177,8 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// If the "show info" button is pressed, the labels with the data corresponding
+		// to the worker selected from the combobox will become visible
 		if (e.getSource().equals(btnShowInfo)) {
 			String workerDeletion = (String) comboBox.getSelectedItem();
 			Worker work = new Worker();
@@ -193,10 +202,6 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 					lblDato5.setText("2");
 				else if (work.getLevel() == 3)
 					lblDato5.setText("3");
-				else if (work.getLevel() == 4)
-					lblDato5.setText("4");
-				else if (work.getLevel() == 5)
-					lblDato5.setText("5");
 				lblDato5.setVisible(true);
 				lblDato6.setText(work.getBossID());
 				lblDato6.setVisible(true);
@@ -205,6 +210,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 			}
 		}
 
+		// If the "level up" button is clicked, confirmation will be requested and the worker's level will be added by one, and will be displayed as updated
 		if (e.getSource().equals(btnLevelUp)) {
 			String workerDeletion = (String) comboBox.getSelectedItem();
 			Worker work = new Worker();
@@ -239,11 +245,6 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 						else if (work.getLevel() == 2)
 							lblDato5.setText("2");
 						else if (work.getLevel() == 3)
-							lblDato5.setText("3");
-						else if (work.getLevel() == 4)
-							lblDato5.setText("4");
-						else if (work.getLevel() == 5)
-							lblDato5.setText("5");
 						lblDato5.setVisible(true);
 						lblDato6.setText(work.getBossID());
 						lblDato6.setVisible(true);

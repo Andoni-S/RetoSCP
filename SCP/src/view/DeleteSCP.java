@@ -23,10 +23,7 @@ import clases.SCP;
 import clases.Worker;
 
 public class DeleteSCP extends JPanel implements ActionListener {
-
-	/**
-	 * Create the panel.
-	 */
+	// We declare the required labels, buttons, and table
 	private JTable tablaSCP;
 	private DefaultTableModel model;
 	private JLabel lblSCP;
@@ -39,6 +36,8 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
 
+		// We collect all the workers in an array in order to fill the table with the
+		// data
 		SCP scp = new SCP();
 		ArrayList<SCP> arrayDeSCP = scp.showAllSCP();
 
@@ -55,6 +54,8 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		scrollPane.getViewport().setOpaque(false);
 		tablaSCP.setShowGrid(false);
 		tablaSCP.addMouseListener(new MouseAdapter() {
+			// The following method fills in the text field called "textSCP" with the ID
+			// selected in the table with the mouse
 			@Override
 			public void mouseClicked(final MouseEvent e) {
 				if (e.getClickCount() == 1) {
@@ -72,6 +73,7 @@ public class DeleteSCP extends JPanel implements ActionListener {
 
 		scrollPane.setViewportView(tablaSCP);
 
+		// We call the fillTable() method to fill in the table
 		fillTable();
 
 		lblSCP = new JLabel("Insert the ID of the SCP:");
@@ -110,11 +112,13 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		add(background);
 	}
 
+	// Method for emptying the table after deletion
 	public void emptyTable() {
 		DefaultTableModel model = (DefaultTableModel) tablaSCP.getModel();
 		model.setRowCount(0);
 	}
 
+	// Method to fill in the table with the data of all workers
 	public void fillTable() {
 		SCP scp = new SCP();
 		ArrayList<SCP> arrayDeSCP = scp.showAllSCP();
@@ -133,6 +137,8 @@ public class DeleteSCP extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// If the "Show Info" button is pressed, it will display a ShowInfo2 type window
+		// with the data of the selected SCP
 		if (e.getSource().equals(btnShowInfo)) {
 			if (textSCP.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(tablaSCP, "Empty field. Please enter an ID");
@@ -148,6 +154,8 @@ public class DeleteSCP extends JPanel implements ActionListener {
 			}
 		}
 
+		// If the user clicks on "Delete", a confirmation message will be displayed and,
+		// if confirmed, the worker will be deleted
 		if (e.getSource().equals(btnDelete)) {
 			if (textSCP.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(tablaSCP, "Empty field. Please enter an ID");

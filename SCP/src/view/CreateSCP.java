@@ -36,6 +36,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JSeparator;
 
 public class CreateSCP extends JPanel implements ActionListener {
+	// We declare the necessary labels, textArea, buttons, and comboBoxes
 	private static final long serialVersionUID = 1L;
 	private JButton btnReset, btnCreate;
 	private JLabel lblId, lblIdRelated, lblIdFacility, lblName, lblProcedures, lblDescription, lblLevel, lblContainment,
@@ -255,11 +256,12 @@ public class CreateSCP extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		// If you click on "Create", a new SCP is created
 		if (e.getSource().equals(btnCreate)) {
 			SCP scp = new SCP();
 		}
-
+		
+		// If you click on "Reset", all data entered so far will be deleted
 		if (e.getSource().equals(btnReset)) {
 			fieldId.setText("");
 			fieldRelated.setText("");

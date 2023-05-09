@@ -58,6 +58,7 @@ public class Agent extends Worker implements AgentController {
 		return this;
 	}
 
+	// This method is used to display the agent's assigned installation
 	@Override
 	public Facility showAsignedFacility(String ID_Worker) {
 		Facility fac = null;
@@ -86,5 +87,4 @@ public class Agent extends Worker implements AgentController {
 
 		return fac;
 	}
-
 }

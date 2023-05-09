@@ -73,6 +73,7 @@ public class Overseer extends Worker implements OverseerController {
 		return this;
 	}
 
+	// This method is used to level up the worker
 	@Override
 	public void levelUpWorker(Worker work) {
 		ResultSet rs = null;
@@ -91,6 +92,7 @@ public class Overseer extends Worker implements OverseerController {
 
 	}
 
+	// This method deletes an SCP from its ID
 	@Override
 	public void deleteSCP(String idScp) {
 		ResultSet rs = null;
@@ -110,6 +112,7 @@ public class Overseer extends Worker implements OverseerController {
 		conController.closeConnection(stmt, con);
 	}
 
+	// And this is used to delete a worker from its ID
 	@Override
 	public void deleteWorker(String idWorker) {
 		ResultSet rs = null;
@@ -128,5 +131,4 @@ public class Overseer extends Worker implements OverseerController {
 
 		conController.closeConnection(stmt, con);
 	}
-
 }

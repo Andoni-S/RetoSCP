@@ -27,10 +27,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class DeleteWorker extends JPanel implements ActionListener {
-
-	/**
-	 * Create the panel.
-	 */
+	// We declare the required labels, buttons, and table
 	private JTable tablaWorkers;
 	private DefaultTableModel model;
 	private JLabel lblWorker;
@@ -38,7 +35,7 @@ public class DeleteWorker extends JPanel implements ActionListener {
 	private JButton btnShowInfo;
 	private JButton btnDelete;
 	private JLabel background;
-	
+
 	private JTabbedPane tabbedPane = new JTabbedPane();
 	private Container container = new Container();
 
@@ -46,6 +43,8 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
 
+		// We collect all the workers in an array in order to fill the table with the
+		// data
 		Worker work = new Worker();
 		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
 
@@ -60,7 +59,6 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		add(scrollPane);
 
 		tablaWorkers = new JTable();
-		
 
 		model = new DefaultTableModel();
 		tablaWorkers.setModel(model);
@@ -69,6 +67,8 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		scrollPane.getViewport().setOpaque(false);
 		tablaWorkers.setShowGrid(false);
 		tablaWorkers.addMouseListener(new MouseAdapter() {
+			// The following method fills in the text field called "textWorker" with the ID
+			// selected in the table with the mouse
 			@Override
 			public void mouseClicked(final MouseEvent e) {
 				if (e.getClickCount() == 1) {
@@ -86,6 +86,7 @@ public class DeleteWorker extends JPanel implements ActionListener {
 
 		scrollPane.setViewportView(tablaWorkers);
 
+		// We call the fillTable() method to fill in the table
 		fillTable();
 
 		lblWorker = new JLabel("Insert the ID of the worker:");
@@ -124,11 +125,13 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		add(background);
 	}
 
+	// Method for emptying the table after deletion
 	public void emptyTable() {
 		DefaultTableModel model = (DefaultTableModel) tablaWorkers.getModel();
 		model.setRowCount(0);
 	}
 
+	// Method to fill in the table with the data of all workers
 	public void fillTable() {
 		Worker work = new Worker();
 		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
@@ -147,7 +150,8 @@ public class DeleteWorker extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		// If the "Show Info" button is pressed, it will display a ShowInfo2 type window
+		// with the data of the selected worker
 		if (e.getSource().equals(btnShowInfo)) {
 			if (textWorker.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Empty field. Please enter an ID");
@@ -162,13 +166,15 @@ public class DeleteWorker extends JPanel implements ActionListener {
 					container.add(tabbedPane, BorderLayout.CENTER);
 					tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 					tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
-					
+
 				} else {
 					JOptionPane.showMessageDialog(null, "Please insert an existing ID");
 				}
 			}
 		}
 
+		// If the user clicks on "Delete", a confirmation message will be displayed and,
+		// if confirmed, the worker will be deleted
 		if (e.getSource().equals(btnDelete)) {
 			if (textWorker.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Empty field. Please enter an ID");

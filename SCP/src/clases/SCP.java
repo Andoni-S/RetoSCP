@@ -116,6 +116,8 @@ public class SCP {
 		this.secondary = secondary;
 	}
 
+	// This method returns an array of all SCPs, and is used, for example, to load
+	// the table with the data
 	public ArrayList<SCP> showAllSCP() {
 		ResultSet rs = null;
 		con = conController.openConnection();
@@ -146,6 +148,7 @@ public class SCP {
 		return arrayDeSCP;
 	}
 
+	// This method is used to check if the SCP exists in the database
 	public boolean checkSCP(String id_scp) {
 		ResultSet rs = null;
 		con = conController.openConnection();

@@ -139,7 +139,6 @@ public class Worker implements Loginable {
 				setBossID(rs.getString("ID_Boss"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		conController.closeConnection(stmt, con);
@@ -179,6 +178,7 @@ public class Worker implements Loginable {
 		return arrayDeWorkers;
 	}
 
+	// This method is used to check if the worker exists in the database
 	public boolean checkWorker(String id_worker) {
 		ResultSet rs = null;
 		con = conController.openConnection();
