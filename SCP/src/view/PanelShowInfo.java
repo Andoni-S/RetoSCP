@@ -236,6 +236,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
+		/**Mostrar SCP*/
 		if (e.getSource().equals(btnAsigned)) {
 			Scientific sci = new Scientific();
 			ArrayList<SCP> scp_list = sci.showAsignedSCP(userID);

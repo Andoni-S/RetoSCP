@@ -193,17 +193,15 @@ public class PanelShowScp extends JPanel {
 
 		cbRelatedSCP = new JComboBox<String>();
 		cbRelatedSCP.setForeground(new Color(255, 255, 255));
-		cbRelatedSCP.setBackground(new Color(0, 0, 0));
-		for(SCP scp: scp_list) {
+		for (SCP scp : scp_list) {
 			cbRelatedSCP.addItem(scp.getScp_id());
 		}
 		cbRelatedSCP.setSelectedItem(scp_1.getRelated_scp_id());
-		cbRelatedSCP.getEditor().getEditorComponent().setBackground(Color.BLACK);
-		JTextField text = ((JTextField) cbRelatedSCP.getEditor().getEditorComponent());
-        text.setBackground(Color.YELLOW);
 		cbRelatedSCP.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
 		cbRelatedSCP.setBounds(697, 166, 270, 27);
+		cbRelatedSCP.setBackground(Color.BLACK);
 		cbRelatedSCP.setEnabled(false);
+		cbRelatedSCP.setEditable(false);
 		add(cbRelatedSCP);
 
 		JTextArea description_background = new JTextArea((String) null);
@@ -367,7 +365,7 @@ public class PanelShowScp extends JPanel {
 				lbMoveOn.setEnabled(false);
 				lbGoBack.setVisible(false);
 				lbGoBack.setEnabled(false);
-				
+
 				// Hacer editables los cuadros de texto
 
 				level_scp.setEditable(true);
@@ -418,7 +416,6 @@ public class PanelShowScp extends JPanel {
 		description_scp.setText(scp_1.getScp_description());
 		cbRelatedSCP.setSelectedItem(scp_1.getRelated_scp_id());
 
-
 		containment = path + scp_1.getContainment() + png;
 		lbContainment.setIcon(new ImageIcon(PanelShowScp.class.getResource(containment)));
 		disruption = path + scp_1.getDisruption() + png;
@@ -452,7 +449,7 @@ public class PanelShowScp extends JPanel {
 		lbGuardar.setEnabled(false);
 		lbModify.setVisible(true);
 		lbModify.setEnabled(true);
-		
+
 		if (index >= scp_list.size() - 1) {
 			lbMoveOn.setVisible(false);
 		} else {

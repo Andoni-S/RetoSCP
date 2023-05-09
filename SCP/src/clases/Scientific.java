@@ -12,7 +12,7 @@ import acs.Risk;
 import acs.SecondaryC;
 import controller.ScientificController;
 
-public class Scientific extends Worker implements ScientificController  {
+public class Scientific extends Worker implements ScientificController {
 
 	private String studies;
 	private Connection con;
@@ -54,6 +54,9 @@ public class Scientific extends Worker implements ScientificController  {
 		return this;
 	}
 
+	/**
+	 * Meter en un array de SCP todos los scp que han sido asignados a el científico
+	 */
 	@Override
 	public ArrayList<SCP> showAsignedSCP(String id) {
 		// TODO Auto-generated method stub
@@ -97,8 +100,9 @@ public class Scientific extends Worker implements ScientificController  {
 
 	}
 
+	/** Modificar un SCP */
 	@Override
-	public boolean  modifySCP(SCP scp) {
+	public boolean modifySCP(SCP scp) {
 		// TODO Auto-generated method stub
 		final String MODIFYSCP = "UPDATE SCP SET ID_RelatedSCP= ?,ID_Facility=?,Procedures=?,Description_SCP=?,Level_SCP=? WHERE ID_SCP=?";
 		boolean correcto = false;
@@ -120,7 +124,7 @@ public class Scientific extends Worker implements ScientificController  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	return correcto;
+		return correcto;
 	}
 
 }

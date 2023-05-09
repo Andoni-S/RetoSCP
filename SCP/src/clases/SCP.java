@@ -113,6 +113,8 @@ public class SCP {
 		this.secondary = secondary;
 	}
 
+	/** Mostrar toda la informacion de un SCP */
+
 	public SCP showInfo(String id_SCP) {
 		ResultSet rs = null;
 		con = conController.openConnection();
