@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import controller.AgentController;
 import controller.Loginable;
+	
 
 public class Agent extends Worker implements AgentController {
 	private String id_facility;

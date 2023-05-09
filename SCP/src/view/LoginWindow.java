@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import clases.Worker;
 import javax.swing.JLabel;
@@ -144,7 +145,6 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 			}
 		}
 	}
-
 	class LabelAnim implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -177,7 +177,6 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,10 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import clases.Agent;
 import clases.Facility;
 import clases.Overseer;
+import clases.SCP;
 import clases.Scientific;
 import clases.Worker;
 
@@ -284,16 +284,21 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
-
-		if (e.getSource().equals(btnAddScp)) {
-			JComponent panelCreateWorker = null;
-			panelCreateWorker = new CreateSCP();
-			tabbedPane.addTab("Tab", null, panelCreateWorker, "Panel");
+		/**Mostrar SCP*/
+		if (e.getSource().equals(btnAsigned)) {
+			Scientific sci = new Scientific();
+			ArrayList<SCP> scp_list = sci.showAsignedSCP(userID);
+			
+			JComponent panelShowSCP = null;
+			panelShowSCP = new PanelShowScp(scp_list);
+			tabbedPane.addTab("Tab", null, panelShowSCP, "Panel");
 			container.add(tabbedPane, BorderLayout.CENTER);
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
+		if (e.getSource().equals(btnAddScp)) {
 
+		}
 		if (e.getSource().equals(btnAddWorker)) {
 			JComponent panelCreateWorker = null;
 			panelCreateWorker = new CreateWorker();
@@ -302,6 +307,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
+
 
 		if (e.getSource().equals(btnAsignScientist)) {
 

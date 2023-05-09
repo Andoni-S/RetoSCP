@@ -47,7 +47,32 @@ public class Overseer extends Worker implements OverseerController {
 	public void asignAgentToFacility() {
 
 	}
-
+	@Override
+	public Worker showInfo(String id) {
+		
+		super.showInfo(id);
+		
+		ResultSet rs = null;
+		con = conController.openConnection();
+				
+		String OBTENERprop = "SELECT Continent FROM Overseer WHERE ID_Overseer = ?";
+		try {
+			stmt = con.prepareStatement(OBTENERprop);		
+			stmt.setString(1, id);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {			
+				setContinent(Continent.valueOf(rs.getString("Continent")));
+			}		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		conController.closeConnection(stmt, con);
+		
+		return this;
+	}
 	@Override
 	public Worker showInfo(String id) {
 		super.showInfo(id);
@@ -92,6 +117,20 @@ public class Overseer extends Worker implements OverseerController {
 
 	}
 
+
+  @Override
+	public void deleteWorker() {
+		ResultSet rs = null;
+		con = conController.openConnection();
+
+		String BORRARwork = "DELETE FROM Worker WHERE ID_Worker = ?";
+
+		try {
+			stmt = con.prepareStatement(BORRARwork);
+
+			stmt.setString(1, id);
+			rs = stmt.executeQuery();
+
 	// This method deletes an SCP from its ID
 	@Override
 	public void deleteSCP(String idScp) {
@@ -105,12 +144,15 @@ public class Overseer extends Worker implements OverseerController {
 
 			stmt.setString(1, idScp);
 			stmt.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		conController.closeConnection(stmt, con);
+
 	}
+
 
 	// And this is used to delete a worker from its ID
 	@Override

@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import controller.Loginable;
 import clases.DBConnectionController;
 
@@ -22,7 +21,6 @@ public class Worker implements Loginable {
 	protected int level;
 	protected String password;
 	protected String bossID;
-
 	protected Connection con;
 	protected PreparedStatement stmt;
 	protected DBConnectionController conController = new DBConnectionController();
@@ -30,7 +28,6 @@ public class Worker implements Loginable {
 	public String getId() {
 		return id;
 	}
-
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -46,7 +43,6 @@ public class Worker implements Loginable {
 	public Date getDate_Entry() {
 		return date_Entry;
 	}
-
 	public void setDate_Entry(Date date_Entry) {
 		this.date_Entry = date_Entry;
 	}
@@ -116,7 +112,6 @@ public class Worker implements Loginable {
 
 		return false;
 	}
-
 	public Worker showInfo(String id) {
 
 		ResultSet rs = null;
@@ -137,7 +132,7 @@ public class Worker implements Loginable {
 				setLevel(rs.getInt("Level_Worker"));
 				setPassword(rs.getString("password_Worker"));
 				setBossID(rs.getString("ID_Boss"));
-			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -156,7 +151,8 @@ public class Worker implements Loginable {
 		try {
 			stmt = con.prepareStatement(OBTENERprop);
 
-			// .setString(1, id);
+			//.setString(1, id);
+
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -164,7 +160,6 @@ public class Worker implements Loginable {
 				workie.setId(rs.getString("ID_Worker"));
 				workie.setName(rs.getString("Name_Worker"));
 				workie.setDate_Entry(rs.getDate("Date_Entry"));
-
 				arrayDeWorkers.add(workie);
 
 			}

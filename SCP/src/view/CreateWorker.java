@@ -239,6 +239,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 			btnAgent_1.setEnabled(true);
 			btnScientist_1.setEnabled(true);
 		}
+
 		if (e.getSource().equals(btnAgent_1)) {
 
 			lblHistory.setText("RECORD");
@@ -260,6 +261,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 			btnAgent_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
 		}
+
 
 		if (e.getSource().equals(btnOverseer_1)) {
 

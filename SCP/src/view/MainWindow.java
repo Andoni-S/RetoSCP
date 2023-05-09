@@ -35,6 +35,11 @@ import javax.swing.ImageIcon;
 
 public class MainWindow extends JFrame implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	//private final JPanel contentPanel = new JPanel();
 	public JTabbedPane tabbedPane;
 	
@@ -79,6 +84,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
+
 		tabbedPane.setUI(new BasicTabbedPaneUI() {  
 		    @Override  
 		    protected int calculateTabAreaHeight(int tab_placement, int run_count, int max_tab_height) {  

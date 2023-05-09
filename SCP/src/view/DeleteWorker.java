@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -19,7 +18,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import clases.Overseer;
 import clases.Worker;
 import java.awt.event.MouseAdapter;
@@ -35,16 +33,15 @@ public class DeleteWorker extends JPanel implements ActionListener {
 	private JButton btnShowInfo;
 	private JButton btnDelete;
 	private JLabel background;
-
 	private JTabbedPane tabbedPane = new JTabbedPane();
 	private Container container = new Container();
-
 	public DeleteWorker() {
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
 
 		// We collect all the workers in an array in order to fill the table with the
 		// data
+
 		Worker work = new Worker();
 		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
 
@@ -102,7 +99,6 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		textWorker.setFont(new Font("OCR A Extended", Font.BOLD, 14));
 		add(textWorker);
 		textWorker.setColumns(10);
-
 		btnShowInfo = new JButton("Show Info");
 		btnShowInfo.setBackground(new Color(0, 0, 0));
 		btnShowInfo.setForeground(new Color(255, 255, 255));
@@ -155,6 +151,7 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		if (e.getSource().equals(btnShowInfo)) {
 			if (textWorker.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Empty field. Please enter an ID");
+
 			} else {
 				String workerDeletion = textWorker.getText();
 				Worker work = new Worker();

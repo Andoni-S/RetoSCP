@@ -2,12 +2,10 @@ package view;
 
 import java.awt.Font;
 import java.awt.Graphics;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import clases.Agent;
 import clases.Facility;
 import java.awt.Color;
