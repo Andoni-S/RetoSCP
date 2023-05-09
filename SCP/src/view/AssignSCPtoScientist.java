@@ -25,27 +25,73 @@ import clases.Worker;
 import java.awt.Color;
 import java.awt.Font;
 
+/**
+ *
+ * This class is a JPanel which implements the ActionListener Interface to add functionality to buttons.
+ * It is used in the MainWindow Class.
+ * @author Iñi
+ */
 public class AssignSCPtoScientist extends JPanel implements ActionListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * This label shows the word SCPs at the upper section of the window.
+	 */
 	private JLabel lblIdSCP;
+	/**
+	 * This label shows the word Scientists at the upper section of the window.
+	 */
 	private JLabel lblIdScientist;
+	/**
+	 * This text field obtains the information of the scientist from the tables and passes it onto the database.
+	 */
 	private JTextField fieldIDScientist;
+	/**
+	 * This text field obtains the information of the SCP from the tables and passes it onto the database.
+	 */
 	private JTextField fieldIDSCP;
+	/**
+	 * This JButton confirms the assignment of an SCP and a Scientist.
+	 */
 	private JButton btnIDSCP;
+	/**
+	 * This JLabel is used to show the background image on the window screen.
+	 */
 	private JLabel background;
+	/**
+	 * This table shows all the scientists, ID and studies there are for each one.
+	 */
 	private JTable table1;
+	/**
+	 * This model is used to show the header of the columns of the scientist's table.
+	 */
 	private DefaultTableModel model1;
+	/**
+	 * This scrollPane is used as a container for the scientist's table.
+	 */
 	private JScrollPane scrollPane1;
+	/**
+	 * This table shows all the SCPs, ID and description there are for each one.
+	 */
 	private JTable table2;
+	/**
+	 * This model is used to show the header of the columns of the SCP's table.
+	 */
 	private DefaultTableModel model2;
+	
+	/**
+	 * This scrollPane is used as a container for the SCP's table.
+	 */
 	private JScrollPane scrollPane2;
+	
 	/**
 	 * Create the panel.
 	 */
+	
+	
 	public AssignSCPtoScientist() {
 		
 		
@@ -151,7 +197,10 @@ public class AssignSCPtoScientist extends JPanel implements ActionListener {
         background.setBounds(0, 0, 1024, 768);
         add(background);
 	}
-	
+	/**
+	 * Fills the table with the information from the database in form of an ArrayList
+	 * and calls to the showAllScientists method to obtain it.
+	 */
 	public void fillTable1() {
 		Scientific scientist = new Scientific();
 		ArrayList<Scientific> arrayScientists = scientist.showAllScientists();
@@ -167,6 +216,10 @@ public class AssignSCPtoScientist extends JPanel implements ActionListener {
 		table1.setDefaultEditor(Object.class, null);
 	}
 	
+	/**
+	 * Fills the table with the information from the database in form of an ArrayList
+	 * and calls to the showAllSCP method to obtain it.
+	 */
 	public void fillTable2() {
 		SCP scp = new SCP();
 		ArrayList<SCP> arraySCP = scp.showAllSCP();
