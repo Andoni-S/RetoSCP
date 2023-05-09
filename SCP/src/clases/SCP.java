@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import acs.Containment;
 import acs.Disruption;
+import java.util.ArrayList;
 import acs.Risk;
 import acs.SecondaryC;
 
@@ -94,6 +95,7 @@ public class SCP {
 	}
 
 	public void setDisruption(Disruption disruption) {
+
 		this.disruption = disruption;
 	}
 
@@ -112,6 +114,7 @@ public class SCP {
 	public void setSecondary(SecondaryC secondary) {
 		this.secondary = secondary;
 	}
+
 
 	/** Mostrar toda la informacion de un SCP */
 
@@ -142,12 +145,71 @@ public class SCP {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+    }
+	// This method returns an array of all SCPs, and is used, for example, to load
+	// the table with the data
+	public ArrayList<SCP> showAllSCP() {
+		ResultSet rs = null;
+		con = conController.openConnection();
+		ArrayList<SCP> arrayDeSCP = new ArrayList<SCP>();
+
+		String OBTENERprop = "SELECT * FROM scp";
+
+		try {
+			stmt = con.prepareStatement(OBTENERprop);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				SCP scp = new SCP();
+				scp.setScp_id(rs.getString("ID_SCP"));
+				scp.setScp_name(rs.getString("Name_SCP"));
+				scp.setScp_level(rs.getInt("Level_SCP"));
+
+				arrayDeSCP.add(scp);
+
+			}
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		conController.closeConnection(stmt, con);
 
-		return this;
+
+		return arrayDeSCP;
+	}
+
+	// This method is used to check if the SCP exists in the database
+	public boolean checkSCP(String id_scp) {
+		ResultSet rs = null;
+		con = conController.openConnection();
+
+		String OBTENERprop1 = "SELECT ID_SCP FROM scp WHERE ID_SCP = ?";
+
+		try {
+			stmt = con.prepareStatement(OBTENERprop1);
+
+			stmt.setString(1, id_scp);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				setScp_id(rs.getString("ID_SCP"));
+			}
+
+			if (scp_id != null) {
+				if (scp_id.equals(id_scp)) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
 }

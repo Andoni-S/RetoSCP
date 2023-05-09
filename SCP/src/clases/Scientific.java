@@ -35,9 +35,11 @@ public class Scientific extends Worker implements ScientificController {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
-		String OBTENERprop = "SELECT Studies FROM Scientist WHERE ID_Scientist = ?";
+		String OBTAINstudies = "SELECT Studies FROM Scientist WHERE ID_Scientist = ?";
+
 		try {
-			stmt = con.prepareStatement(OBTENERprop);
+			stmt = con.prepareStatement(OBTAINstudies);
+
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
 
@@ -54,6 +56,7 @@ public class Scientific extends Worker implements ScientificController {
 		return this;
 	}
 
+
 	/**
 	 * Meter en un array de SCP todos los scp que han sido asignados a el científico
 	 */
@@ -68,13 +71,11 @@ public class Scientific extends Worker implements ScientificController {
 		String OBTENER_SCP = "Select * from scp where ID_SCP in (Select ID_SCP from research where ID_Scientist LIKE ?)";
 		try {
 			stmt = con.prepareStatement(OBTENER_SCP);
-
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				SCP scp = new SCP();
-
 				scp.setScp_id(rs.getString("ID_SCP"));
 				scp.setScp_name(rs.getString("Name_SCP"));
 				scp.setRelated_scp_id(rs.getString("ID_RelatedSCP"));
@@ -95,7 +96,6 @@ public class Scientific extends Worker implements ScientificController {
 		}
 
 		conController.closeConnection(stmt, con);
-
 		return scp_list;
 
 	}
