@@ -133,7 +133,7 @@ public class Worker implements Loginable {
 				setPassword(rs.getString("password_Worker"));
 				setBossID(rs.getString("ID_Boss"));
 
-		} catch (SQLException e) {
+		} }catch (SQLException e) {
 			e.printStackTrace();
 		}
 		conController.closeConnection(stmt, con);

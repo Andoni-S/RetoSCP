@@ -119,6 +119,7 @@ public class CreateSCP extends JPanel implements ActionListener {
 		textAreaProcedures.setForeground(new Color(255, 255, 255));
 		textAreaProcedures.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textAreaProcedures.setBounds(220, 326, 227, 140);
+		textAreaProcedures.setLineWrap(true);
 		textAreaProcedures.setOpaque(false);
 		add(textAreaProcedures);
 		
@@ -138,6 +139,8 @@ public class CreateSCP extends JPanel implements ActionListener {
 		add(lblDescription);
 		
 		textAreaDescription = new JTextArea();
+		textAreaDescription.setForeground(new Color(255, 255, 255));
+		textAreaDescription.setLineWrap(true);
 		textAreaDescription.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textAreaDescription.setBounds(220, 496, 227, 140);
 		textAreaDescription.setOpaque(false);

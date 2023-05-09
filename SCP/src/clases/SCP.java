@@ -118,7 +118,7 @@ public class SCP {
 
 	/** Mostrar toda la informacion de un SCP */
 
-	public SCP showInfo(String id_SCP) {
+	public void showInfo(String id_SCP) {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
@@ -146,6 +146,8 @@ public class SCP {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
     }
+		
+	}
 	// This method returns an array of all SCPs, and is used, for example, to load
 	// the table with the data
 	public ArrayList<SCP> showAllSCP() {

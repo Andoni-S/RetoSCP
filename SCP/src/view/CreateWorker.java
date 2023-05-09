@@ -18,6 +18,7 @@ import javax.swing.UIManager;
 import com.toedter.calendar.JCalendar;
 
 import acs.Continent;
+import acs.Discruption;
 import clases.Agent;
 import clases.Overseer;
 import clases.Worker;
@@ -40,6 +41,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 	private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 	private JTextArea textAreaHistory;
 	private JComboBox<Continent> comboBox;
+	JTextArea textAreaProceduresTransparente = null;
 
 	public CreateWorker() {
 		setBounds(0, 0, 1024, 768);
@@ -196,12 +198,26 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(lblHistory);
 
 		textAreaHistory = new JTextArea();
+		textAreaHistory.setForeground(new Color(255, 255, 255));
 		textAreaHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textAreaHistory.setBounds(284, 388, 227, 202);
+		textAreaHistory.setOpaque(false);
+		textAreaHistory.setLineWrap(true);
 		textAreaHistory.setVisible(false);
 		add(textAreaHistory);
 
+		textAreaProceduresTransparente = new JTextArea();
+		textAreaProceduresTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		textAreaProceduresTransparente.setBounds(284, 388, 227, 202);
+		textAreaProceduresTransparente.setBackground(new Color(0,0,0,80));
+		textAreaProceduresTransparente.setEditable(false);
+		textAreaProceduresTransparente.setEnabled(false);
+		textAreaProceduresTransparente.setVisible(false);
+		add(textAreaProceduresTransparente);
+		
 		comboBox = new JComboBox<>();
+		comboBox.setBackground(new Color(0, 0, 0));
+		comboBox.setForeground(new Color(255, 255, 255));
 		for (Continent cont : Continent.values()) {
 			comboBox.addItem(cont);
 		}
@@ -238,6 +254,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 			btnOverseer_1.setEnabled(true);
 			btnAgent_1.setEnabled(true);
 			btnScientist_1.setEnabled(true);
+			textAreaProceduresTransparente.setVisible(false);
 		}
 
 		if (e.getSource().equals(btnAgent_1)) {
@@ -249,6 +266,8 @@ public class CreateWorker extends JPanel implements ActionListener {
 			textAreaHistory.setVisible(true);
 			btnScientist_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
+			
+			textAreaProceduresTransparente.setVisible(true);		
 		}
 
 		if (e.getSource().equals(btnScientist_1)) {
@@ -260,6 +279,8 @@ public class CreateWorker extends JPanel implements ActionListener {
 			textAreaHistory.setVisible(true);
 			btnAgent_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
+			
+			textAreaProceduresTransparente.setVisible(true);
 		}
 
 

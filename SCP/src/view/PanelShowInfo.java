@@ -36,12 +36,15 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 	private JCheckBox checkBoxActive;
 	private JTabbedPane tabbedPane;
 	private Container container;
-
-	public PanelShowInfo(Worker worker, String usernameUsuario, JTabbedPane tabbedPane_, Container pane) {
+	private Worker worker;
+	
+	public PanelShowInfo(Worker worker_, String usernameUsuario, JTabbedPane tabbedPane_, Container pane) {
 		// JPanel panel = null;
 		tabbedPane = tabbedPane_;
 		container = pane;
 
+		worker = worker_;
+		
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
 
@@ -104,7 +107,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		textFieldId = new JTextField(usernameUsuario);
 		textFieldId.setForeground(new Color(255, 255, 255));
 		textFieldId.setBackground(new Color(0, 0, 0));
-		textFieldId.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
+		textFieldId.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textFieldId.setEditable(false);
 		textFieldId.setBounds(400, 55, 231, 30);
 		add(textFieldId);
@@ -113,7 +116,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		textFieldName = new JTextField(worker.getName());
 		textFieldName.setForeground(new Color(255, 255, 255));
 		textFieldName.setBackground(new Color(0, 0, 0));
-		textFieldName.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
+		textFieldName.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textFieldName.setEditable(false);
 		textFieldName.setColumns(10);
 		textFieldName.setBounds(400, 105, 231, 30);
@@ -122,7 +125,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		textFieldDate = new JTextField(worker.getDate_Entry().toString());
 		textFieldDate.setForeground(new Color(255, 255, 255));
 		textFieldDate.setBackground(new Color(0, 0, 0));
-		textFieldDate.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
+		textFieldDate.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textFieldDate.setEditable(false);
 		textFieldDate.setColumns(10);
 		textFieldDate.setBounds(400, 155, 231, 30);
@@ -136,7 +139,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		add(checkBoxActive);
 
 		lblLevelNumber = new JLabel(String.format("%d", worker.getLevel()));
-		lblLevelNumber.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
+		lblLevelNumber.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		lblLevelNumber.setBounds(400, 255, 132, 40);
 		lblLevelNumber.setForeground(Color.WHITE);
 		add(lblLevelNumber);
@@ -144,7 +147,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		textFieldBoss = new JTextField(worker.getBossID());
 		textFieldBoss.setForeground(new Color(255, 255, 255));
 		textFieldBoss.setBackground(new Color(0, 0, 0));
-		textFieldBoss.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
+		textFieldBoss.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textFieldBoss.setEditable(false);
 		textFieldBoss.setColumns(10);
 		textFieldBoss.setBounds(400, 306, 231, 30);
@@ -158,12 +161,22 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			add(lblRecord);
 
 			txtFieldAge = new JTextArea(((Scientific) worker).getStudies());
-			txtFieldAge.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
+			txtFieldAge.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			txtFieldAge.setBounds(400, 390, 400, 160);
-			txtFieldAge.setForeground(Color.BLACK);
+			txtFieldAge.setForeground(Color.WHITE);
 			txtFieldAge.setEditable(false);
 			txtFieldAge.setLineWrap(true);
+			txtFieldAge.setOpaque(false);
 			add(txtFieldAge);
+			
+			JTextArea textAreaProceduresTransparente = new JTextArea();
+			textAreaProceduresTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			textAreaProceduresTransparente.setBounds(400, 390, 400, 160);
+			textAreaProceduresTransparente.setBackground(new Color(0,0,0,80));
+			textAreaProceduresTransparente.setEditable(false);
+			textAreaProceduresTransparente.setEnabled(false);
+			add(textAreaProceduresTransparente);
+
 
 			btnAsigned = new JButton("ASSIGNED SCP");
 			btnAsigned.setBounds(750, 52, 200, 40);
@@ -182,12 +195,21 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			add(lblRecord);
 
 			txtFieldAge = new JTextArea(((Agent) worker).getHistory());
-			txtFieldAge.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
+			txtFieldAge.setForeground(new Color(255, 255, 255));
+			txtFieldAge.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			txtFieldAge.setBounds(400, 390, 400, 160);
-			txtFieldAge.setForeground(Color.BLACK);
 			txtFieldAge.setEditable(false);
 			txtFieldAge.setLineWrap(true);
+			txtFieldAge.setOpaque(false);
 			add(txtFieldAge);
+			
+			JTextArea textAreaProceduresTransparente = new JTextArea();
+			textAreaProceduresTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			textAreaProceduresTransparente.setBounds(400, 390, 400, 160);
+			textAreaProceduresTransparente.setBackground(new Color(0,0,0,80));
+			textAreaProceduresTransparente.setEditable(false);
+			textAreaProceduresTransparente.setEnabled(false);
+			add(textAreaProceduresTransparente);
 
 			lblHistory = new JLabel("FACILITY      " + ((Agent) worker).getId_facility());
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
@@ -297,7 +319,12 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 		if (e.getSource().equals(btnAddScp)) {
-
+			JComponent panelCreateWorker = null;
+			panelCreateWorker = new CreateSCP();
+			tabbedPane.addTab("Tab", null, panelCreateWorker, "Panel");
+			container.add(tabbedPane, BorderLayout.CENTER);
+			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 		if (e.getSource().equals(btnAddWorker)) {
 			JComponent panelCreateWorker = null;
@@ -337,7 +364,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 
 		if (e.getSource().equals(btnDeleteWorker)) {
 			JComponent panelDeleteWorker = null;
-			panelDeleteWorker = new DeleteWorker();
+			panelDeleteWorker = new DeleteWorker(worker, userID, tabbedPane, container);
 			tabbedPane.addTab("Tab", null, panelDeleteWorker, "Panel");
 			container.add(tabbedPane, BorderLayout.CENTER);
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);

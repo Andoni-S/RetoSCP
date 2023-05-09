@@ -33,12 +33,19 @@ public class DeleteWorker extends JPanel implements ActionListener {
 	private JButton btnShowInfo;
 	private JButton btnDelete;
 	private JLabel background;
-	private JTabbedPane tabbedPane = new JTabbedPane();
-	private Container container = new Container();
-	public DeleteWorker() {
+	private JTabbedPane tabbedPane = null;
+	private Container container = null;
+	private Worker worker;
+	private String user;
+	
+	public DeleteWorker(Worker worker_, String usernameUsuario, JTabbedPane tabbedPane_, Container pane) {
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
 
+		worker = worker_;
+		user = usernameUsuario;
+		tabbedPane = tabbedPane_;
+		container = pane;
 		// We collect all the workers in an array in order to fill the table with the
 		// data
 
@@ -157,13 +164,13 @@ public class DeleteWorker extends JPanel implements ActionListener {
 				Worker work = new Worker();
 
 				if (work.checkWorker(workerDeletion)) {
-					JComponent show = null;
-					show = new ShowInfo2();
-					tabbedPane.addTab("Tab", null, show, "Panel");
-					container.add(tabbedPane, BorderLayout.CENTER);
+					JComponent show = null;				
+					show = new PanelShowInfo(worker, workerDeletion, tabbedPane, container);
+					tabbedPane.addTab("Tab", null, show, "Panel");     			
+					container.add(tabbedPane, BorderLayout.CENTER);				
 					tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 					tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
-
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "Please insert an existing ID");
 				}

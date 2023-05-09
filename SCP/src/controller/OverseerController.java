@@ -13,4 +13,5 @@ public interface OverseerController {
 	// DELETE
 	void deleteWorker(String idWorker);
 	void deleteSCP(String idScp);
+	void deleteWorker();
 }

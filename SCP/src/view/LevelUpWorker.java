@@ -118,7 +118,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		lblDato3.setVisible(false);
 		add(lblDato3);
 
-		lblActive = new JLabel("- Active (1 YES / 0 NO):        ");
+		lblActive = new JLabel("- Active:        ");
 		lblActive.setForeground(new Color(255, 255, 255));
 		lblActive.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblActive.setBounds(130, 360, 595, 43);
