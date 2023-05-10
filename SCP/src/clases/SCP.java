@@ -120,10 +120,10 @@ public class SCP {
 		con = conController.openConnection();
 		ArrayList<SCP> arrayDeSCP = new ArrayList<SCP>();
 
-		String OBTENERprop = "SELECT * FROM scp";
+		String OBTENERSCPs = "SELECT * FROM scp";
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop);
+			stmt = con.prepareStatement(OBTENERSCPs);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -149,10 +149,10 @@ public class SCP {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
-		String OBTENERprop1 = "SELECT ID_SCP FROM scp WHERE ID_SCP = ?";
+		String OBTENERIDSCP = "SELECT ID_SCP FROM scp WHERE ID_SCP = ?";
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop1);
+			stmt = con.prepareStatement(OBTENERIDSCP);
 
 			stmt.setString(1, id_scp);
 			rs = stmt.executeQuery();

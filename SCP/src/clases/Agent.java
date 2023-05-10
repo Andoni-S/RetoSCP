@@ -89,7 +89,6 @@ public class Agent extends Worker implements AgentController {
 	@Override
 	public void createWorker() {
 		
-		ResultSet rs = null;
 		con = conController.openConnection();
 
 		try {
@@ -120,10 +119,10 @@ public class Agent extends Worker implements AgentController {
 		String id = "AGE-";
 		
 		
-		String OBTENERprop = "select count(ID_Agent) AS count FROM AGENT;";
+		String OBTENERIDAgent = "select count(ID_Agent) AS count FROM AGENT;";
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop);
+			stmt = con.prepareStatement(OBTENERIDAgent);
 
 			//.setString(1, id);
 			rs = stmt.executeQuery();

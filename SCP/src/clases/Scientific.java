@@ -100,7 +100,6 @@ public class Scientific extends Worker implements ScientificController {
 	@Override
 	public void createWorker() {
 
-		ResultSet rs = null;
 		con = conController.openConnection();
 
 		try {
@@ -130,10 +129,10 @@ public class Scientific extends Worker implements ScientificController {
 		con = conController.openConnection();
 		String id = "SCI-";
 
-		String OBTENERprop = "select count(ID_Scientist) AS count FROM SCIENTIST";
+		String OBTENERIDSCientist = "select count(ID_Scientist) AS count FROM SCIENTIST";
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop);
+			stmt = con.prepareStatement(OBTENERIDSCientist);
 
 			// .setString(1, id);
 			rs = stmt.executeQuery();
@@ -158,10 +157,10 @@ public class Scientific extends Worker implements ScientificController {
 		con = conController.openConnection();
 		ArrayList<Scientific> arrayScientists = new ArrayList<Scientific>();
 
-		String OBTENERprop = "SELECT * FROM scientist";
+		String OBTENERScientists = "SELECT * FROM scientist";
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop);
+			stmt = con.prepareStatement(OBTENERScientists);
 
 			// .setString(1, id);
 			rs = stmt.executeQuery();

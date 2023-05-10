@@ -179,10 +179,10 @@ public class Overseer extends Worker implements OverseerController {
 		String id = "OVE-";
 		
 		
-		String OBTENERprop = "select count(ID_Overseer) AS count FROM OVERSEER;";
+		String OBTENERIDAgent = "select count(ID_Overseer) AS count FROM OVERSEER;";
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop);
+			stmt = con.prepareStatement(OBTENERIDAgent);
 
 			//.setString(1, id);
 			rs = stmt.executeQuery();

@@ -88,10 +88,10 @@ public class Worker implements Loginable {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
-		String OBTENERprop1 = "SELECT ID_Worker, password_Worker FROM Worker WHERE ID_Worker = ?";
+		String OBTENERIDWorker = "SELECT ID_Worker, password_Worker FROM Worker WHERE ID_Worker = ?";
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop1);
+			stmt = con.prepareStatement(OBTENERIDWorker);
 
 			stmt.setString(1, usernameUsuario);
 			rs = stmt.executeQuery();
@@ -122,9 +122,9 @@ public class Worker implements Loginable {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
-		String OBTENERprop = "SELECT * FROM Worker WHERE ID_Worker = ?";
+		String OBTENERIDWorker = "SELECT * FROM Worker WHERE ID_Worker = ?";
 		try {
-			stmt = con.prepareStatement(OBTENERprop);
+			stmt = con.prepareStatement(OBTENERIDWorker);
 
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
@@ -152,10 +152,10 @@ public class Worker implements Loginable {
 		con = conController.openConnection();
 		ArrayList<Worker> arrayDeWorkers = new ArrayList<Worker>();
 
-		String OBTENERprop = "SELECT * FROM Worker";
+		String OBTENERWorker = "SELECT * FROM Worker";
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop);
+			stmt = con.prepareStatement(OBTENERWorker);
 
 			// .setString(1, id);
 			rs = stmt.executeQuery();
@@ -183,10 +183,10 @@ public class Worker implements Loginable {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
-		String OBTENERprop1 = "SELECT ID_Worker FROM Worker WHERE ID_Worker = ?";
+		String OBTENERIDWorker = "SELECT ID_Worker FROM Worker WHERE ID_Worker = ?";
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop1);
+			stmt = con.prepareStatement(OBTENERIDWorker);
 
 			stmt.setString(1, id_worker);
 			rs = stmt.executeQuery();
