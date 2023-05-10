@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Panel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,7 +20,6 @@ import javax.swing.table.DefaultTableModel;
 import clases.Overseer;
 import clases.SCP;
 import clases.Scientific;
-import clases.Worker;
 
 import java.awt.Color;
 import java.awt.Font;
