@@ -284,11 +284,11 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
-		/**Mostrar SCP*/
+		/** Mostrar SCP */
 		if (e.getSource().equals(btnAsigned)) {
 			Scientific sci = new Scientific();
 			ArrayList<SCP> scp_list = sci.showAsignedSCP(userID);
-			
+
 			JComponent panelShowSCP = null;
 			panelShowSCP = new PanelShowScp(scp_list);
 			tabbedPane.addTab("Tab", null, panelShowSCP, "Panel");
@@ -297,7 +297,17 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 		if (e.getSource().equals(btnAddScp)) {
-
+			JComponent panelCreateWorker = null;
+			SCP scp = new SCP();
+			Overseer ove = new Overseer();
+			ArrayList<SCP> scp_list = scp.showAllSCP();
+			ArrayList<String> facility_list = ove.showAllFacility();
+			
+			panelCreateWorker = new CreateSCP(scp_list, facility_list);
+			tabbedPane.addTab("Tab", null, panelCreateWorker, "Panel");
+			container.add(tabbedPane, BorderLayout.CENTER);
+			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 		if (e.getSource().equals(btnAddWorker)) {
 			JComponent panelCreateWorker = null;
@@ -307,7 +317,6 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
-
 
 		if (e.getSource().equals(btnAsignScientist)) {
 

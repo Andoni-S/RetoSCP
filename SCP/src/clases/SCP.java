@@ -146,6 +146,8 @@ public class SCP {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
     }
+		return null;
+	}
 	// This method returns an array of all SCPs, and is used, for example, to load
 	// the table with the data
 	public ArrayList<SCP> showAllSCP() {
@@ -211,5 +213,6 @@ public class SCP {
 
 		return false;
 	}
-
 }
+	
+

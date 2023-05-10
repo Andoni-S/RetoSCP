@@ -132,7 +132,7 @@ public class Worker implements Loginable {
 				setLevel(rs.getInt("Level_Worker"));
 				setPassword(rs.getString("password_Worker"));
 				setBossID(rs.getString("ID_Boss"));
-
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
