@@ -1,7 +1,6 @@
 package main;
 
 import view.LoginWindow;
-import view.MainWindow;
 
 public class Main {
 

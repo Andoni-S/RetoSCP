@@ -1,19 +1,17 @@
 package clases;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 
-import com.mysql.cj.jdbc.CallableStatement;
+
 
 import controller.Loginable;
-import clases.DBConnectionController;
 
 public class Worker implements Loginable {
 

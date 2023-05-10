@@ -20,7 +20,6 @@ import clases.Overseer;
 import clases.Worker;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class DeleteWorker extends JPanel implements ActionListener {
 

@@ -1,7 +1,5 @@
 package controller;
 
-import clases.SCP;
-import clases.Scientific;
 import clases.Worker;
 
 public interface OverseerController {

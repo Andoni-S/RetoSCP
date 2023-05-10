@@ -18,7 +18,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import clases.Agent;
-import clases.Facility;
 import clases.Overseer;
 import clases.Scientific;
 import clases.Worker;

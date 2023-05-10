@@ -18,7 +18,6 @@ import javax.swing.table.DefaultTableModel;
 
 import clases.Overseer;
 import clases.SCP;
-import clases.Worker;
 
 public class DeleteSCP extends JPanel implements ActionListener {
 

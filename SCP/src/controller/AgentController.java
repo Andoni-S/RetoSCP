@@ -1,6 +1,5 @@
 package controller;
 
-import clases.Agent;
 import clases.Facility;
 
 public interface AgentController {
