@@ -6,24 +6,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDayChooser;
 
 import acs.Continent;
 import clases.Agent;
 import clases.Overseer;
 import clases.Scientific;
 import clases.Worker;
+import exceptions.ServerException;
 import main.AgentFactory;
+import main.LoginableFactory;
 import main.OverseerFactory;
 import main.ScientificFactory;
 
@@ -120,16 +124,22 @@ public class CreateWorker extends JPanel implements ActionListener {
 		fieldName.setColumns(10);
 
 		fieldEntryDate = new JTextField();
+		fieldEntryDate.setEditable(false);
 		fieldEntryDate.setColumns(10);
 		fieldEntryDate.setBounds(600, 430, 300, 33);
 		add(fieldEntryDate);
 
 		chckbxActive = new JCheckBox("");
-		chckbxActive.setBackground(new Color(255, 255, 255, 0));
-		chckbxActive.setBounds(284, 178, 97, 23);
+		chckbxActive.setBackground(Color.BLACK);
+		chckbxActive.setBounds(284, 181, 21, 20);
 		add(chckbxActive);
 
-		ArrayList<String> bossList = OverseerFactory.getOverseerDB().getOverseerIDs();
+		ArrayList<String> bossList = null;
+		try {
+			bossList = OverseerFactory.getOverseerDB().getOverseerIDs();
+		} catch (ServerException ex) {
+			JOptionPane.showMessageDialog(this, ex.getMessage());
+		}
 		
 		comboBoxBoss = new JComboBox<>();
 		for (String id : bossList) {
@@ -159,11 +169,30 @@ public class CreateWorker extends JPanel implements ActionListener {
 
 		// Instanciar Componente
 		calendar = new JCalendar();
+		calendar.getDayChooser().setBackground(Color.WHITE);
+		calendar.getDayChooser().setWeekdayForeground(Color.WHITE);
+		calendar.setBackground(new Color(0,0,0,0));
 		calendar.setWeekdayForeground(Color.WHITE);
 		calendar.setWeekOfYearVisible(false);
-		calendar.setDecorationBackgroundColor(Color.BLACK);
+		calendar.setDecorationBackgroundColor(new Color(0,0,0,0));
+		calendar.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		// Ubicar y agregar al panel
 		calendar.setBounds(600, 100, 300, 300);
+		
+		for (int i = 0; i < calendar.getComponentCount(); i++)  {
+		    if (calendar.getComponent(i) instanceof JDayChooser) {
+		        JDayChooser chooser = ((JDayChooser) calendar.getComponent( i ) );
+		        JPanel panel = (JPanel) chooser.getComponent(0);
+		        // the following line changes the color of the background behind the buttons
+		        panel.setBackground(new Color(0,0,0,0));
+		        // the for loop below changes the color of the buttons themselves
+		        for (int y = 0; y < panel.getComponentCount(); y++) {
+		            panel.getComponent(y).setBackground(Color.BLACK);
+		            panel.getComponent(y).setForeground(Color.WHITE);
+		        }
+		        break; // leave the for loop, we're done
+		    }
+		}
 		calendar.getDayChooser().addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
@@ -222,50 +251,47 @@ public class CreateWorker extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		//Add Worker Buttons
-		if (e.getSource().equals(btnCreate)){
-			Worker worker = null;		
-			if(isAgent)
-			{
-				worker = new Agent();
-				((Agent)worker).setHistory(textAreaHistory.getText());
-			}
-			else if(isScientist)
-			{
-				worker = new Scientific();
-				((Scientific)worker).setStudies(textAreaHistory.getText());
-			}
-			else if(isOverseer)
-			{
-				worker = new Overseer();
-				((Overseer)worker).setContinent(Continent.valueOf(comboBox.getSelectedItem().toString()));
-			}
-		
-			String id = worker.workerIDCreator();
+		try {
+			//Add Worker Buttons
+			if (e.getSource().equals(btnCreate)){
+				Worker worker = null;		
+				if(isAgent)
+				{
+					worker = new Agent();
+					((Agent)worker).setHistory(textAreaHistory.getText());
+				}
+				else if(isScientist)
+				{
+					worker = new Scientific();
+					((Scientific)worker).setStudies(textAreaHistory.getText());
+				}
+				else if(isOverseer)
+				{
+					worker = new Overseer();
+					((Overseer)worker).setContinent(Continent.valueOf(comboBox.getSelectedItem().toString()));
+				}
 			
-			worker.setId(id);
-			worker.setActive(chckbxActive.isSelected());
-			worker.setName(fieldName.getText());
-			worker.setPassword(fieldPassword.getText());
-			worker.setLevel((int)spinnerLevel.getValue());
-			
-			System.out.println((int)spinnerLevel.getValue());
-			System.out.println(fieldEntryDate.getText());
-			
-			java.sql.Date sqlDate = java.sql.Date.valueOf( fieldEntryDate.getText() );
-			//(Date)calendar.getDate()
-			
-			
-			worker.setDate_Entry(sqlDate);
-			worker.setBossID((String)comboBoxBoss.getSelectedItem());
-			
-			if(isAgent)
-				AgentFactory.getAgentDB().createWorker((Agent)worker);
-			else if(isScientist)
-				ScientificFactory.getScientificDB().createWorker((Scientific)worker);			
-			else if(isOverseer) 
-				OverseerFactory.getOverseerDB().createWorker((Overseer)worker);
-			
+				String id = LoginableFactory.getLoginable().workerIDCreator(worker);
+				
+				worker.setId(id);
+				worker.setActive(chckbxActive.isSelected());
+				worker.setName(fieldName.getText());
+				worker.setPassword(fieldPassword.getText());
+				worker.setLevel((int)spinnerLevel.getValue());
+				
+				java.sql.Date sqlDate = java.sql.Date.valueOf( fieldEntryDate.getText() );	
+				
+				worker.setDate_Entry(sqlDate);
+				worker.setBossID((String)comboBoxBoss.getSelectedItem());
+				
+				if(isAgent)
+					AgentFactory.getAgentDB().createWorker((Agent)worker);
+				else if(isScientist)
+					ScientificFactory.getScientificDB().createWorker((Scientific)worker);			
+				else if(isOverseer) 
+					OverseerFactory.getOverseerDB().createWorker((Overseer)worker);		
+				
+				JOptionPane.showMessageDialog(this, "Worker created succesfully, ID "+id+" assigned");
 		}
 		if (e.getSource().equals(btnReset)){
 			isAgent = false;
@@ -288,7 +314,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource().equals(btnAgent_1)) {
-      isAgent= true;
+			isAgent= true;
 			lblHistory.setText("RECORD");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 385, 91, 46);
@@ -300,7 +326,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource().equals(btnScientist_1)) {
-      isScientist = true;
+			isScientist = true;
 			lblHistory.setText("STUDIES");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 385, 91, 46);
@@ -312,7 +338,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource().equals(btnOverseer_1)) {
-      isOverseer = true;
+			isOverseer = true;
 			lblHistory.setText("CONTINENT");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 375, 91, 46);
@@ -321,6 +347,10 @@ public class CreateWorker extends JPanel implements ActionListener {
 			btnAgent_1.setEnabled(false);
 			btnScientist_1.setEnabled(false);
 			btnCreate.setEnabled(true);
+		}
+		
+		}catch (ServerException ex){
+			JOptionPane.showMessageDialog(this, ex.getMessage());
 		}
 	}
 }

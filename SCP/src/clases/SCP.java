@@ -6,10 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+
+import DBImplementation.DBConnectionController;
 import acs.Containment;
-import acs.Discruption;
+import acs.Disruption;
 import acs.Risk;
 import acs.SecondaryC;
+import exceptions.ServerException;
 
 public class SCP {
 	private String scp_id;
@@ -20,7 +23,7 @@ public class SCP {
 	private String scp_description;
 	private int scp_level;
 	private Containment containment;
-	private Discruption disruption;
+	private Disruption disruption;
 	private Risk risk;
 	private SecondaryC secondary;
 
@@ -92,11 +95,11 @@ public class SCP {
 		this.containment = containment;
 	}
 
-	public Discruption getDisruption() {
+	public Disruption getDisruption() {
 		return disruption;
 	}
 
-	public void setDisruption(Discruption disruption) {
+	public void setDisruption(Disruption disruption) {
 		this.disruption = disruption;
 	}
 
@@ -114,67 +117,5 @@ public class SCP {
 
 	public void setSecondary(SecondaryC secondary) {
 		this.secondary = secondary;
-	}
-
-	public ArrayList<SCP> showAllSCP() {
-		ResultSet rs = null;
-		con = conController.openConnection();
-		ArrayList<SCP> arrayDeSCP = new ArrayList<SCP>();
-
-		String OBTENERprop = "SELECT * FROM scp";
-
-		try {
-			stmt = con.prepareStatement(OBTENERprop);
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				SCP scp = new SCP();
-				scp.setScp_id(rs.getString("ID_SCP"));
-				scp.setScp_name(rs.getString("Name_SCP"));
-				scp.setScp_level(rs.getInt("Level_SCP"));
-
-				arrayDeSCP.add(scp);
-
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		conController.closeConnection(stmt, con);
-
-		return arrayDeSCP;
-	}
-
-	public boolean checkSCP(String id_scp) {
-		ResultSet rs = null;
-		con = conController.openConnection();
-
-		String OBTENERprop1 = "SELECT ID_SCP FROM scp WHERE ID_SCP = ?";
-
-		try {
-			stmt = con.prepareStatement(OBTENERprop1);
-
-			stmt.setString(1, id_scp);
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				setScp_id(rs.getString("ID_SCP"));
-			}
-
-			if (scp_id != null) {
-				if (scp_id.equals(id_scp)) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return false;
 	}
 }

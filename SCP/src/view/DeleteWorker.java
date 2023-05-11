@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 import clases.Overseer;
 import clases.Worker;
+import exceptions.ServerException;
 import main.LoginableFactory;
 import main.OverseerFactory;
 
@@ -43,7 +44,11 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		setLayout(null);
 
 		Worker work = new Worker();
-		ArrayList<Worker> arrayDeWorkers = LoginableFactory.getLoginable().showAllWorkers();
+		try {
+			ArrayList<Worker> arrayDeWorkers = LoginableFactory.getLoginable().showAllWorkers();
+		} catch (ServerException e1) {
+			JOptionPane.showMessageDialog(this, e1.getMessage());
+		}
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.addMouseListener(new MouseAdapter() {
@@ -123,24 +128,35 @@ public class DeleteWorker extends JPanel implements ActionListener {
 	}
 
 	public void fillTable() {
-		Worker work = new Worker();
-		ArrayList<Worker> arrayDeWorkers = LoginableFactory.getLoginable().showAllWorkers();
+		try {
+			Worker work = new Worker();
+			ArrayList<Worker> arrayDeWorkers;
+		
+			arrayDeWorkers = LoginableFactory.getLoginable().showAllWorkers();
+		
 
-		for (Worker worker : arrayDeWorkers) {
+			for (Worker worker : arrayDeWorkers) {
 			Object[] fila = new Object[3];
 			fila[0] = worker.getId();
 			fila[1] = worker.getName();
 			fila[2] = worker.getDate_Entry();
 
 			model.addRow(fila);
-		}
+			}
 
-		tablaWorkers.setDefaultEditor(Object.class, null);
+			tablaWorkers.setDefaultEditor(Object.class, null);
+		
+		} catch (ServerException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		try {
+			
+		
 		if (e.getSource().equals(btnShowInfo)) {
 			if (textWorker.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Empty field. Please enter an ID");
@@ -181,6 +197,9 @@ public class DeleteWorker extends JPanel implements ActionListener {
 				}
 			}
 		}
-
+		}catch (ServerException ex) {
+			JOptionPane.showMessageDialog(this, ex.getMessage());
+		}
+		
 	}
 }

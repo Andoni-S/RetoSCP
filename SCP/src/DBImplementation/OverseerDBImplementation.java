@@ -8,11 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import acs.Continent;
-import clases.DBConnectionController;
 import clases.Overseer;
+import clases.SCP;
 import clases.Scientific;
 import clases.Worker;
 import controller.OverseerControllable;
+import exceptions.ServerException;
 
 public class OverseerDBImplementation implements OverseerControllable{
 
@@ -22,12 +23,6 @@ public class OverseerDBImplementation implements OverseerControllable{
 	
 	@Override
 	public void addSCP() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addWorker() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -45,69 +40,77 @@ public class OverseerDBImplementation implements OverseerControllable{
 	}
 
 	@Override
-	public void levelUpWorker(Worker work) {
+	public void levelUpWorker(Worker work) throws ServerException {
 		ResultSet rs = null;
-		con = conController.openConnection();
-		String UPDATEworker = "UPDATE WORKER SET Level_Worker = Level_Worker + 1 WHERE ID_Worker=?";
-
-		try {
+		try {		
+			con = conController.openConnection();
+			
+			String UPDATEworker = "UPDATE WORKER SET Level_Worker = Level_Worker + 1 WHERE ID_Worker=?";	
 			stmt = con.prepareStatement(UPDATEworker);
 			stmt.setString(1, work.getId());
-			stmt.executeUpdate();
-
+			stmt.executeUpdate();	
+			
+			conController.closeConnection(stmt, con);
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		conController.closeConnection(stmt, con);
 	}
 
 	@Override
-	public void deleteWorker(String idWorker) {
+	public void deleteWorker(String idWorker) throws ServerException {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
-		String BORRARwork = "DELETE FROM Worker WHERE ID_Worker = ?";
-
 		try {
+			
+			String BORRARwork = "DELETE FROM Worker WHERE ID_Worker = ?";
 			stmt = con.prepareStatement(BORRARwork);
-
 			stmt.setString(1, idWorker);
 			stmt.executeUpdate();
+		
+
+			conController.closeConnection(stmt, con);	
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		conController.closeConnection(stmt, con);	
 	}
 
 	@Override
-	public void deleteSCP(String idScp) {
-		ResultSet rs = null;
-		con = conController.openConnection();
-
-		String DELETEscp = "DELETE FROM scp WHERE ID_SCP = ?";
-
+	public void deleteSCP(String idScp) throws ServerException {
+		
 		try {
+			
+			ResultSet rs = null;
+			con = conController.openConnection();
+
+			String DELETEscp = "DELETE FROM scp WHERE ID_SCP = ?";
+
+		
 			stmt = con.prepareStatement(DELETEscp);
 
 			stmt.setString(1, idScp);
-			stmt.executeUpdate();
+			stmt.executeUpdate();		
 
+			conController.closeConnection(stmt, con);
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		conController.closeConnection(stmt, con);
 	}
 
 	@Override
-	public Worker showInfo(String id) {
+	public Worker showInfo(String id) throws ServerException {
 		ResultSet rs = null;
-		con = conController.openConnection();
-		String OBTAINstudies = "select * from worker w, overseer o where w.ID_Worker = o.ID_Overseer and ID_Worker = ?";
-
-		Overseer ove = new Overseer();
+		Overseer ove = null;
 		try {
+			
+			con = conController.openConnection();
+			String OBTAINstudies = "select * from worker w, overseer o where w.ID_Worker = o.ID_Overseer and ID_Worker = ?";
+
+			ove = new Overseer();
+		
 			stmt = con.prepareStatement(OBTAINstudies);
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
@@ -122,21 +125,23 @@ public class OverseerDBImplementation implements OverseerControllable{
 				ove.setBossID(rs.getString("ID_Boss"));
 				ove.setContinent(Continent.valueOf(rs.getString("Continent")));
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 
 		conController.closeConnection(stmt, con);
 
+		} catch (SQLException e) {
+			throw new ServerException(e.getMessage());
+		}
+		
 		return ove;
 	}
 
 	@Override
-	public void createWorker(Overseer ove) {
+	public void createWorker(Overseer ove) throws ServerException {
 		ResultSet rs = null;
+		try {
 		con = conController.openConnection();
 
-		try {
+		
 			CallableStatement cst = con.prepareCall("{CALL insertOverseer(?, ?, ?, ?, ?, ?, ? ,?)}");
 			
 			cst.setString(1,ove.getId());
@@ -148,39 +153,100 @@ public class OverseerDBImplementation implements OverseerControllable{
 			cst.setString(7, ove.getBossID());
 			cst.setString(8, ove.getContinent().toString());
 			cst.execute();
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+				
 		conController.closeConnection(stmt, con);
+		
+		} catch (SQLException e) {
+			throw new ServerException(e.getMessage());
+		}
 		
 	}
 	@Override
-	public ArrayList<String> getOverseerIDs() {
+	public ArrayList<String> getOverseerIDs() throws ServerException {
 		ResultSet rs = null;
-		con = conController.openConnection();
-		String OBTAINids = "SELECT ID_Overseer FROM Overseer";
-
-		ArrayList<String> idList = new ArrayList();
-		
+		ArrayList<String> idList = null;
 		try {
+			
+			con = conController.openConnection();
+			String OBTAINids = "SELECT ID_Overseer FROM Overseer";
+
+			idList = new ArrayList();
+		
+		
 			stmt = con.prepareStatement(OBTAINids);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {				
 				idList.add(rs.getString("ID_Overseer"));
-			}
-			
+			}		
+
+			conController.closeConnection(stmt, con);
+
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new ServerException(e.getMessage());
+		}
+		
+		return idList;	
+	}
+	
+	public ArrayList<SCP> showAllSCP() throws ServerException {
+		try {
+		
+			ResultSet rs = null;
+			con = conController.openConnection();
+			ArrayList<SCP> arrayDeSCP = new ArrayList<SCP>();
+
+			String OBTENERprop = "SELECT * FROM scp";	
+			stmt = con.prepareStatement(OBTENERprop);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				SCP scp = new SCP();
+				scp.setScp_id(rs.getString("ID_SCP"));
+				scp.setScp_name(rs.getString("Name_SCP"));
+				scp.setScp_level(rs.getInt("Level_SCP"));
+				arrayDeSCP.add(scp);
+
+			}
+			conController.closeConnection(stmt, con);
+
+			return arrayDeSCP;
+		
+		} catch (SQLException e) {
+			throw new ServerException(e.getMessage());
+		}
+	}
+
+	public boolean checkSCP(String id_scp) throws ServerException {
+		ResultSet rs = null;
+		
+		try {		
+			con = conController.openConnection();
+
+			String OBTENERprop1 = "SELECT ID_SCP FROM scp WHERE ID_SCP = ?";
+			String id = null;
+		
+			stmt = con.prepareStatement(OBTENERprop1);
+
+			stmt.setString(1, id_scp);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				id = rs.getString("ID_SCP");
+			}
+
+			conController.closeConnection(stmt, con);
+			
+			if (id.equals(id_scp) && id != null) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			throw new ServerException(e.getMessage());
 		}
 
-		conController.closeConnection(stmt, con);
-
-		return idList;
 		
 	}
 

@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import clases.DBConnectionController;
+import clases.Agent;
+import clases.Overseer;
+import clases.Scientific;
 import clases.Worker;
 import controller.Loginable;
 import exceptions.LoginException;
@@ -47,7 +49,6 @@ public class LoginDBImplementation implements Loginable{
 				throw new LoginException("Error in Login");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new ServerException(e.getMessage());
 		}
 
@@ -55,7 +56,7 @@ public class LoginDBImplementation implements Loginable{
 	}
 
 	@Override
-	public Worker showInfoDefault(String id) {
+	public Worker showInfoDefault(String id) throws ServerException {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
@@ -77,15 +78,14 @@ public class LoginDBImplementation implements Loginable{
 				worker.setBossID(rs.getString("ID_Boss"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ServerException(e.getMessage());
 		}
 		conController.closeConnection(stmt, con);
 		return worker;
 	}
 
 	@Override
-	public ArrayList<Worker> showAllWorkers() {
+	public ArrayList<Worker> showAllWorkers() throws ServerException {
 		ResultSet rs = null;
 		con = conController.openConnection();
 		ArrayList<Worker> arrayDeWorkers = new ArrayList<Worker>();
@@ -94,8 +94,6 @@ public class LoginDBImplementation implements Loginable{
 
 		try {
 			stmt = con.prepareStatement(OBTENERprop);
-
-			// .setString(1, id);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -105,18 +103,17 @@ public class LoginDBImplementation implements Loginable{
 				workie.setDate_Entry(rs.getDate("Date_Entry"));
 
 				arrayDeWorkers.add(workie);
-
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new ServerException(e.getMessage());
 		}
 
 		conController.closeConnection(stmt, con);
 
 		return arrayDeWorkers;
 	}
-	public boolean checkWorker(String id_worker) {
+	public boolean checkWorker(String id_worker) throws ServerException {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
@@ -128,7 +125,7 @@ public class LoginDBImplementation implements Loginable{
 			stmt.setString(1, id_worker);
 			rs = stmt.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				worker.setId(rs.getString("ID_Worker"));
 			}
 
@@ -142,9 +139,41 @@ public class LoginDBImplementation implements Loginable{
 				return false;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new ServerException(e.getMessage());
+		}
+	}
+	@Override
+	public String workerIDCreator(Worker w) throws ServerException {
+		ResultSet rs = null;
+		con = conController.openConnection();
+		String id = "";
+		String OBTAINcount="";
+		
+		if(w instanceof Agent) {
+			id = "AGE-"; 
+			OBTAINcount = "select count(ID_Agent) AS count FROM AGENT;";
+		}
+		else if(w instanceof Scientific) {
+			id = "SCI-"; 
+			OBTAINcount = "select count(ID_Scientist) AS count FROM Scientist;";
+		}
+		else if(w instanceof Overseer) {
+			id = "OVE-"; 
+			OBTAINcount = "select count(ID_Overseer) AS count FROM Overseer;";
+		}
+		
+		try {
+			stmt = con.prepareStatement(OBTAINcount);
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				id = id+String.format("%04d", rs.getInt("count")+1);				
+			}
+
+		} catch (SQLException e) {
+			throw new ServerException(e.getMessage());
 		}
 
-		return false;
+		conController.closeConnection(stmt, con);
+		return id;
 	}
 }

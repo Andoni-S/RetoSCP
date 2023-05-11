@@ -19,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
 import clases.Overseer;
 import clases.SCP;
 import clases.Worker;
+import exceptions.EmptyFieldException;
+import exceptions.ServerException;
 import main.OverseerFactory;
 
 public class DeleteSCP extends JPanel implements ActionListener {
@@ -40,8 +42,12 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
 
-		SCP scp = new SCP();
-		ArrayList<SCP> arrayDeSCP = scp.showAllSCP();
+		try {
+			ArrayList<SCP> arrayDeSCP =  OverseerFactory.getOverseerDB().showAllSCP();
+		} catch (ServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -105,23 +111,34 @@ public class DeleteSCP extends JPanel implements ActionListener {
 	}
 
 	public void fillTable() {
-		SCP scp = new SCP();
-		ArrayList<SCP> arrayDeSCP = scp.showAllSCP();
+		try {
 
-		for (SCP s : arrayDeSCP) {
-			Object[] fila = new Object[3];
-			fila[0] = s.getScp_id();
-			fila[1] = s.getScp_name();
-			fila[2] = s.getScp_level();
+			ArrayList<SCP> arrayDeSCP;
+		
+			arrayDeSCP = OverseerFactory.getOverseerDB().showAllSCP();
+		
 
-			model.addRow(fila);
+			for (SCP s : arrayDeSCP) {
+				Object[] fila = new Object[3];
+				fila[0] = s.getScp_id();
+				fila[1] = s.getScp_name();
+				fila[2] = s.getScp_level();
+
+				model.addRow(fila);
+			}	
+
+			tablaSCP.setDefaultEditor(Object.class, null);
+		
+		} catch (ServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		tablaSCP.setDefaultEditor(Object.class, null);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		try {
+			
 		if (e.getSource().equals(btnShowInfo)) {
 			if (textSCP.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(tablaSCP, "Empty field. Please enter an ID");
@@ -129,7 +146,7 @@ public class DeleteSCP extends JPanel implements ActionListener {
 				String scpDeletion = textSCP.getText();
 				SCP sc = new SCP();
 
-				if (sc.checkSCP(scpDeletion)) {
+				if (OverseerFactory.getOverseerDB().checkSCP(scpDeletion)) {
 
 				} else {
 					JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID");
@@ -138,28 +155,36 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource().equals(btnDelete)) {
+						
 			if (textSCP.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(tablaSCP, "Empty field. Please enter an ID");
+				throw new EmptyFieldException("Empty field. Please enter an ID");
 			} else {
 				int n = JOptionPane.showConfirmDialog(null, "Do you want to delete this worker?", "Confirmation",
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				if (n == JOptionPane.YES_OPTION) {
 					String SCPDeletion = textSCP.getText();
-					SCP sc = new SCP();
 
-					if (sc.checkSCP(SCPDeletion)) {
-						OverseerFactory.getOverseerDB().deleteSCP(sc.getScp_id());
+					if (OverseerFactory.getOverseerDB().checkSCP(SCPDeletion)) {					
+						OverseerFactory.getOverseerDB().deleteSCP(SCPDeletion);
 						JOptionPane.showMessageDialog(tablaSCP, "The SCP has been deleted");
 						emptyTable();
 						fillTable();
-						fillTable();
 						textSCP.setText("");
-					} else {
-						JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID");
-					}
+					} 
+					else
+						JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID", "FATAL ERROR", JOptionPane.ERROR_MESSAGE);				
+				} else {
+					JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID");
 				}
 			}
+			
+		}
+		
+		}catch (ServerException e1) {
+			JOptionPane.showMessageDialog(this, e1.getMessage());
+		} catch (EmptyFieldException e1) {
+			JOptionPane.showMessageDialog(this, e1.getMessage());
 		}
 	}
 }

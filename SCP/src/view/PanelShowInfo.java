@@ -6,12 +6,14 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
@@ -20,8 +22,10 @@ import javax.swing.JTextField;
 import clases.Agent;
 import clases.Facility;
 import clases.Overseer;
+import clases.SCP;
 import clases.Scientific;
 import clases.Worker;
+import exceptions.ServerException;
 import main.AgentFactory;
 import main.OverseerFactory;
 import main.ScientificFactory;
@@ -51,14 +55,17 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		userTypeID = usernameUsuario.substring(0, 3);
 		userType = "undefined";
 
-		if (userTypeID.equalsIgnoreCase("SCI")) {
-			worker = ScientificFactory.getScientificDB().showInfo(usernameUsuario);			
-		} else if (userTypeID.equalsIgnoreCase("AGE")) {
-			worker = AgentFactory.getAgentDB().showInfo(usernameUsuario);
-		} else if (userTypeID.equalsIgnoreCase("OVE")) {
-			worker = OverseerFactory.getOverseerDB().showInfo(usernameUsuario);
-		}
-
+		try {			
+			if (userTypeID.equalsIgnoreCase("SCI")) {
+				worker = ScientificFactory.getScientificDB().showInfo(usernameUsuario);				
+			} else if (userTypeID.equalsIgnoreCase("AGE")) {
+				worker = AgentFactory.getAgentDB().showInfo(usernameUsuario);
+			} else if (userTypeID.equalsIgnoreCase("OVE")) {
+				worker = OverseerFactory.getOverseerDB().showInfo(usernameUsuario);
+			}
+		} catch (ServerException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}	
 		userID = usernameUsuario;
 
 		lblProfileImg = new JLabel("profile");
@@ -280,7 +287,21 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 		if (e.getSource().equals(btnAsigned)){
-			
+			Scientific sci = new Scientific();
+			ArrayList<SCP> scp_list = null;
+			try {
+				scp_list = ScientificFactory.getScientificDB().showAsignedSCP(userID);
+			} catch (ServerException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			JComponent panelShowSCP = null;
+			panelShowSCP = new PanelShowScp(scp_list);
+			tabbedPane.addTab("Tab", null, panelShowSCP, "Panel");
+			container.add(tabbedPane, BorderLayout.CENTER);
+			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 		if (e.getSource().equals(btnAddScp)){
 			

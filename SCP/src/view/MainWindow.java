@@ -33,7 +33,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
-public class MainWindow extends JFrame implements ActionListener {
+public class MainWindow extends JDialog implements ActionListener {
 
 	//private final JPanel contentPanel = new JPanel();
 	public JTabbedPane tabbedPane;
@@ -81,15 +81,15 @@ public class MainWindow extends JFrame implements ActionListener {
 		
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
-		/*tabbedPane.setUI(new BasicTabbedPaneUI() {  
+		tabbedPane.setUI(new BasicTabbedPaneUI() {  
 		    @Override  
 		    protected int calculateTabAreaHeight(int tab_placement, int run_count, int max_tab_height) {  
 		        /*if (tabbedPane.getTabCount() > 1)
 		            return super.calculateTabAreaHeight(tab_placement, run_count, max_tab_height);  
-		        else  
+		        else  */
 		            return 0;  
 		    }  
-		});*/  		
+		});	
 		//desabilita el cambiar a una tab expecifica
 		//tabbedPane.setEnabledAt(1, false);
 		//hace invisible las tabs

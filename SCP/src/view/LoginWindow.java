@@ -48,19 +48,6 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 	private JPasswordField passwordField;
 	private JButton btnLogIn;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginWindow frame = new LoginWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public LoginWindow() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginWindow.class.getResource("/resources/icon.png")));
 
@@ -87,6 +74,8 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		contentPane.add(passwordLabel);
 
 		userField = new JTextField();
+		userField.setForeground(Color.WHITE);
+		userField.setBackground(Color.BLACK);
 		userField.setBounds(400, 1000, 300, 32);
 		userField.setFont(new Font("OCR A Extended", Font.BOLD, 14));
 		contentPane.add(userField);
@@ -94,6 +83,8 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		userField.setFocusable(true);
 
 		passwordField = new JPasswordField();
+		passwordField.setForeground(Color.WHITE);
+		passwordField.setBackground(Color.BLACK);
 		passwordField.setBounds(400, 1200, 300, 33);
 		passwordField.addKeyListener(this);
 		contentPane.add(passwordField);
@@ -147,10 +138,6 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		private void moveLogo() {
 			logoy += 5;
 			scpLogo.setLocation(scpLogo.getX(), logoy);
-
-			/*
-			 * if (logoy >= 50) { timer.stop(); }
-			 */
 		}
 
 		private void moveLabel() {
@@ -190,14 +177,6 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 			
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(btnLogIn, e.getMessage());
-		
-		
-			/*{
-				MainWindow vMain = new MainWindow(usernameUsuario);
-				vMain.setVisible(true);
-			} else {
-				JOptionPane.showMessageDialog(btnLogIn, "Username/Password Incorrect");
-			}*/
 		}
 	}
 }

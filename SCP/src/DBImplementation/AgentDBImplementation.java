@@ -8,11 +8,11 @@ import java.sql.SQLException;
 
 import acs.Continent;
 import clases.Agent;
-import clases.DBConnectionController;
 import clases.Facility;
 import clases.Overseer;
 import clases.Worker;
 import controller.AgentControllable;
+import exceptions.ServerException;
 
 public class AgentDBImplementation implements AgentControllable{
 
@@ -21,7 +21,7 @@ public class AgentDBImplementation implements AgentControllable{
 	protected DBConnectionController conController = new DBConnectionController();
 	
 	@Override
-	public Facility showAsignedFacility(String idWorker) {
+	public Facility showAsignedFacility(String idWorker) throws ServerException {
 		Facility fac = null;
 
 		ResultSet rs = null;
@@ -41,7 +41,7 @@ public class AgentDBImplementation implements AgentControllable{
 				fac.setFacility_level(rs.getInt("Level_Facility"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new ServerException(e.getMessage());
 		}
 
 		conController.closeConnection(stmt, con);
@@ -50,7 +50,7 @@ public class AgentDBImplementation implements AgentControllable{
 	}
 
 	@Override
-	public Worker showInfo(String id) {
+	public Worker showInfo(String id) throws ServerException {
 		ResultSet rs = null;
 		con = conController.openConnection();
 		String OBTAINstudies = "select * from worker w, agent a where w.ID_Worker = a.ID_Agent and ID_Worker = ?";
@@ -73,7 +73,7 @@ public class AgentDBImplementation implements AgentControllable{
 				age.setHistory(rs.getString("Record"));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new ServerException(e.getMessage());
 		}
 
 		conController.closeConnection(stmt, con);
@@ -82,7 +82,7 @@ public class AgentDBImplementation implements AgentControllable{
 	}
 
 	@Override
-	public void createWorker(Agent age) {
+	public void createWorker(Agent age) throws ServerException {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
@@ -101,8 +101,7 @@ public class AgentDBImplementation implements AgentControllable{
 			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ServerException(e.getMessage());
 		}
 		
 		conController.closeConnection(stmt, con);

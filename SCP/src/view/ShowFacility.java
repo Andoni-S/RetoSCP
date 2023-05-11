@@ -5,11 +5,13 @@ import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import clases.Agent;
 import clases.Facility;
+import exceptions.ServerException;
 import main.AgentFactory;
 
 import java.awt.Color;
@@ -25,7 +27,11 @@ public class ShowFacility extends JPanel {
 		Agent wAge = new Agent();
 		Facility fac = null;
 		
-		fac = AgentFactory.getAgentDB().showAsignedFacility(userID);
+		try {
+			fac = AgentFactory.getAgentDB().showAsignedFacility(userID);
+		} catch (ServerException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 		setLayout(null);
 
 		lblIdFacility = new JLabel("ID Facility:           " + wAge.getId_facility());

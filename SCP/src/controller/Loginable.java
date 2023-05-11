@@ -9,7 +9,8 @@ import exceptions.ServerException;
 public interface Loginable {
 
 	public Worker logIn(String usernameUsuario, String passwordUsuario) throws LoginException, ServerException;
-	public Worker showInfoDefault(String id);
-	public ArrayList<Worker> showAllWorkers();
-	public boolean checkWorker(String id_worker);
+	public Worker showInfoDefault(String id) throws ServerException;
+	public ArrayList<Worker> showAllWorkers() throws ServerException;
+	public boolean checkWorker(String id_worker) throws ServerException;
+	public String workerIDCreator(Worker w) throws ServerException;
 }
