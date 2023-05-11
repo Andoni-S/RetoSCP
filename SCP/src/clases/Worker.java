@@ -88,10 +88,10 @@ public class Worker implements Loginable {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
-		String OBTENERIDWorker = "SELECT ID_Worker, password_Worker FROM Worker WHERE ID_Worker = ?";
+		String OBTENERIDPassWorker = "SELECT ID_Worker,password_Worker FROM Worker WHERE ID_Worker = ?";
 
 		try {
-			stmt = con.prepareStatement(OBTENERIDWorker);
+			stmt = con.prepareStatement(OBTENERIDPassWorker);
 
 			stmt.setString(1, usernameUsuario);
 			rs = stmt.executeQuery();
@@ -100,7 +100,9 @@ public class Worker implements Loginable {
 				setId(rs.getString("ID_Worker"));
 				setPassword(rs.getString("password_Worker"));
 			}
-
+			
+			conController.closeConnection(stmt,con);
+			
 			if (id != null || password != null) {
 				if (id.equals(usernameUsuario) && password.equals(passwordUsuario)) {
 					return true;
@@ -115,6 +117,7 @@ public class Worker implements Loginable {
 		}
 
 		return false;
+		
 	}
 
 	public Worker showInfo(String id) {

@@ -138,7 +138,7 @@ public class Agent extends Worker implements AgentController {
 
 		conController.closeConnection(stmt, con);
 
-		System.out.println(id);
+		
 		return id;
 	}
 }
