@@ -165,5 +165,35 @@ public class ScientificDBImplementation implements ScientificControllable{
 			throw new ServerException(e.getMessage());
 		}
 	}
+	@Override
+	public ArrayList<Scientific> showAllScientists() throws ServerException{
+		ResultSet rs = null;
+		con = conController.openConnection();
+		ArrayList<Scientific> arrayScientists = new ArrayList<Scientific>();
 
+		String OBTENERScientists = "SELECT * FROM scientist";
+
+		try {
+			stmt = con.prepareStatement(OBTENERScientists);
+
+			// .setString(1, id);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Scientific scientist = new Scientific();
+				scientist.setId(rs.getString("ID_Scientist"));
+				scientist.setStudies(rs.getString("Studies"));
+
+				arrayScientists.add(scientist);
+
+			}
+
+		} catch (SQLException e) {
+			throw new ServerException(e.getMessage());
+		}
+
+		conController.closeConnection(stmt, con);
+
+		return arrayScientists;
+	}
 }

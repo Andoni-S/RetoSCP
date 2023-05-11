@@ -24,4 +24,5 @@ public interface OverseerControllable {
 	public void createWorker(Overseer ove) throws ServerException;
 	public ArrayList<SCP> showAllSCP() throws ServerException;
 	public boolean checkSCP(String id_scp) throws ServerException;
+	public void asignSCPtoScientific(String scientificID, String scpID)throws ServerException;
 }

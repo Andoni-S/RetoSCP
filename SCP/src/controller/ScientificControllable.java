@@ -13,4 +13,5 @@ public interface ScientificControllable {
 	public Worker showInfo(String id) throws ServerException;
 	public void createWorker(Scientific sci) throws ServerException;
 	public boolean modifySCP(SCP scp)throws ServerException;
+	public ArrayList<Scientific> showAllScientists() throws ServerException;
 }

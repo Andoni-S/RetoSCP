@@ -249,5 +249,24 @@ public class OverseerDBImplementation implements OverseerControllable{
 
 		
 	}
+	@Override
 
+	public void asignSCPtoScientific(String scientificID, String scpID) throws ServerException {
+		
+		try{
+			
+			PreparedStatement stmt = null;
+			con = conController.openConnection();		
+			stmt = con.prepareStatement("INSERT IGNORE INTO RESEARCH(ID_SCP, ID_Scientist) VALUES(?, ?)");
+			stmt.setString(1, scpID);
+			stmt.setString(2, scientificID);
+			stmt.executeUpdate();
+		
+		conController.closeConnection(stmt, con);
+		
+		} catch (SQLException e) {
+			throw new ServerException(e.getMessage());
+		}
+	}
+	
 }

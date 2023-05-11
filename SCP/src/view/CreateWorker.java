@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 
 import com.toedter.calendar.JCalendar;
@@ -48,6 +49,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 	private JCalendar calendar;
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	private JTextArea textAreaHistory;
+	private JScrollPane scroll;
 	private JComboBox<Continent> comboBox;
 	private JComboBox<String> comboBoxBoss;
 
@@ -227,9 +229,16 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(lblHistory);
 
 		textAreaHistory = new JTextArea();
+		textAreaHistory.setRows(100);
+		textAreaHistory.setLineWrap(true);
 		textAreaHistory.setBounds(284, 388, 227, 202);
 		textAreaHistory.setVisible(false);
+		/*scroll = new JScrollPane (textAreaHistory, 
+				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);*/
 		add(textAreaHistory);
+		//scroll.setVisible(true);
+		//add(scroll);
+		
 
 		comboBox = new JComboBox<>();
 		for (Continent cont : Continent.values()) {
@@ -319,7 +328,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 385, 91, 46);
 			lblHistory.setVisible(true);
-			textAreaHistory.setVisible(true);
+			lblHistory.setVisible(true);
 			btnScientist_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
 			btnCreate.setEnabled(true);
