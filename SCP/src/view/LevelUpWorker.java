@@ -76,6 +76,8 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		btnLevelUp.addActionListener(this);
 
 		comboBox = new JComboBox();
+		comboBox.setForeground(new Color(255, 255, 255));
+		comboBox.setBackground(new Color(0, 0, 0));
 		comboBox.setBounds(393, 49, 500, 30);
 		add(comboBox);
 
@@ -210,44 +212,49 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 			}
 		}
 
-		// If the "level up" button is clicked, confirmation will be requested and the worker's level will be added by one, and will be displayed as updated
+		// If the "level up" button is clicked, confirmation will be requested and the
+		// worker's level will be added by one, and will be displayed as updated
 		if (e.getSource().equals(btnLevelUp)) {
 			String workerDeletion = (String) comboBox.getSelectedItem();
 			Worker work = new Worker();
 
 			if (work.checkWorker(workerDeletion)) {
+				work = work.showInfo(workerDeletion);
+				if (work.getLevel() == 3) {
+					JOptionPane.showMessageDialog(null, "The worker is already level 3");
+				} else {
 
-				int n = JOptionPane.showConfirmDialog(null, "Do you want to level up this worker?", "Confirmation",
-						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					int n = JOptionPane.showConfirmDialog(null, "Do you want to level up this worker?", "Confirmation",
+							JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
-				if (n == JOptionPane.YES_OPTION) {
-					Overseer ove = new Overseer();
-					ove.levelUpWorker(work);
-					JOptionPane.showMessageDialog(null, "The worker has been leveled up");
+					if (n == JOptionPane.YES_OPTION) {
+						Overseer ove = new Overseer();
+						ove.levelUpWorker(work);
+						JOptionPane.showMessageDialog(null, "The worker has been leveled up");
 
-					String workerDeletions = (String) comboBox.getSelectedItem();
-
-					if (work.checkWorker(workerDeletion)) {
-						work = work.showInfo(workerDeletion);
-						lblDato1.setText(workerDeletion);
-						lblDato1.setVisible(true);
-						lblDato2.setText(work.getName());
-						lblDato2.setVisible(true);
-						lblDato3.setText(work.getDate_Entry().toString());
-						lblDato3.setVisible(true);
-						if (work.isActive())
-							lblDato4.setText("YES");
-						else
-							lblDato4.setText("NO");
-						lblDato4.setVisible(true);
-						if (work.getLevel() == 1)
-							lblDato5.setText("1");
-						else if (work.getLevel() == 2)
-							lblDato5.setText("2");
-						else if (work.getLevel() == 3)
-						lblDato5.setVisible(true);
-						lblDato6.setText(work.getBossID());
-						lblDato6.setVisible(true);
+						if (work.checkWorker(workerDeletion)) {
+							work = work.showInfo(workerDeletion);
+							lblDato1.setText(workerDeletion);
+							lblDato1.setVisible(true);
+							lblDato2.setText(work.getName());
+							lblDato2.setVisible(true);
+							lblDato3.setText(work.getDate_Entry().toString());
+							lblDato3.setVisible(true);
+							if (work.isActive())
+								lblDato4.setText("YES");
+							else
+								lblDato4.setText("NO");
+							lblDato4.setVisible(true);
+							if (work.getLevel() == 1)
+								lblDato5.setText("1");
+							else if (work.getLevel() == 2)
+								lblDato5.setText("2");
+							else if (work.getLevel() == 3)
+								lblDato5.setText("3");
+							lblDato5.setVisible(true);
+							lblDato6.setText(work.getBossID());
+							lblDato6.setVisible(true);
+						}
 					}
 				}
 			}

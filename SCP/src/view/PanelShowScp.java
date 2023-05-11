@@ -80,7 +80,7 @@ public class PanelShowScp extends JPanel {
 			}
 		});
 		lbGoBack.setIcon(new ImageIcon(PanelShowScp.class.getResource("/resources/ArroyGoBack64.png")));
-		lbGoBack.setBounds(675, 596, 64, 64);
+		lbGoBack.setBounds(675, 600, 64, 64);
 		add(lbGoBack);
 		// if (scp_list.get(scp_1)!=0) {
 		lbGoBack.setVisible(true);
@@ -249,10 +249,10 @@ public class PanelShowScp extends JPanel {
 		lblRelatedScp.setBounds(573, 171, 132, 22);
 		add(lblRelatedScp);
 
-		JLabel lbACS = new JLabel("A.C.S.");
+		JLabel lbACS = new JLabel("  A.C.S.");
 		lbACS.setForeground(new Color(255, 255, 255));
 		lbACS.setFont(new Font("OCR A Extended", Font.PLAIN, 34));
-		lbACS.setBounds(735, 208, 127, 54);
+		lbACS.setBounds(707, 204, 186, 54);
 		add(lbACS);
 
 		JLabel lbACS_MEANING = new JLabel("Anomaly Containment System");
@@ -300,11 +300,11 @@ public class PanelShowScp extends JPanel {
 		add(lbRisk);
 
 		lbMoveOn.setIcon(new ImageIcon(PanelShowScp.class.getResource("/resources/ArroyMoveOn64.png")));
-		lbMoveOn.setBounds(877, 596, 64, 64);
+		lbMoveOn.setBounds(877, 600, 64, 64);
 		add(lbMoveOn);
 
 		lbGuardar = new JLabel("");
-		lbGuardar.setBounds(675, 596, 64, 64);
+		lbGuardar.setBounds(675, 600, 64, 64);
 		add(lbGuardar);
 		lbGuardar.setVisible(false);
 
@@ -332,7 +332,7 @@ public class PanelShowScp extends JPanel {
 		lbGuardar.setIcon(new ImageIcon(PanelShowScp.class.getResource("/resources/save.png")));
 
 		lbNoGuardar = new JLabel("");
-		lbNoGuardar.setBounds(877, 596, 64, 64);
+		lbNoGuardar.setBounds(877, 600, 64, 64);
 		add(lbNoGuardar);
 		lbNoGuardar.setVisible(false);
 
@@ -340,14 +340,37 @@ public class PanelShowScp extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				CambiarBotones();
-				// No realiza ningun cambio
+				
+				
+				scp_1 = scp_list.get(index);
+
+				id_scp.setText(scp_1.getScp_id());
+				name_scp.setText(scp_1.getScp_name());
+				level_scp.setText(String.valueOf(scp_1.getScp_level()));
+				facility_scp.setText(scp_1.getFacility_id());
+				procedure_scp.setText(scp_1.getScp_procedures());
+				description_scp.setText(scp_1.getScp_description());
+				cbRelatedSCP.setSelectedItem(scp_1.getRelated_scp_id());
+
+				containment = path + scp_1.getContainment() + png;
+				lbContainment.setIcon(new ImageIcon(PanelShowScp.class.getResource(containment)));
+				disruption = path + scp_1.getDisruption() + png;
+				lbDisruption.setIcon(new ImageIcon(PanelShowScp.class.getResource(disruption)));
+				risk = path + scp_1.getRisk() + png;
+				lbRisk.setIcon(new ImageIcon(PanelShowScp.class.getResource(risk)));
+				secondary = path + scp_1.getSecondary() + png;
+				lbSecondary.setIcon(new ImageIcon(PanelShowScp.class.getResource(secondary)));
+				
+				
+				JOptionPane.showMessageDialog(null, "     Modification Cancelled");
+				
 				NoEditable();
 			}
 		});
 		lbNoGuardar.setIcon(new ImageIcon(PanelShowScp.class.getResource("/resources/dontsave.png")));
 
 		lbModify = new JLabel("");
-		lbModify.setBounds(777, 596, 64, 64);
+		lbModify.setBounds(777, 600, 64, 64);
 		add(lbModify);
 		lbModify.setVisible(true);
 		lbModify.addMouseListener(new MouseAdapter() {

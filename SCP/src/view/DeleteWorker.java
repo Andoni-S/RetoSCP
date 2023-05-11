@@ -107,16 +107,16 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		add(textWorker);
 		textWorker.setColumns(10);
 		btnShowInfo = new JButton("Show Info");
-		btnShowInfo.setBackground(new Color(0, 0, 0));
-		btnShowInfo.setForeground(new Color(255, 255, 255));
+		btnShowInfo.setForeground(Color.white);
+		btnShowInfo.setBackground(Color.black);
 		btnShowInfo.setFont(new Font("OCR A Extended", Font.BOLD, 15));
 		btnShowInfo.setBounds(771, 485, 120, 45);
 		add(btnShowInfo);
 		btnShowInfo.addActionListener(this);
 
 		btnDelete = new JButton("Delete");
-		btnDelete.setForeground(new Color(255, 255, 255));
-		btnDelete.setBackground(new Color(0, 0, 0));
+		btnDelete.setForeground(Color.white);
+		btnDelete.setBackground(Color.black);
 		btnDelete.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		btnDelete.setBounds(771, 545, 120, 45);
 		add(btnDelete);

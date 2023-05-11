@@ -18,7 +18,7 @@ import javax.swing.UIManager;
 import com.toedter.calendar.JCalendar;
 
 import acs.Continent;
-import acs.Discruption;
+import acs.Disruption;
 import clases.Agent;
 import clases.Overseer;
 import clases.Worker;
@@ -202,6 +202,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 		textAreaHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textAreaHistory.setBounds(284, 388, 227, 202);
 		textAreaHistory.setOpaque(false);
+		textAreaHistory.setWrapStyleWord(true);
 		textAreaHistory.setLineWrap(true);
 		textAreaHistory.setVisible(false);
 		add(textAreaHistory);
@@ -211,7 +212,9 @@ public class CreateWorker extends JPanel implements ActionListener {
 		textAreaProceduresTransparente.setBounds(284, 388, 227, 202);
 		textAreaProceduresTransparente.setBackground(new Color(0,0,0,80));
 		textAreaProceduresTransparente.setEditable(false);
+		textAreaProceduresTransparente.setWrapStyleWord(true);
 		textAreaProceduresTransparente.setEnabled(false);
+		textAreaProceduresTransparente.setLineWrap(true);
 		textAreaProceduresTransparente.setVisible(false);
 		add(textAreaProceduresTransparente);
 		

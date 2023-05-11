@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
@@ -19,7 +20,7 @@ import com.toedter.calendar.JCalendar;
 
 import acs.Containment;
 import acs.Continent;
-import acs.Discruption;
+import acs.Disruption;
 import acs.Risk;
 import acs.SecondaryC;
 import clases.Agent;
@@ -45,7 +46,7 @@ public class CreateSCP extends JPanel implements ActionListener {
 	private JTextArea textAreaProcedures, textAreaDescription;
 	private JSpinner spinnerLevel;
 	private JComboBox<Containment> comboBoxContainment;
-	private JComboBox<Discruption> comboBoxDisruption;
+	private JComboBox<Disruption> comboBoxDisruption;
 	private JComboBox<Risk> comboBoxRisk;
 	private JComboBox<SecondaryC> comboBoxSecondary;
 
@@ -120,40 +121,43 @@ public class CreateSCP extends JPanel implements ActionListener {
 		textAreaProcedures.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textAreaProcedures.setBounds(220, 326, 227, 140);
 		textAreaProcedures.setLineWrap(true);
+		textAreaProcedures.setWrapStyleWord(true);
 		textAreaProcedures.setOpaque(false);
 		add(textAreaProcedures);
-		
+
 		JTextArea textAreaProceduresTransparente = new JTextArea();
 		textAreaProceduresTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textAreaProceduresTransparente.setBounds(220, 326, 227, 140);
-		textAreaProceduresTransparente.setBackground(new Color(0,0,0,80));
+		textAreaProceduresTransparente.setBackground(new Color(0, 0, 0, 80));
 		textAreaProceduresTransparente.setEditable(false);
+		textAreaProceduresTransparente.setWrapStyleWord(true);
 		textAreaProceduresTransparente.setEnabled(false);
 		add(textAreaProceduresTransparente);
-
 
 		lblDescription = new JLabel("DESCRIPTION");
 		lblDescription.setBounds(75, 496, 130, 40);
 		lblDescription.setFont(new Font("OCR A EXTENDED", Font.BOLD, 12));
 		lblDescription.setForeground(Color.WHITE);
 		add(lblDescription);
-		
+
 		textAreaDescription = new JTextArea();
 		textAreaDescription.setForeground(new Color(255, 255, 255));
 		textAreaDescription.setLineWrap(true);
 		textAreaDescription.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textAreaDescription.setBounds(220, 496, 227, 140);
+		textAreaDescription.setWrapStyleWord(true);
 		textAreaDescription.setOpaque(false);
 		add(textAreaDescription);
 
 		JTextArea textAreaDescriptionTransparente = new JTextArea();
 		textAreaDescriptionTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textAreaDescriptionTransparente.setBounds(220, 496, 227, 140);
-		textAreaDescriptionTransparente.setBackground(new Color(0,0,0,80));
+		textAreaDescriptionTransparente.setBackground(new Color(0, 0, 0, 80));
 		textAreaDescriptionTransparente.setEditable(false);
 		textAreaDescriptionTransparente.setEnabled(false);
+		textAreaDescriptionTransparente.setWrapStyleWord(true);
 		add(textAreaDescriptionTransparente);
-		
+
 		lblLevel = new JLabel("LEVEL");
 		lblLevel.setBounds(629, 61, 71, 20);
 		lblLevel.setFont(new Font("OCR A EXTENDED", Font.BOLD, 12));
@@ -193,7 +197,7 @@ public class CreateSCP extends JPanel implements ActionListener {
 		comboBoxDisruption = new JComboBox<>();
 		comboBoxDisruption.setBackground(new Color(0, 0, 0));
 		comboBoxDisruption.setForeground(new Color(255, 255, 255));
-		for (Discruption disr : Discruption.values()) {
+		for (Disruption disr : Disruption.values()) {
 			comboBoxDisruption.addItem(disr);
 		}
 		comboBoxDisruption.setBounds(798, 168, 138, 20);
@@ -253,17 +257,37 @@ public class CreateSCP extends JPanel implements ActionListener {
 		background.setForeground(Color.WHITE);
 		background.setIcon(new ImageIcon(LoginWindow.class.getResource("/resources/background.png")));
 		add(background);
-		
-		
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// If you click on "Create", a new SCP is created
 		if (e.getSource().equals(btnCreate)) {
-			SCP scp = new SCP();
+			if (fieldId.getText().equals("") || fieldRelated.getText().equals("")
+					|| fieldIdFacility.getText().equals("") || fieldName.getText().equals("")
+					|| textAreaProcedures.getText().equals("") || textAreaDescription.getText().equals("")
+					|| comboBoxContainment.getSelectedIndex() == -1 || comboBoxDisruption.getSelectedIndex() == -1
+					|| comboBoxRisk.getSelectedIndex() == -1 || comboBoxSecondary.getSelectedIndex() == -1) {
+				JOptionPane.showMessageDialog(null, "There is an empty field");
+			} else {
+				SCP scp = new SCP();
+				
+				scp.setScp_id(fieldId.getText());
+				scp.setRelated_scp_id(fieldRelated.getText());
+				scp.setFacility_id(fieldIdFacility.getText());
+				scp.setScp_name(fieldName.getText());
+				scp.setScp_procedures(textAreaProcedures.getText());
+				scp.setScp_description(textAreaDescription.getText());
+				scp.setContainment((Containment) comboBoxContainment.getSelectedItem());
+				scp.setDisruption((Disruption) comboBoxDisruption.getSelectedItem());
+				scp.setRisk((Risk) comboBoxRisk.getSelectedItem());
+				scp.setSecondary((SecondaryC) comboBoxSecondary.getSelectedItem());
+				
+				
+			}
 		}
-		
+
 		// If you click on "Reset", all data entered so far will be deleted
 		if (e.getSource().equals(btnReset)) {
 			fieldId.setText("");
