@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import controller.AgentController;
 
@@ -16,6 +17,9 @@ public class Agent extends Worker implements AgentController {
 	private PreparedStatement stmt;
 	private DBConnectionController conController = new DBConnectionController();
 
+	/**
+	 * Getters and setters
+	 */
 	public String getId_facility() {
 		return id_facility;
 	}
@@ -141,4 +145,35 @@ public class Agent extends Worker implements AgentController {
 		
 		return id;
 	}
+	
+	public ArrayList<Agent> showAllAgents() {
+		ResultSet rs = null;
+		con = conController.openConnection();
+		ArrayList<Agent> arrayAgents= new ArrayList<Agent>();
+
+		String OBTENERSCPs = "SELECT * FROM agent";
+
+		try {
+			stmt = con.prepareStatement(OBTENERSCPs);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Agent agent = new Agent();
+				agent.setId(rs.getString("ID_Agent"));
+				agent.setId_facility(rs.getString("ID_Facility"));
+				agent.setHistory(rs.getString("Record"));
+
+				arrayAgents.add(agent);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		conController.closeConnection(stmt, con);
+
+		return arrayAgents;
+	}
 }
+

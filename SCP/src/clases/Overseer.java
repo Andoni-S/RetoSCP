@@ -51,17 +51,6 @@ public class Overseer extends Worker implements OverseerController {
 		}
 		conController.closeConnection(stmt, con);
 	}
-		
-
-	public void asignSCPtoScientific() {
-
-
-	}
-
-	@Override
-	public void asignAgentToFacility() {
-
-	}
 
 	@Override
 	public Worker showInfo(String id) {
@@ -213,16 +202,40 @@ public class Overseer extends Worker implements OverseerController {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
-	public void asignAgentToFacility1() {
+	public void levelUpWorker1(Worker worker) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void levelUpWorker1(Worker worker) {
+	public void asignAgentToFacility1(String agentID, String facilityID) {
+		PreparedStatement stmt = null;
+		con = conController.openConnection();
+		
+		try{
+			stmt = con.prepareStatement("INSERT IGNORE INTO Agent(ID_Agent, ID_Facility) VALUES(?, ?)");
+			stmt.setString(1, agentID);
+			stmt.setString(2, facilityID);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		conController.closeConnection(stmt, con);
+		
+	}
+
+	@Override
+	public void asignSCPtoScientific() {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void asignAgentToFacility() {
+		
 		
 	}
 
