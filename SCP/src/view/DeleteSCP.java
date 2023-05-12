@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -61,7 +63,25 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		tablaSCP.setOpaque(false);
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		scrollPane.setFont(new Font("OCR A Extended", Font.PLAIN, 20));
+		tablaSCP.setBackground(new Color(35,35,35,0));
+		tablaSCP.setForeground(new Color(255,255,255));
 		tablaSCP.setShowGrid(false);
+		tablaSCP.setFont(new Font("OCR A Extended", Font.PLAIN, 25));
+		tablaSCP.getTableHeader().setFont(new Font("OCR A Extended", Font.PLAIN, 25));
+		tablaSCP.setRowHeight(tablaSCP.getRowHeight()+15);
+		tablaSCP.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(final MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					final JTable jTable = (JTable) e.getSource();
+					final int row = jTable.getSelectedRow();
+					final String valueInCell = (String) jTable.getValueAt(row, 0);
+					textSCP.setText(valueInCell);
+				}
+			}
+		});
 
 		model.addColumn("ID");
 		model.addColumn("Name");

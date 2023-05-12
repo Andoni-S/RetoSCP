@@ -191,8 +191,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 				if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
 					
 					work = LoginableFactory.getLoginable().showInfoDefault(workerDeletion);
-					showInfoWorker(work);
-					
+					showInfoWorker(work);					
 				} else {
 					JOptionPane.showMessageDialog(comboBox, "Please insert an existing ID");
 				}
@@ -205,24 +204,28 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		if (e.getSource().equals(btnLevelUp)) {
 			String workerDeletion = (String) comboBox.getSelectedItem();
 			Worker work = null;
-			
-			
+						
 			try {
 				
 				if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
 
 					work = LoginableFactory.getLoginable().showInfoDefault(workerDeletion);
 					showInfoWorker(work);
+					if (work.getLevel() == 3) {
+						JOptionPane.showMessageDialog(null, "The worker is already level 3");
+					} else {
+						
 					
-					int n = JOptionPane.showConfirmDialog(null, "Do you want to level up this worker?", "Confirmation",
+						int n = JOptionPane.showConfirmDialog(null, "Do you want to level up this worker?", "Confirmation",
 							JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
-					if (n == JOptionPane.YES_OPTION) {
+						if (n == JOptionPane.YES_OPTION) {
 						
-						OverseerFactory.getOverseerDB().levelUpWorker(work);	
-						JOptionPane.showMessageDialog(null, "The worker has been leveled up");
-						work = LoginableFactory.getLoginable().showInfoDefault(workerDeletion);
-						showInfoWorker(work);
+							OverseerFactory.getOverseerDB().levelUpWorker(work);	
+							JOptionPane.showMessageDialog(null, "The worker has been leveled up");
+							work = LoginableFactory.getLoginable().showInfoDefault(workerDeletion);
+							showInfoWorker(work);
+						}
 					}
 				}
 			} catch (HeadlessException e1) {

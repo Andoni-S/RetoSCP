@@ -137,13 +137,18 @@ public class AsignSCPtoScientist extends JPanel implements ActionListener {
         
 	    tableScientists = new JTable();
 	    modelScientists = new DefaultTableModel();
-	    modelScientists.addColumn("ID_Scientist");
+	    modelScientists.addColumn("ID");
 	    modelScientists.addColumn("Studies");
-	    tableScientists.setBackground(new Color(0,0,0));
+	    tableScientists.setBackground(new Color(35,35,35,0));
 	    tableScientists.setForeground(new Color(255,255,255));
 		tableScientists.setOpaque(false);
 		tableScientists.setShowGrid(false);
 		tableScientists.setModel(modelScientists);
+		tableScientists.setFont(new Font("OCR A Extended", Font.PLAIN, 18));
+		tableScientists.getTableHeader().setFont(new Font("OCR A Extended", Font.PLAIN, 18));
+		tableScientists.setRowHeight(tableScientists.getRowHeight()+15);
+		tableScientists.getColumnModel().getColumn(0).setPreferredWidth(0);
+		
 	    tableScientists.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(final MouseEvent e) {
@@ -164,18 +169,23 @@ public class AsignSCPtoScientist extends JPanel implements ActionListener {
 		scrollPaneScientists.setOpaque(false);
 		scrollPaneScientists.getViewport().setOpaque(false);
 	    scrollPaneScientists.setViewportView(tableScientists);
-	    
+	    scrollPaneScientists.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 	    fillTableScientists();
 	    
 	    tableSCPs = new JTable();
 	    modelSCPs = new DefaultTableModel();
-	    modelSCPs.addColumn("ID_SCP");
-	    modelSCPs.addColumn("Name_SCP");
-	    tableSCPs.setBackground(new Color(0,0,0));
+	    modelSCPs.addColumn("ID");
+	    modelSCPs.addColumn("Name SCP");
+	    tableSCPs.setBackground(new Color(35,35,35,0));
 	    tableSCPs.setForeground(new Color(255,255,255));
 		tableSCPs.setOpaque(false);
 		tableSCPs.setShowGrid(false);
 	    tableSCPs.setModel(modelSCPs);
+	    tableSCPs.setFont(new Font("OCR A Extended", Font.PLAIN, 18));
+	    tableSCPs.getTableHeader().setFont(new Font("OCR A Extended", Font.PLAIN, 18));
+	    tableSCPs.setRowHeight(tableScientists.getRowHeight()+15);
+	    tableSCPs.getColumnModel().getColumn(0).setPreferredWidth(0);
+		
 	    tableSCPs.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(final MouseEvent e) {
@@ -194,7 +204,7 @@ public class AsignSCPtoScientist extends JPanel implements ActionListener {
 	    scrollPaneSCPs.setOpaque(false);
 		scrollPaneSCPs.getViewport().setOpaque(false);
 	    scrollPaneSCPs.setViewportView(tableSCPs);
-	    
+	    scrollPaneSCPs.setBorder(javax.swing.BorderFactory.createEmptyBorder());    
 	    fillTableSCPs();
 	    
 	    background = new JLabel("bg");

@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+
+import clases.RotatedLabel;
 import clases.Worker;
 import exceptions.LoginException;
 import main.LoginableFactory;
@@ -34,20 +36,20 @@ import javax.swing.JButton;
 
 public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 	private static final long serialVersionUID = 1L;
-	private Timer timer;
+	private Timer timer, timer2;
 	private JLabel usernameLabel;
 	private JLabel passwordLabel;
 	private JPanel contentPane;
 	private JLabel component;
 	private int usery;
 	private int logoy;
-	private JLabel scpLogo;
+	private RotatedLabel scpLogo;
 	private JLabel background;
-	private ActionListener labelAnim;
+	private ActionListener labelAnim, labelRotation;
 	private JTextField userField;
 	private JPasswordField passwordField;
 	private JButton btnLogIn;
-
+	private double[] size = new double[2];
 	public LoginWindow() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginWindow.class.getResource("/resources/icon.png")));
 
@@ -89,9 +91,10 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		passwordField.addKeyListener(this);
 		contentPane.add(passwordField);
 
-		scpLogo = new JLabel("scp");
+		scpLogo = new RotatedLabel("scp");
 		scpLogo.setIcon(new ImageIcon(LoginWindow.class.getResource("/resources/MEDIUM_White.png")));
 		scpLogo.setBounds(100, -550, 800, 800);
+		scpLogo.setAngle(0);
 		contentPane.add(scpLogo);
 
 		background = new JLabel("bg");
@@ -100,9 +103,11 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		contentPane.add(background);
 
 		labelAnim = new LabelAnim();
+		labelRotation = new LabelRotation();
 		logoy = scpLogo.getY();
 		usery = usernameLabel.getY();
 		timer = new Timer(1, labelAnim);
+		timer2 = new Timer(1, labelRotation);
 
 		btnLogIn = new JButton("LOG IN");
 		btnLogIn.setFont(new Font("OCR A EXTENDED", Font.BOLD, 16));
@@ -113,6 +118,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		btnLogIn.addActionListener(this);
 		    
 		timer.start();
+		//timer2.start();
 	}
 
 	@Override
@@ -131,6 +137,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 	class LabelAnim implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("help1");
 			moveLabel();
 			moveLogo();
 		}
@@ -150,7 +157,31 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 
 			if (usery <= 450) {
 				timer.stop();
+				timer2.start();
 			}
+		}
+	}
+	
+	class LabelRotation implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			rotateLabel();
+		}
+
+		private void rotateLabel() {
+			
+			if(scpLogo.getAngle() >= 2*3.1416)
+				scpLogo.setAngle(0);
+			
+			scpLogo.setLocation(scpLogo.getX()+1, scpLogo.getX()+1);
+			scpLogo.setLocation(scpLogo.getX()-1, scpLogo.getX()-1);
+			//scpLogo.setAngle(scpLogo.getAngle()+0.01);
+			
+			size[0]=size[0]+0.001;
+			size[1]=size[1]+0.001;
+			System.out.println(size[0]+" "+ size[1]);
+			scpLogo.setSizeCustom(size);
 		}
 	}
 
@@ -176,6 +207,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 			vMain.setVisible(true);
 			
 		}catch(Exception e){
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(btnLogIn, e.getMessage());
 		}
 	}

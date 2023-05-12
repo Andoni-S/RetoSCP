@@ -348,7 +348,9 @@ public class PanelShowScp extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				CambiarBotones();
-				// No realiza ningun cambio
+				scp_1 = scp_list.get(index);
+				Update();		
+				JOptionPane.showMessageDialog(null, "     Modification Cancelled", "CANCEL", JOptionPane.OK_CANCEL_OPTION);
 				NoEditable();
 			}
 		});

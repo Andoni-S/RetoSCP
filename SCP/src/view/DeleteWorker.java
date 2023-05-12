@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableModel;
 
 import clases.Overseer;
@@ -67,7 +68,29 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		tablaWorkers.setOpaque(false);
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		scrollPane.setFont(new Font("OCR A Extended", Font.PLAIN, 20));
+		scrollPane.getViewport().setBackground(Color.BLACK);
+		scrollPane.getViewport().setForeground(Color.BLACK);
+		scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override 
+            protected void configureScrollBarColors(){
+                this.thumbColor = Color.BLACK;
+            }
+        });
+		scrollPane.getHorizontalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override 
+            protected void configureScrollBarColors(){
+                this.thumbColor = Color.BLACK;
+            }
+        });
+		tablaWorkers.setBackground(new Color(35,35,35,0));
+		tablaWorkers.setForeground(new Color(255,255,255));
 		tablaWorkers.setShowGrid(false);
+		tablaWorkers.setFont(new Font("OCR A Extended", Font.PLAIN, 25));
+		tablaWorkers.getTableHeader().setFont(new Font("OCR A Extended", Font.PLAIN, 25));
+		tablaWorkers.setRowHeight(tablaWorkers.getRowHeight()+15);
+		//tablaWorkers.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		tablaWorkers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(final MouseEvent e) {
@@ -76,6 +99,7 @@ public class DeleteWorker extends JPanel implements ActionListener {
 					final int row = jTable.getSelectedRow();
 					final String valueInCell = (String) jTable.getValueAt(row, 0);
 					textWorker.setText(valueInCell);
+					
 				}
 			}
 		});
@@ -83,6 +107,7 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		model.addColumn("ID");
 		model.addColumn("Name");
 		model.addColumn("Date Entry");
+		//model.setFont(new Font("OCR A Extended", Font.PLAIN, 20));
 
 		scrollPane.setViewportView(tablaWorkers);
 
