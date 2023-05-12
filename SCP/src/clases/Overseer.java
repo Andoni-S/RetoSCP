@@ -2,6 +2,7 @@ package clases;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -135,12 +136,16 @@ public class Overseer extends Worker implements OverseerController {
 
 		con = conController.openConnection();
 
-		String ADDscp = "INSERT INTO SCP (ID_SCP, ID_RelatedSCP, ID_Facility, Name_SCP, Procedures, Description_SCP, Level_SCP, Containment, Disruption, Risk, SecondaryC) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String ADDscp = "INSERT INTO SCP (ID_SCP, ID_RelatedSCP, ID_Facility, Name_SCP, Procedures, Description_SCP, Level_SCP, Containment, Disruption, Risk, SecondaryC) VALUES (?,?,(SELECT ID_Facility FROM FACILITY WHERE Name_Facility=?),?,?,?,?,?,?,?,?)";
 
 		try {
 			stmt = con.prepareStatement(ADDscp);
 			stmt.setString(1, scp.getScp_id());
-			stmt.setString(2, scp.getRelated_scp_id());
+			if(scp.getRelated_scp_id().equals("NONE"))
+				stmt.setNull(2, Types.VARCHAR);
+			else
+				stmt.setString(2, scp.getRelated_scp_id());
+			System.out.println(scp.getFacility_id());
 			stmt.setString(3, scp.getFacility_id());
 			stmt.setString(4, scp.getScp_name());
 			stmt.setString(5, scp.getScp_procedures());
