@@ -20,26 +20,73 @@ import javax.swing.table.DefaultTableModel;
 
 import clases.Facility;
 import clases.Overseer;
-import clases.Scientific;
 import clases.Agent;
 
+/**
+ * @author Iñi
+ *
+ */
 public class AssignAgentToFacility extends JPanel implements ActionListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * It is used for showing the description of the table below it
+	 */
 	private JLabel lblAgent;
+	/**
+	 * It is used for showing the description of the table below it.
+	 */
 	private JLabel lblFacility;
+	/**
+	 * It is used to show the background image.
+	 */
 	private JLabel background;
+	/**
+	 * It is used to retrieve the text on the agent's table and send it to the database.
+	 */
 	private JTextField txtAgent;
+	
+	/**
+	 * It is used to retrieve the text on the facilities table and send it to the database.
+	 */
 	private JTextField txtFacility;
+	
+	/**
+	 * It is used to trigger the assignment of the agent to the facility in the database.
+	 */
 	private JButton btnAssign;
+	/**
+	 * It is used to show the agent's data from the database.
+	 */
 	private JTable tableAgent;
+	
+	/**
+	 * It is used to show the facilities data from the database.
+	 */
 	private JTable tableFacility;
+	
+	/**
+	 * It is used to show the header columns of the agent's table.
+	 */
 	private DefaultTableModel modelAgent;
+	
+	/**
+	 * It is used to show the header columns of the facilities table.
+	 */
 	private DefaultTableModel modelFacility;
+	
+	/**
+	 * It is used to contain the whole agent's table.
+	 */
 	private JScrollPane scrollPaneAgent;
+	
+	/**
+	 * It is used to contain the whole facilities table.
+	 */
 	private JScrollPane scrollPaneFacility;
 
 	/**
@@ -150,6 +197,9 @@ public class AssignAgentToFacility extends JPanel implements ActionListener {
 
 	}
 
+	/**
+	 * Gets the data from the database puts it on an arrayList and shows everything on a table.
+	 */
 	public void fillTableAgent() {
 		
 		Agent agent = new Agent();
@@ -167,6 +217,9 @@ public class AssignAgentToFacility extends JPanel implements ActionListener {
 		
 	}
 
+	/**
+	 * Gets the data from the database puts it on an arrayList and shows everything on a table.
+	 */
 	public void fillTableFacility() {
 		Facility facility = new Facility();
 		ArrayList<Facility> arrayFacilities = facility.showAllFacilities();
