@@ -28,6 +28,7 @@ import clases.Scientific;
 import clases.Worker;
 import exceptions.ServerException;
 import main.AgentFactory;
+import main.LoginableFactory;
 import main.OverseerFactory;
 import main.ScientificFactory;
 
@@ -340,7 +341,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnAddWorker.addActionListener(this);
 			add(btnAddWorker);
 
-			btnAsignAgent = new JButton("ASSIGN SCIENTIST");
+			btnAsignAgent = new JButton("ASSIGN FACILITY");
 			btnAsignAgent.setBounds(750, 230, 200, 40);
 			btnAsignAgent.setBackground(Color.black);
 			btnAsignAgent.setForeground(Color.white);
@@ -372,7 +373,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnDeleteWorker.addActionListener(this);
 			add(btnDeleteWorker);
 
-			btnAsignScientist = new JButton("ASSIGN FACILITY");
+			btnAsignScientist = new JButton("ASSIGN SCIENTIST");
 			btnAsignScientist.setBounds(750, 630, 200, 40);
 			btnAsignScientist.setBackground(Color.black);
 			btnAsignScientist.setForeground(Color.white);
@@ -403,8 +404,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			try {
 				scp_list = ScientificFactory.getScientificDB().showAsignedSCP(userID);
 			} catch (ServerException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 
 			JComponent panelShowSCP = null;
@@ -415,7 +415,23 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 		if (e.getSource().equals(btnAddScp)){
-			
+			JComponent panelCreateWorker = null;
+			SCP scp = new SCP();
+			Overseer ove = new Overseer();
+			ArrayList<Facility> facility_list = null;
+			ArrayList<SCP> scp_list = null;
+			try {
+				scp_list = OverseerFactory.getOverseerDB().showAllSCP();		
+				facility_list = AgentFactory.getAgentDB().showAllFacilities();
+			} catch (ServerException e1) {
+				
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+			panelCreateWorker = new CreateSCP(scp_list, facility_list);
+			tabbedPane.addTab("Tab", null, panelCreateWorker, "Panel");
+			container.add(tabbedPane, BorderLayout.CENTER);
+			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 
 		if (e.getSource().equals(btnAddWorker)) {
@@ -437,8 +453,10 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource().equals(btnAsignAgent)) {
-
-		}
+			JComponent panelAssignAgentToFacility = null;
+			panelAssignAgentToFacility = new AssignAgentToFacility();
+			tabbedPane.addTab("Tab", null, panelAssignAgentToFacility, "Panel");
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);		}
 
 		if (e.getSource().equals(btnLevelUpWorker)) {
 			JComponent panelLevelUp = null;

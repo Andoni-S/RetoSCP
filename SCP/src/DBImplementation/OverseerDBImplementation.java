@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 
 import acs.Continent;
@@ -269,4 +270,58 @@ public class OverseerDBImplementation implements OverseerControllable{
 		}
 	}
 	
+	@Override
+	public void asignAgentToFacility(String agentID, String facilityID) throws ServerException {
+		PreparedStatement stmt = null;
+		try{
+
+			con = conController.openConnection();
+		
+			stmt = con.prepareStatement("INSERT IGNORE INTO Agent(ID_Agent, ID_Facility) VALUES(?, ?)");
+			stmt.setString(1, agentID);
+			stmt.setString(2, facilityID);
+			stmt.executeUpdate();
+		
+			conController.closeConnection(stmt, con);
+		} catch (SQLException e) {
+			throw new ServerException(e.getMessage());
+		}
+		
+	}
+	@Override
+	public void addSCP(SCP scp) throws ServerException {
+
+		try {
+			
+			con = conController.openConnection();
+		
+			String ADDscp = "INSERT INTO SCP (ID_SCP, ID_RelatedSCP, ID_Facility, Name_SCP, Procedures, Description_SCP, Level_SCP, Containment, Disruption, Risk, SecondaryC) VALUES (?,?,(SELECT ID_Facility FROM FACILITY WHERE Name_Facility=?),?,?,?,?,?,?,?,?)";
+
+		
+			stmt = con.prepareStatement(ADDscp);
+			stmt.setString(1, scp.getScp_id());
+			if(scp.getRelated_scp_id().equals("NONE"))
+				stmt.setNull(2, Types.VARCHAR);
+			else
+				stmt.setString(2, scp.getRelated_scp_id());
+			System.out.println(scp.getFacility_id());
+			stmt.setString(3, scp.getFacility_id());
+			stmt.setString(4, scp.getScp_name());
+			stmt.setString(5, scp.getScp_procedures());
+			stmt.setString(6, scp.getScp_description());
+			stmt.setInt(7, scp.getScp_level());
+			stmt.setString(8, scp.getContainment().toString());
+			stmt.setString(9, scp.getDisruption().toString());
+			stmt.setString(10, scp.getRisk().toString());
+			stmt.setString(11, scp.getSecondary().toString());
+			stmt.executeUpdate();
+
+		
+			conController.closeConnection(stmt, con);
+
+		} catch (SQLException e) {
+			throw new ServerException(e.getMessage());
+		}
+
+	}
 }

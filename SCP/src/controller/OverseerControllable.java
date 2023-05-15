@@ -25,4 +25,6 @@ public interface OverseerControllable {
 	public ArrayList<SCP> showAllSCP() throws ServerException;
 	public boolean checkSCP(String id_scp) throws ServerException;
 	public void asignSCPtoScientific(String scientificID, String scpID)throws ServerException;
+	public void asignAgentToFacility(String agentID, String facilityID) throws ServerException;
+	public void addSCP(SCP scp) throws ServerException;
 }
