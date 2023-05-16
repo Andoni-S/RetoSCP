@@ -6,14 +6,17 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import controller.Loginable;
-import clases.DBConnectionController;
 
+/**
+ * The Worker class, which implements the single method of the Loginable
+ * interface
+ * 
+ * @author Alex
+ */
 public class Worker implements Loginable {
-
 	protected String id;
 	protected String name;
 	protected Date date_Entry;
@@ -82,6 +85,13 @@ public class Worker implements Loginable {
 		this.bossID = bossID;
 	}
 
+	/**
+	 * A method that verifies that both the user name and password are correct.
+	 * 
+	 * @param usernameUsuario - entered by the user
+	 * @param passwordUsuario - entered by the user
+	 * @return returns a boolean with true or false
+	 */
 	@Override
 	public boolean logIn(String usernameUsuario, String passwordUsuario) {
 		ResultSet rs = null;
@@ -119,8 +129,17 @@ public class Worker implements Loginable {
 		
 	}
 
+
 	public Worker showInfo(String id) {
 
+
+	/**
+	 * This method displays the information of a particular Worker
+	 * 
+	 * @param id - entered by the user
+	 * @return it returns the required Worker object
+	 */
+	public Worker showInfo(String id) {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
@@ -140,6 +159,7 @@ public class Worker implements Loginable {
 				setLevel(rs.getInt("Level_Worker"));
 				setPassword(rs.getString("password_Worker"));
 				setBossID(rs.getString("ID_Boss"));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -149,6 +169,11 @@ public class Worker implements Loginable {
 		return this;
 	}
 
+	/**
+	 * This one serves to get the information of all the Workers
+	 * 
+	 * @return returns an ArrayList with all the Workers in the DB
+	 */
 	public ArrayList<Worker> showAllWorkers() {
 		ResultSet rs = null;
 		con = conController.openConnection();
@@ -157,10 +182,12 @@ public class Worker implements Loginable {
 
 		String OBTENERWorker = "SELECT * FROM Worker";
 
+
 		try {
 			stmt = con.prepareStatement(OBTENERWorker);
 
 			// .setString(1, id);
+
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -182,6 +209,12 @@ public class Worker implements Loginable {
 		return arrayDeWorkers;
 	}
 
+	/**
+	 * This method verifies that the Worker exists in the database
+	 * 
+	 * @param id_worker - entered by the user
+	 * @return returns true if it exists and false if it does not
+	 */
 
 	public boolean checkWorker(String id_worker) {
 		ResultSet rs = null;

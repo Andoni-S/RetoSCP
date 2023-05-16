@@ -5,23 +5,24 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
 
 import clases.Overseer;
 import clases.Worker;
 import javax.swing.JComboBox;
 
+/**
+ * LevelUpWorker is also JPanel and will level up workers
+ * 
+ * @author Alex
+ */
 public class LevelUpWorker extends JPanel implements ActionListener {
+
 	// This class will display a window for upgrading a worker when logged in as an
 	// overseer
 
@@ -46,6 +47,10 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 	private JLabel lblDato5;
 	private JLabel lblDato6;
 
+	/**
+	 * This is the window constructor, where all the elements of the window are
+	 * instantiated
+	 */
 	public LevelUpWorker() {
 		setBounds(0, 0, 1024, 768);
 
@@ -79,6 +84,8 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		btnLevelUp.addActionListener(this);
 
 		comboBox = new JComboBox();
+		comboBox.setForeground(new Color(255, 255, 255));
+		comboBox.setBackground(new Color(0, 0, 0));
 		comboBox.setBounds(393, 49, 500, 30);
 		add(comboBox);
 
@@ -126,7 +133,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		lblDato3.setVisible(false);
 		add(lblDato3);
 
-		lblActive = new JLabel("- Active (1 YES / 0 NO):        ");
+		lblActive = new JLabel("- Active:        ");
 		lblActive.setForeground(new Color(255, 255, 255));
 		lblActive.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblActive.setBounds(130, 360, 595, 43);
@@ -175,8 +182,10 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		background.setBounds(0, 0, 1024, 768);
 		add(background);
 	}
-
-	// This is the method to fill the combobox options with workers
+	/**
+	 * The following method takes care of loading the comboBox with the IDs of all
+	 * workers
+	 */
 
 	private void cargarWorkers() {
 		Worker worky = new Worker();
@@ -187,6 +196,11 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * actionPerformed method listening to btnShowInfo and btnLevelUp buttons
+	 * 
+	 * @param e - ActionEvent type variable
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// If the "show info" button is pressed, the labels with the data corresponding
@@ -222,45 +236,50 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(comboBox, "Please insert an existing ID");
 			}
 		}
-		// If the "level up" button is clicked, confirmation will be requested and the worker's level will be added by one, and will be displayed as updated
+
+		// If the "level up" button is clicked, confirmation will be requested and the
+		// worker's level will be added by one, and will be displayed as updated
 
 		if (e.getSource().equals(btnLevelUp)) {
 			String workerDeletion = (String) comboBox.getSelectedItem();
 			Worker work = new Worker();
 
 			if (work.checkWorker(workerDeletion)) {
+				work = work.showInfo(workerDeletion);
+				if (work.getLevel() == 3) {
+					JOptionPane.showMessageDialog(null, "The worker is already level 3");
+				} else {
+					int n = JOptionPane.showConfirmDialog(null, "Do you want to level up this worker?", "Confirmation",
+							JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
-				int n = JOptionPane.showConfirmDialog(null, "Do you want to level up this worker?", "Confirmation",
-						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+					if (n == JOptionPane.YES_OPTION) {
+						Overseer ove = new Overseer();
+						ove.levelUpWorker(work);
+						JOptionPane.showMessageDialog(null, "The worker has been leveled up");
 
-				if (n == JOptionPane.YES_OPTION) {
-					Overseer ove = new Overseer();
-					ove.levelUpWorker(work);
-					JOptionPane.showMessageDialog(null, "The worker has been leveled up");
-
-					String workerDeletions = (String) comboBox.getSelectedItem();
-
-					if (work.checkWorker(workerDeletion)) {
-						work = work.showInfo(workerDeletion);
-						lblDato1.setText(workerDeletion);
-						lblDato1.setVisible(true);
-						lblDato2.setText(work.getName());
-						lblDato2.setVisible(true);
-						lblDato3.setText(work.getDate_Entry().toString());
-						lblDato3.setVisible(true);
-						if (work.isActive())
-							lblDato4.setText("YES");
-						else
-							lblDato4.setText("NO");
-						lblDato4.setVisible(true);
-						if (work.getLevel() == 1)
-							lblDato5.setText("1");
-						else if (work.getLevel() == 2)
-							lblDato5.setText("2");
-						else if (work.getLevel() == 3)
-						lblDato5.setVisible(true);
-						lblDato6.setText(work.getBossID());
-						lblDato6.setVisible(true);
+						if (work.checkWorker(workerDeletion)) {
+							work = work.showInfo(workerDeletion);
+							lblDato1.setText(workerDeletion);
+							lblDato1.setVisible(true);
+							lblDato2.setText(work.getName());
+							lblDato2.setVisible(true);
+							lblDato3.setText(work.getDate_Entry().toString());
+							lblDato3.setVisible(true);
+							if (work.isActive())
+								lblDato4.setText("YES");
+							else
+								lblDato4.setText("NO");
+							lblDato4.setVisible(true);
+							if (work.getLevel() == 1)
+								lblDato5.setText("1");
+							else if (work.getLevel() == 2)
+								lblDato5.setText("2");
+							else if (work.getLevel() == 3)
+								lblDato5.setText("3");
+							lblDato5.setVisible(true);
+							lblDato6.setText(work.getBossID());
+							lblDato6.setVisible(true);
+						}
 					}
 				}
 			}

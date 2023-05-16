@@ -68,22 +68,22 @@ public class MainWindow extends JFrame implements ActionListener {
 		JComponent panelOverseer = null;
 		//panelOverseer = makePanelOverseer("Panel Overseer");
 		panelOverseer = new PanelShowInfo(worker, usernameUsuario, tabbedPane, getContentPane());
-		tabbedPane.addTab("Tab", null, panelOverseer, "Panel");     
+		tabbedPane.addTab("Tab", null, panelOverseer, "Panel"); 
 		
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
 
-		tabbedPane.setUI(new BasicTabbedPaneUI() {  
+		/*tabbedPane.setUI(new BasicTabbedPaneUI() {  
 		    @Override  
 		    protected int calculateTabAreaHeight(int tab_placement, int run_count, int max_tab_height) {  
 		        /*if (tabbedPane.getTabCount() > 1)
 		            return super.calculateTabAreaHeight(tab_placement, run_count, max_tab_height);  
-		        else  */
+		        else  
 		            return 0;  
 		    }  
-		});		
+		});		*/
 		//desabilita el cambiar a una tab expecifica
 		//tabbedPane.setEnabledAt(1, false);
 		//hace invisible las tabs

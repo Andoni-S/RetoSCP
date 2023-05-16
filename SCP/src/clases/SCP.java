@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import acs.Risk;
 import acs.SecondaryC;
 
+/**
+ * SCP class, which will contain the necessary attributes, Getters and Setters
+ * and methods
+ * 
+ * @author Alex
+ */
 public class SCP {
 	private String scp_id;
 	private String related_scp_id;
@@ -121,6 +127,47 @@ public class SCP {
 		this.secondary = secondary;
 	}
 
+	/**
+	 * This method executes a query to display all the information corresponding to
+	 * an SCP
+	 * 
+	 * @param id_SCP - entered by the user
+	 */
+	public void showInfo(String id_SCP) {
+		ResultSet rs = null;
+		con = conController.openConnection();
+
+		String OBTENERprop = "SELECT * FROM SCP WHERE ID_SCP = ?";
+		try {
+			stmt = con.prepareStatement(OBTENERprop);
+
+			stmt.setString(1, id_SCP);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				setScp_id(rs.getString("ID_SCP"));
+				setScp_name(rs.getString("Name_SCP"));
+				setRelated_scp_id(rs.getString("ID_RelatedSCP"));
+				setFacility_id(rs.getString("ID_Facility"));
+				setScp_procedures(rs.getString("Procedures"));
+				setScp_description(rs.getString("Description_SCP"));
+				setScp_level(rs.getInt("Level_SCP"));
+				setContainment(Containment.valueOf(rs.getString("Containment")));
+				setDisruption(Disruption.valueOf(rs.getString("Disruption")));
+				setRisk(Risk.valueOf(rs.getString("Risk")));
+				setSecondary(SecondaryC.valueOf(rs.getString("SecondaryC")));
+			}
+
+		} catch (SQLException e) {
+		}
+
+	}
+
+	/**
+	 * Used to display all SCPs in the table of the DB
+	 * 
+	 * @return returns an ArrayList containing all SCPs
+	 */
 
 	public ArrayList<SCP> showAllSCP() {
 		ResultSet rs = null;
@@ -148,7 +195,13 @@ public class SCP {
 		return arrayDeSCP;
 	}
 
-	// This method is used to check if the SCP exists in the database
+	/**
+	 * This method verifies that the SCP entered by the user actually exists in the
+	 * database
+	 * 
+	 * @param id_scp - entered by the user
+	 * @return returns true if found or false if not
+	 */
 	public boolean checkSCP(String id_scp) {
 		ResultSet rs = null;
 		con = conController.openConnection();

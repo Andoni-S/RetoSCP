@@ -1,14 +1,18 @@
 package clases;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import acs.Continent;
 import controller.OverseerController;
 
+/**
+ * Overseer class that inherits from Worker and implements the methods of the
+ * interface named OverseerController
+ * 
+ * @author Alex
+ */
 public class Overseer extends Worker implements OverseerController {
-
 	private Connection con;
 	private PreparedStatement stmt;
 	private DBConnectionController conController = new DBConnectionController();
@@ -104,6 +108,7 @@ public class Overseer extends Worker implements OverseerController {
 
 	}
 
+
 	// And this is used to delete a worker from its ID
 	@Override
 	public void deleteWorker(String idWorker) {
@@ -190,8 +195,8 @@ public class Overseer extends Worker implements OverseerController {
 		}
 
 		conController.closeConnection(stmt, con);
-
 	}
+
 	public void deleteSCP(String idScp) {
 		con = conController.openConnection();
 

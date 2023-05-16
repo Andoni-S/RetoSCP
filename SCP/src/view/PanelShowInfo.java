@@ -17,30 +17,32 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import clases.Agent;
-import clases.Facility;
 import clases.Overseer;
 import clases.SCP;
 import clases.Scientific;
 import clases.Worker;
+import java.awt.SystemColor;
 
 public class PanelShowInfo extends JPanel implements ActionListener {
 
 	private JButton btnAddScp, btnAddWorker, btnAsignScientist, btnAsignAgent, btnLevelUpWorker, btnDeleteScp,
 			btnDeleteWorker, btnAsigned, btnAsignedFacility;
-	private JLabel lblId, lblName, lblDateEntry, lblActive, lblBoss, lblLevel, lblLevelNumber, lblStudies, lblFacility,
-			lblHistory, lblContinent, lblLogo, lblWelcome, background, lblProfileImg;
-	private JLabel lblRecord;
-	private JTextField textFieldId, textFieldName, textFieldDate, textFieldBoss;
-	private JTextArea txtFieldAge;;
+	private JLabel lblId, lblName, lblDateEntry, lblActive, lblBoss, lblLevel, lblLevelNumber, lblHistory, lblContinent,
+			background, lblProfileImg, lblRecord;
+	private JTextArea txtAreaAge, textAreaId, textAreaName, textAreaDate, textAreaBoss, txtAreaHistory,
+			txtAreaContinent;
 	private String userTypeID, userType, userID;
 	private JCheckBox checkBoxActive;
 	private JTabbedPane tabbedPane;
 	private Container container;
+	private Worker worker;
 
-	public PanelShowInfo(Worker worker, String usernameUsuario, JTabbedPane tabbedPane_, Container pane) {
+	public PanelShowInfo(Worker worker_, String usernameUsuario, JTabbedPane tabbedPane_, Container pane) {
 		// JPanel panel = null;
 		tabbedPane = tabbedPane_;
 		container = pane;
+
+		worker = worker_;
 
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
@@ -101,34 +103,60 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		lblBoss.setForeground(Color.WHITE);
 		add(lblBoss);
 
-		textFieldId = new JTextField(usernameUsuario);
-		textFieldId.setForeground(new Color(255, 255, 255));
-		textFieldId.setBackground(new Color(0, 0, 0));
+		textAreaId = new JTextArea(usernameUsuario);
+		textAreaId.setOpaque(false);
+		textAreaId.setForeground(SystemColor.inactiveCaption);
+		textAreaId.setBackground(new Color(0, 0, 0));
+		textAreaId.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		textAreaId.setEditable(false);
+		textAreaId.setBounds(400, 61, 231, 18);
+		add(textAreaId);
+		textAreaId.setColumns(10);
 
-		textFieldId.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
-		textFieldId.setEditable(false);
-		textFieldId.setBounds(400, 55, 231, 30);
-		add(textFieldId);
-		textFieldId.setColumns(10);
+		JTextArea textAreaIdTransparente = new JTextArea();
+		textAreaIdTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		textAreaIdTransparente.setBounds(400, 61, 231, 18);
+		textAreaIdTransparente.setBackground(new Color(0, 0, 0, 80));
+		textAreaIdTransparente.setEditable(false);
+		textAreaIdTransparente.setEnabled(false);
+		add(textAreaIdTransparente);
 
-		textFieldName = new JTextField(worker.getName());
-		textFieldName.setForeground(new Color(255, 255, 255));
-		textFieldName.setBackground(new Color(0, 0, 0));
-		textFieldName.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
-		textFieldName.setEditable(false);
-		textFieldName.setColumns(10);
-		textFieldName.setBounds(400, 105, 231, 30);
-		add(textFieldName);
+		textAreaName = new JTextArea(worker.getName());
+		textAreaName.setOpaque(false);
+		textAreaName.setForeground(SystemColor.inactiveCaption);
+		textAreaName.setBackground(new Color(0, 0, 0));
+		textAreaName.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		textAreaName.setEditable(false);
+		textAreaName.setColumns(10);
+		textAreaName.setBounds(400, 111, 231, 18);
+		add(textAreaName);
 
-		textFieldDate = new JTextField(worker.getDate_Entry().toString());
+		JTextArea textAreaNameTransparente = new JTextArea();
+		textAreaNameTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		textAreaNameTransparente.setBounds(400, 111, 231, 18);
+		textAreaNameTransparente.setBackground(new Color(0, 0, 0, 80));
+		textAreaNameTransparente.setEditable(false);
+		textAreaNameTransparente.setEnabled(false);
+		add(textAreaNameTransparente);
 
-		textFieldDate.setForeground(new Color(255, 255, 255));
-		textFieldDate.setBackground(new Color(0, 0, 0));
-		textFieldDate.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
-		textFieldDate.setEditable(false);
-		textFieldDate.setColumns(10);
-		textFieldDate.setBounds(400, 155, 231, 30);
-		add(textFieldDate);
+		textAreaDate = new JTextArea(worker.getDate_Entry().toString());
+		textAreaDate.setOpaque(false);
+		textAreaDate.setForeground(SystemColor.inactiveCaption);
+		textAreaDate.setBackground(new Color(0, 0, 0));
+		textAreaDate.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		textAreaDate.setEditable(false);
+		textAreaDate.setColumns(10);
+		textAreaDate.setBounds(400, 161, 231, 18);
+		add(textAreaDate);
+
+		JTextArea textAreaDateTransparente = new JTextArea();
+		textAreaDateTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		textAreaDateTransparente.setBounds(400, 161, 231, 18);
+		textAreaDateTransparente.setBackground(new Color(0, 0, 0, 80));
+		textAreaDateTransparente.setEditable(false);
+		textAreaDateTransparente.setEnabled(false);
+		add(textAreaDateTransparente);
+
 
 		checkBoxActive = new JCheckBox();
 		checkBoxActive.setBackground(new Color(0, 0, 0, 0));
@@ -138,19 +166,28 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		add(checkBoxActive);
 
 		lblLevelNumber = new JLabel(String.format("%d", worker.getLevel()));
-		lblLevelNumber.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
+		lblLevelNumber.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		lblLevelNumber.setBounds(400, 255, 132, 40);
-		lblLevelNumber.setForeground(Color.WHITE);
+		lblLevelNumber.setForeground(SystemColor.inactiveCaption);
 		add(lblLevelNumber);
 
-		textFieldBoss = new JTextField(worker.getBossID());
-		textFieldBoss.setForeground(new Color(255, 255, 255));
-		textFieldBoss.setBackground(new Color(0, 0, 0));
-		textFieldBoss.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
-		textFieldBoss.setEditable(false);
-		textFieldBoss.setColumns(10);
-		textFieldBoss.setBounds(400, 306, 231, 30);
-		add(textFieldBoss);
+		textAreaBoss = new JTextArea(worker.getBossID());
+		textAreaBoss.setOpaque(false);
+		textAreaBoss.setForeground(SystemColor.inactiveCaption);
+		textAreaBoss.setBackground(new Color(0, 0, 0));
+		textAreaBoss.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		textAreaBoss.setEditable(false);
+		textAreaBoss.setColumns(10);
+		textAreaBoss.setBounds(400, 312, 231, 18);
+		add(textAreaBoss);
+
+		JTextArea textAreaBossTransparente = new JTextArea();
+		textAreaBossTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		textAreaBossTransparente.setBounds(400, 312, 231, 18);
+		textAreaBossTransparente.setBackground(new Color(0, 0, 0, 80));
+		textAreaBossTransparente.setEditable(false);
+		textAreaBossTransparente.setEnabled(false);
+		add(textAreaBossTransparente);
 
 		if (userTypeID.equalsIgnoreCase("SCI")) {
 			lblRecord = new JLabel("STUDIES");
@@ -159,13 +196,23 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			lblRecord.setForeground(Color.WHITE);
 			add(lblRecord);
 
-			txtFieldAge = new JTextArea(((Scientific) worker).getStudies());
-			txtFieldAge.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
-			txtFieldAge.setBounds(400, 390, 400, 160);
-			txtFieldAge.setForeground(Color.BLACK);
-			txtFieldAge.setEditable(false);
-			txtFieldAge.setLineWrap(true);
-			add(txtFieldAge);
+			txtAreaAge = new JTextArea(((Scientific) worker).getStudies());
+			txtAreaAge.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			txtAreaAge.setBounds(400, 390, 400, 160);
+			txtAreaAge.setForeground(SystemColor.inactiveCaption);
+			txtAreaAge.setEditable(false);
+			txtAreaAge.setWrapStyleWord(true);
+			txtAreaAge.setLineWrap(true);
+			txtAreaAge.setOpaque(false);
+			add(txtAreaAge);
+
+			JTextArea textAreaProceduresTransparente = new JTextArea();
+			textAreaProceduresTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			textAreaProceduresTransparente.setBounds(400, 390, 350, 160);
+			textAreaProceduresTransparente.setBackground(new Color(0, 0, 0, 80));
+			textAreaProceduresTransparente.setEditable(false);
+			textAreaProceduresTransparente.setEnabled(false);
+			add(textAreaProceduresTransparente);
 
 			btnAsigned = new JButton("ASSIGNED SCP");
 			btnAsigned.setBounds(750, 52, 200, 40);
@@ -183,19 +230,49 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			lblRecord.setForeground(Color.WHITE);
 			add(lblRecord);
 
-			txtFieldAge = new JTextArea(((Agent) worker).getHistory());
-			txtFieldAge.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
-			txtFieldAge.setBounds(400, 390, 400, 160);
-			txtFieldAge.setForeground(Color.BLACK);
-			txtFieldAge.setEditable(false);
-			txtFieldAge.setLineWrap(true);
-			add(txtFieldAge);
+			txtAreaAge = new JTextArea(((Agent) worker).getHistory());
+			txtAreaAge.setForeground(SystemColor.inactiveCaption);
+			txtAreaAge.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			txtAreaAge.setBounds(400, 390, 350, 160);
+			txtAreaAge.setEditable(false);
+			txtAreaAge.setWrapStyleWord(true);
+			txtAreaAge.setLineWrap(true);
+			txtAreaAge.setOpaque(false);
+			add(txtAreaAge);
 
-			lblHistory = new JLabel("FACILITY      " + ((Agent) worker).getId_facility());
+			JTextArea textAreaProceduresTransparente = new JTextArea();
+			textAreaProceduresTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			textAreaProceduresTransparente.setBounds(400, 390, 350, 160);
+			textAreaProceduresTransparente.setBackground(new Color(0, 0, 0, 80));
+			textAreaProceduresTransparente.setEditable(false);
+			textAreaProceduresTransparente.setEnabled(false);
+			add(textAreaProceduresTransparente);
+
+			lblHistory = new JLabel("FACILITY      ");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(300, 560, 500, 40);
 			lblHistory.setForeground(Color.WHITE);
 			add(lblHistory);
+
+			txtAreaHistory = new JTextArea(((Agent) worker).getId_facility());
+			txtAreaHistory.setOpaque(false);
+			txtAreaHistory.setForeground(SystemColor.inactiveCaption);
+			txtAreaHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			txtAreaHistory.setBounds(400, 572, 231, 18);
+			txtAreaHistory.setEditable(false);
+			txtAreaHistory.setWrapStyleWord(true);
+			txtAreaHistory.setLineWrap(true);
+			txtAreaHistory.setOpaque(false);
+			add(txtAreaHistory);
+
+			JTextArea textAreaHistoryTransparente = new JTextArea();
+			textAreaHistoryTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			textAreaHistoryTransparente.setBounds(400, 572, 231, 18);
+			;
+			textAreaHistoryTransparente.setBackground(new Color(0, 0, 0, 80));
+			textAreaHistoryTransparente.setEditable(false);
+			textAreaHistoryTransparente.setEnabled(false);
+			add(textAreaHistoryTransparente);
 
 			btnAsignedFacility = new JButton("ASSIGNED FACILITY");
 			btnAsignedFacility.setBounds(750, 52, 200, 40);
@@ -206,12 +283,32 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			add(btnAsignedFacility);
 
 		} else if (userTypeID.equalsIgnoreCase("OVE")) {
-			lblHistory = new JLabel("CONTINENT     " + ((Overseer) worker).getContinent().name());
-			lblHistory.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
-			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
-			lblHistory.setBounds(300, 370, 500, 40);
-			lblHistory.setForeground(Color.WHITE);
-			add(lblHistory);
+			lblContinent = new JLabel("CONTINENT     ");
+			lblContinent.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
+			lblContinent.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			lblContinent.setBounds(300, 370, 500, 40);
+			lblContinent.setForeground(Color.WHITE);
+			add(lblContinent);
+
+			txtAreaContinent = new JTextArea(((Overseer) worker).getContinent().name());
+			txtAreaContinent.setOpaque(false);
+			txtAreaContinent.setForeground(SystemColor.inactiveCaption);
+			txtAreaContinent.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			txtAreaContinent.setBounds(400, 381, 231, 18);
+			txtAreaContinent.setEditable(false);
+			txtAreaContinent.setWrapStyleWord(true);
+			txtAreaContinent.setLineWrap(true);
+			txtAreaContinent.setOpaque(false);
+			add(txtAreaContinent);
+
+			JTextArea textAreaContinentTransparente = new JTextArea();
+			textAreaContinentTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+			textAreaContinentTransparente.setBounds(400, 381, 231, 18);
+			;
+			textAreaContinentTransparente.setBackground(new Color(0, 0, 0, 80));
+			textAreaContinentTransparente.setEditable(false);
+			textAreaContinentTransparente.setEnabled(false);
+			add(textAreaContinentTransparente);
 
 			lblProfileImg.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/profileOverseer.gif")));
 			btnAddScp = new JButton("Add SCP");
@@ -291,11 +388,26 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
+		/** Mostrar SCP */
 		if (e.getSource().equals(btnAsigned)) {
+			Scientific sci = new Scientific();
+			ArrayList<SCP> scp_list = sci.showAsignedSCP(userID);
+
+			JComponent panelShowSCP = null;
+			panelShowSCP = new PanelShowScp(scp_list);
+			tabbedPane.addTab("Tab", null, panelShowSCP, "Panel");
+			container.add(tabbedPane, BorderLayout.CENTER);
+			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 
 		}
 		if (e.getSource().equals(btnAddScp)) {
-
+			JComponent panelCreateWorker = null;
+			panelCreateWorker = new CreateSCP();
+			tabbedPane.addTab("Tab", null, panelCreateWorker, "Panel");
+			container.add(tabbedPane, BorderLayout.CENTER);
+			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 
 		if (e.getSource().equals(btnAddWorker)) {
@@ -306,10 +418,12 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
+
 		if (e.getSource().equals(btnAsignScientist)) {
 			JComponent panelAssignSCPtoScientist = null;
 			panelAssignSCPtoScientist = new AssignSCPtoScientist();
 			tabbedPane.addTab("Tab", null, panelAssignSCPtoScientist, "Panel");
+
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 		
