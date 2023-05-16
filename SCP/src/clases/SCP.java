@@ -35,13 +35,7 @@ public class SCP {
 	private Disruption disruption;
 	private Risk risk;
 	private SecondaryC secondary;
-	private Connection con;
-	private PreparedStatement stmt;
-	private DBConnectionController conController = new DBConnectionController();
 
-	private Connection con;
-	private PreparedStatement stmt;
-	private DBConnectionController conController = new DBConnectionController();
 
 	public String getScp_id() {
 		return scp_id;

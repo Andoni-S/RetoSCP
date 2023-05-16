@@ -1,9 +1,6 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,14 +8,10 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicScrollBarUI;
@@ -32,6 +25,7 @@ import main.OverseerFactory;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * The DeleteWorker class is of type JPanel and implements ActionListener. The
@@ -40,12 +34,10 @@ import java.awt.event.MouseEvent;
  * @author Alex
  */
 public class DeleteWorker extends JPanel implements ActionListener {
-	// We declare the required labels, buttons, and table
 
 	/**
 	 * Create the panel.
 	 */
-
 	private JTable tablaWorkers;
 	private DefaultTableModel model;
 	private JLabel lblWorker;
@@ -53,29 +45,14 @@ public class DeleteWorker extends JPanel implements ActionListener {
 	private JButton btnShowInfo;
 	private JButton btnDelete;
 	private JLabel background;
-	private JTabbedPane tabbedPane = null;
-	private Container container = null;
-	private Worker worker;
-	private String user;
 
 	/**
 	 * This is the window constructor, where the table, JTextField and buttons are
 	 * generated
-	 * 
-	 * @param worker_
-	 * @param usernameUsuario
-	 * @param tabbedPane_
-	 * @param pane
 	 */
-	public DeleteWorker(Worker worker_, String usernameUsuario, JTabbedPane tabbedPane_, Container pane) {
-
+	public DeleteWorker() {
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
-
-		worker = worker_;
-		user = usernameUsuario;
-		tabbedPane = tabbedPane_;
-		container = pane;
 
 		Worker work = new Worker();
 		try {
@@ -125,9 +102,6 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		tablaWorkers.setRowHeight(tablaWorkers.getRowHeight()+15);
 		//tablaWorkers.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		tablaWorkers.addMouseListener(new MouseAdapter() {
-			// The following method fills in the text field called "textWorker" with the ID
-			// selected in the table with the mouse
-
 			@Override
 			public void mouseClicked(final MouseEvent e) {
 				if (e.getClickCount() == 1) {
@@ -147,9 +121,6 @@ public class DeleteWorker extends JPanel implements ActionListener {
 
 		scrollPane.setViewportView(tablaWorkers);
 
-
-		// We call the fillTable() method to fill in the table
-
 		fillTable();
 
 		lblWorker = new JLabel("Insert the ID of the worker:");
@@ -159,26 +130,22 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		add(lblWorker);
 
 		textWorker = new JTextField();
-
-		textWorker.setForeground(new Color(255, 255, 255));
-		textWorker.setBackground(new Color(0, 0, 0));
-
 		textWorker.setBounds(475, 527, 275, 25);
 		textWorker.setFont(new Font("OCR A Extended", Font.BOLD, 14));
 		add(textWorker);
 		textWorker.setColumns(10);
 
 		btnShowInfo = new JButton("Show Info");
-		btnShowInfo.setForeground(Color.white);
-		btnShowInfo.setBackground(Color.black);
+		btnShowInfo.setBackground(new Color(0, 0, 0));
+		btnShowInfo.setForeground(new Color(255, 255, 255));
 		btnShowInfo.setFont(new Font("OCR A Extended", Font.BOLD, 15));
 		btnShowInfo.setBounds(771, 485, 120, 45);
 		add(btnShowInfo);
 		btnShowInfo.addActionListener(this);
 
 		btnDelete = new JButton("Delete");
-		btnDelete.setForeground(Color.white);
-		btnDelete.setBackground(Color.black);
+		btnDelete.setForeground(new Color(255, 255, 255));
+		btnDelete.setBackground(new Color(0, 0, 0));
 		btnDelete.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		btnDelete.setBounds(771, 545, 120, 45);
 		add(btnDelete);
@@ -190,18 +157,10 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		add(background);
 	}
 
-	/**
-	 * The following method returns nothing and clears the table completely
-	 */
-
 	public void emptyTable() {
 		DefaultTableModel model = (DefaultTableModel) tablaWorkers.getModel();
 		model.setRowCount(0);
 	}
-	/**
-	 * The fillTable() method is responsible for filling the table with the ID, name
-	 * and date of entry of all workers
-	 */
 
 	public void fillTable() {
 		try {
@@ -227,21 +186,15 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		}
 	}
 
-	/**
-	 * actionPerformed method listening to btnShowInfo and btnDelete
-	 * 
-	 * @param e - ActionEvent type variable
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		try {
 			
-
+		
 		if (e.getSource().equals(btnShowInfo)) {
 			if (textWorker.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Empty field. Please enter an ID");
-
 			} else {
 				String workerDeletion = textWorker.getText();
 				Worker work = new Worker();
@@ -249,23 +202,11 @@ public class DeleteWorker extends JPanel implements ActionListener {
 				
 				if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
 
-					JComponent show = null;
-					show = new PanelShowInfo(worker, workerDeletion, tabbedPane, container);
-					tabbedPane.addTab("Tab", null, show, "Panel");
-					container.add(tabbedPane, BorderLayout.CENTER);
-					tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-					tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
-
-
 				} else {
 					JOptionPane.showMessageDialog(null, "Please insert an existing ID");
 				}
 			}
 		}
-
-
-		// If the user clicks on "Delete", a confirmation message will be displayed and,
-		// if confirmed, the worker will be deleted
 
 		if (e.getSource().equals(btnDelete)) {
 			if (textWorker.getText().trim().isEmpty()) {

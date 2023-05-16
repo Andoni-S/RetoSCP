@@ -36,7 +36,7 @@ public class Facility {
 		this.facility_level = facility_level;
 	}
 	
-	public ArrayList<Facility> showAllFacilities() {
+	/*public ArrayList<Facility> showAllFacilities() {
 		ResultSet rs = null;
 		con = conController.openConnection();
 		ArrayList<Facility> arrayFacilities = new ArrayList<Facility>();
@@ -64,5 +64,5 @@ public class Facility {
 		conController.closeConnection(stmt, con);
 
 		return arrayFacilities;
-	}
+	}*/
 }

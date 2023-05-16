@@ -45,21 +45,19 @@ public class ShowFacility extends JPanel {
 
 		setLayout(null);
 
-
-		lblIdFacility = new JLabel("ID Facility:           " + wAge.getId_facility());
+		lblIdFacility = new JLabel("ID Facility:  " + wAge.getId_facility());
 		lblIdFacility.setForeground(new Color(255, 255, 255));
 		lblIdFacility.setFont(new Font("OCR A Extended", Font.BOLD, 40));
 		lblIdFacility.setBounds(130, 110, 1500, 43);
 		add(lblIdFacility);
 
-		lblNameFacility = new JLabel("Name Facility:         " + fac.getFacility_name());
+		lblNameFacility = new JLabel("Name Facility:  " + fac.getFacility_name());
 		lblNameFacility.setForeground(new Color(255, 255, 255));
 		lblNameFacility.setFont(new Font("OCR A Extended", Font.BOLD, 40));
-		lblNameFacility.setBounds(130, 310, 796, 43);
+		lblNameFacility.setBounds(130, 310, 1000, 43);
 		add(lblNameFacility);
 
-
-		lblLevelFacility = new JLabel("Level Facility:        " + String.format("%d", fac.getFacility_level()));
+		lblLevelFacility = new JLabel("Level Facility:  " + String.format("%d", fac.getFacility_level()));
 		lblLevelFacility.setForeground(new Color(255, 255, 255));
 		lblLevelFacility.setFont(new Font("OCR A Extended", Font.BOLD, 40));
 		lblLevelFacility.setBounds(130, 510, 595, 43);

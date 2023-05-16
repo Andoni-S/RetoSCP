@@ -26,10 +26,12 @@ public class AgentDBImplementation implements AgentControllable{
 		Facility fac = null;
 
 		ResultSet rs = null;
+		try {
+			
 		con = conController.openConnection();
 		String OBTAINfacility = "SELECT * FROM FACILITY WHERE ID_Facility = (SELECT ID_Facility FROM agent WHERE ID_Agent = ?)";
 
-		try {
+		
 			stmt = con.prepareStatement(OBTAINfacility);
 
 			stmt.setString(1, idWorker);
@@ -37,7 +39,7 @@ public class AgentDBImplementation implements AgentControllable{
 
 			while (rs.next()) {
 				fac = new Facility();
-				//setId_facility(rs.getString("ID_Facility"));
+				fac.setFacility_id(rs.getString("ID_Facility"));
 				fac.setFacility_name(rs.getString("Name_Facility"));
 				fac.setFacility_level(rs.getInt("Level_Facility"));
 			}

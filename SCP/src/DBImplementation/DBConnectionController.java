@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import exceptions.CreateException;
 import exceptions.ServerException;
 
 public class DBConnectionController {
