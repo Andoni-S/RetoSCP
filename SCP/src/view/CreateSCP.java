@@ -17,8 +17,12 @@ import acs.Disruption;
 import acs.Risk;
 import acs.SecondaryC;
 
+import clases.Facility;
 import clases.Overseer;
 import clases.SCP;
+import exceptions.ServerException;
+import main.OverseerFactory;
+
 
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
@@ -32,7 +36,6 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JSeparator;
 
-
 /**
  * CreateSCP is a JPanel and implements the ActionListener to listen to buttons,
  * and is responsible for adding an SCP to the DB
@@ -40,6 +43,7 @@ import javax.swing.JSeparator;
  * @author Alex
  *
  */
+
 public class CreateSCP extends JPanel implements ActionListener {
 	// We declare the necessary labels, textArea, buttons, and comboBoxes
 	private static final long serialVersionUID = 1L;
@@ -68,19 +72,18 @@ public class CreateSCP extends JPanel implements ActionListener {
 	SCP scp_1;
 	String facility_1;
 	ArrayList<SCP> scp_list;
-	ArrayList<String> facility_list;
+	ArrayList<Facility> facility_list;
+
 	private JScrollPane scrollProcedure,scrollDescription;
 	private JTextArea textAreaProcedure;
 	private JTextArea lbTitle;
 
-	public CreateSCP(ArrayList<SCP> scp_list_, ArrayList<String> facility_list2) {
-
-
-	/**
+  /**
 	 * This is the constructor of the window, where all the labels, buttons, etc.
 	 * are added
 	 */
-	public CreateSCP() {
+	public CreateSCP(ArrayList<SCP> scp_list_, ArrayList<Facility> facility_list2) {
+
 
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
@@ -88,7 +91,8 @@ public class CreateSCP extends JPanel implements ActionListener {
 		scp_list = scp_list_;
 		scp_1 = scp_list.get(0);
 		facility_list = facility_list2;
-		facility_1 = facility_list.get(0);
+		facility_1 = facility_list.get(0).getFacility_id();
+
 		
 		lbTitle = new JTextArea ("CREATE NEW SCP");
 		lbTitle.setFont(new Font("Chiller", Font.BOLD, 80));
@@ -141,8 +145,9 @@ public class CreateSCP extends JPanel implements ActionListener {
 		CBIDFacility = new JComboBox<String>();
 		CBIDFacility.setBackground(new Color(255, 255, 255));
 		CBIDFacility.setForeground(new Color(0, 0, 0));
-		for (String fac : facility_list) {
-			CBIDFacility.addItem(fac);
+		for (Facility fac : facility_list) {
+			CBIDFacility.addItem(fac.getFacility_id());
+
 		}
 		CBIDFacility.setBounds(220, 217, 295, 33);
 		CBIDFacility.setSelectedItem(scp_1.getRelated_scp_id());
@@ -169,7 +174,6 @@ public class CreateSCP extends JPanel implements ActionListener {
 		lblProcedures.setFont(new Font("OCR A Extended", Font.BOLD, 18));
 		lblProcedures.setForeground(Color.WHITE);
 		add(lblProcedures);
-
 		
 		scrollProcedure = new JScrollPane();
 		scrollProcedure.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -188,13 +192,11 @@ public class CreateSCP extends JPanel implements ActionListener {
 		textAreaProcedure.setEnabled(true);
 		textAreaProcedure.setEditable(true);
 
-
 		lblDescription = new JLabel("DESCRIPTION");
 		lblDescription.setBounds(25, 496, 130, 40);
 		lblDescription.setFont(new Font("OCR A Extended", Font.BOLD, 18));
 		lblDescription.setForeground(Color.WHITE);
 		add(lblDescription);
-
 
 		scrollDescription = new JScrollPane();
 		scrollDescription.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -212,7 +214,6 @@ public class CreateSCP extends JPanel implements ActionListener {
 		textAreaDescription.setFont(new Font("OCR A Extended", Font.PLAIN, 16));
 		textAreaDescription.setEnabled(true);
 		textAreaDescription.setEditable(true);
-
 
 		lblLevel = new JLabel("LEVEL");
 		lblLevel.setBounds(629, 61, 71, 20);
@@ -256,7 +257,6 @@ public class CreateSCP extends JPanel implements ActionListener {
 		add(lblDisruption);
 
 		comboBoxDisruption = new JComboBox<>();
-
 		comboBoxDisruption.setBackground(new Color(255, 255, 255));
 		comboBoxDisruption.setForeground(new Color(0, 0, 0));
 
@@ -377,17 +377,7 @@ public class CreateSCP extends JPanel implements ActionListener {
 		background.setIcon(new ImageIcon(CreateSCP.class.getResource("/resources/background2.1.png")));
 		add(background);
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 	}
 
 	protected void UpdateCombo() {
@@ -406,15 +396,10 @@ public class CreateSCP extends JPanel implements ActionListener {
 
 	}
 
-	/**
-	 * actionPerformed method listening to btnCreate and btnReset buttons
-	 * 
-	 * @param e - ActionEvent type variable
-	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// If you click on "Create", a new SCP is created
 		if (e.getSource().equals(btnCreate)) {
-
 			if (fieldId.getText().equals("") || CBlIdRelated.getSelectedItem().equals(" ")
 					|| CBIDFacility.getSelectedItem().equals(" ") || fieldName.getText().equals("")
 
@@ -440,13 +425,17 @@ public class CreateSCP extends JPanel implements ActionListener {
 				scpC.setDisruption((Disruption) comboBoxDisruption.getSelectedItem());
 				scpC.setRisk((Risk) comboBoxRisk.getSelectedItem());
 				scpC.setSecondary((SecondaryC) comboBoxSecondary.getSelectedItem());
-				Overseer Ove_scp = new Overseer();
-				Ove_scp.addSCP(scpC);
-				JOptionPane.showMessageDialog(null, "The SCP has been created");
 
+				try {
+					OverseerFactory.getOverseerDB().addSCP(scpC);
+				} catch (ServerException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+				JOptionPane.showMessageDialog(null, "The SCP has been created");
 
 			}
 		}
+
 		// If you click on "Reset", all data entered so far will be deleted
 
 		if (e.getSource().equals(btnReset)) {

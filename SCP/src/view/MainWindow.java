@@ -21,7 +21,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
-public class MainWindow extends JFrame implements ActionListener {
+public class MainWindow extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -83,7 +83,8 @@ public class MainWindow extends JFrame implements ActionListener {
 		        else  
 		            return 0;  
 		    }  
-		});		*/
+		});	*/
+
 		//desabilita el cambiar a una tab expecifica
 		//tabbedPane.setEnabledAt(1, false);
 		//hace invisible las tabs

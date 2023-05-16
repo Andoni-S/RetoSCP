@@ -21,10 +21,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableModel;
 
 import clases.Overseer;
 import clases.Worker;
+import exceptions.ServerException;
+import main.LoginableFactory;
+import main.OverseerFactory;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -73,7 +78,11 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		container = pane;
 
 		Worker work = new Worker();
-		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
+		try {
+			ArrayList<Worker> arrayDeWorkers = LoginableFactory.getLoginable().showAllWorkers();
+		} catch (ServerException e1) {
+			JOptionPane.showMessageDialog(this, e1.getMessage());
+		}
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.addMouseListener(new MouseAdapter() {
@@ -92,7 +101,29 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		tablaWorkers.setOpaque(false);
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		scrollPane.setFont(new Font("OCR A Extended", Font.PLAIN, 20));
+		scrollPane.getViewport().setBackground(Color.BLACK);
+		scrollPane.getViewport().setForeground(Color.BLACK);
+		scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override 
+            protected void configureScrollBarColors(){
+                this.thumbColor = Color.BLACK;
+            }
+        });
+		scrollPane.getHorizontalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override 
+            protected void configureScrollBarColors(){
+                this.thumbColor = Color.BLACK;
+            }
+        });
+		tablaWorkers.setBackground(new Color(35,35,35,0));
+		tablaWorkers.setForeground(new Color(255,255,255));
 		tablaWorkers.setShowGrid(false);
+		tablaWorkers.setFont(new Font("OCR A Extended", Font.PLAIN, 25));
+		tablaWorkers.getTableHeader().setFont(new Font("OCR A Extended", Font.PLAIN, 25));
+		tablaWorkers.setRowHeight(tablaWorkers.getRowHeight()+15);
+		//tablaWorkers.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		tablaWorkers.addMouseListener(new MouseAdapter() {
 			// The following method fills in the text field called "textWorker" with the ID
 			// selected in the table with the mouse
@@ -104,6 +135,7 @@ public class DeleteWorker extends JPanel implements ActionListener {
 					final int row = jTable.getSelectedRow();
 					final String valueInCell = (String) jTable.getValueAt(row, 0);
 					textWorker.setText(valueInCell);
+					
 				}
 			}
 		});
@@ -111,6 +143,7 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		model.addColumn("ID");
 		model.addColumn("Name");
 		model.addColumn("Date Entry");
+		//model.setFont(new Font("OCR A Extended", Font.PLAIN, 20));
 
 		scrollPane.setViewportView(tablaWorkers);
 
@@ -171,19 +204,27 @@ public class DeleteWorker extends JPanel implements ActionListener {
 	 */
 
 	public void fillTable() {
-		Worker work = new Worker();
-		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
+		try {
+			Worker work = new Worker();
+			ArrayList<Worker> arrayDeWorkers;
+		
+			arrayDeWorkers = LoginableFactory.getLoginable().showAllWorkers();
+		
 
-		for (Worker worker : arrayDeWorkers) {
+			for (Worker worker : arrayDeWorkers) {
 			Object[] fila = new Object[3];
 			fila[0] = worker.getId();
 			fila[1] = worker.getName();
 			fila[2] = worker.getDate_Entry();
 
 			model.addRow(fila);
-		}
+			}
 
-		tablaWorkers.setDefaultEditor(Object.class, null);
+			tablaWorkers.setDefaultEditor(Object.class, null);
+		
+		} catch (ServerException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
 	}
 
 	/**
@@ -193,6 +234,10 @@ public class DeleteWorker extends JPanel implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+		try {
+			
+
 		if (e.getSource().equals(btnShowInfo)) {
 			if (textWorker.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Empty field. Please enter an ID");
@@ -201,7 +246,8 @@ public class DeleteWorker extends JPanel implements ActionListener {
 				String workerDeletion = textWorker.getText();
 				Worker work = new Worker();
 
-				if (work.checkWorker(workerDeletion)) {
+				
+				if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
 
 					JComponent show = null;
 					show = new PanelShowInfo(worker, workerDeletion, tabbedPane, container);
@@ -232,9 +278,9 @@ public class DeleteWorker extends JPanel implements ActionListener {
 					String workerDeletion = textWorker.getText();
 					Worker work = new Worker();
 
-					if (work.checkWorker(workerDeletion)) {
-						Overseer ove = new Overseer();
-						ove.deleteWorker(work.getId());
+					if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
+						
+						OverseerFactory.getOverseerDB().deleteWorker(work.getId());
 						JOptionPane.showMessageDialog(null, "The worker has been deleted");
 						emptyTable();
 						fillTable();
@@ -245,6 +291,9 @@ public class DeleteWorker extends JPanel implements ActionListener {
 				}
 			}
 		}
-
+		}catch (ServerException ex) {
+			JOptionPane.showMessageDialog(this, ex.getMessage());
+		}
+		
 	}
 }

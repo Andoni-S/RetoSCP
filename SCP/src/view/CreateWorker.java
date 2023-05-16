@@ -7,17 +7,33 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Locale;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+
 import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDayChooser;
+
 import acs.Continent;
 
 import clases.Agent;
 import clases.Overseer;
 import clases.Scientific;
+import clases.Worker;
+import exceptions.ServerException;
+import main.AgentFactory;
+import main.LoginableFactory;
+import main.OverseerFactory;
+import main.ScientificFactory;
+
 
 import clases.Worker;
 import javax.swing.JTextField;
@@ -37,14 +53,16 @@ public class CreateWorker extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JButton btnAgent_1, btnOverseer_1, btnScientist_1, btnReset, btnCreate;
 	private JLabel lblId, background, lblName, lblActive, lblEntryDate, lblLevel, lblBossID, lblPassword, lblHistory;
-	private JTextField fieldName, fieldEntryDate, fieldBoss, fieldPassword;
+	private JTextField fieldName, fieldEntryDate, fieldPassword;
 	private JCheckBox chckbxActive;
 	private JSpinner spinnerLevel;
 	private JCalendar calendar;
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	private JTextArea textAreaHistory;
+	private JScrollPane scroll;
 	private JComboBox<Continent> comboBox;
-	JTextArea textAreaProceduresTransparente = null;
+
+	private JComboBox<String> comboBoxBoss;
 
 
 	private boolean isScientist = false, isAgent = false, isOverseer = false;
@@ -125,28 +143,34 @@ public class CreateWorker extends JPanel implements ActionListener {
 
 		fieldEntryDate = new JTextField();
 
-		fieldEntryDate.setFont(new Font("OCR A Extended", Font.BOLD, 12));
-		fieldEntryDate.setForeground(new Color(255, 255, 255));
-		fieldEntryDate.setBackground(new Color(0, 0, 0));
+		fieldEntryDate.setEditable(false);
 
 		fieldEntryDate.setColumns(10);
 		fieldEntryDate.setBounds(600, 430, 300, 33);
 		add(fieldEntryDate);
 
-		fieldBoss = new JTextField();
-		fieldBoss.setFont(new Font("OCR A Extended", Font.BOLD, 12));
-		fieldBoss.setForeground(new Color(255, 255, 255));
-		fieldBoss.setBackground(new Color(0, 0, 0));
-
-		fieldBoss.setColumns(10);
-		fieldBoss.setBounds(284, 276, 227, 33);
-		add(fieldBoss);
-
 		chckbxActive = new JCheckBox("");
-		chckbxActive.setBackground(new Color(255, 255, 255, 0));
-		chckbxActive.setBounds(284, 178, 97, 23);
+		chckbxActive.setBackground(Color.BLACK);
+		chckbxActive.setBounds(284, 181, 21, 20);
 		add(chckbxActive);
 
+		ArrayList<String> bossList = null;
+		try {
+			bossList = OverseerFactory.getOverseerDB().getOverseerIDs();
+		} catch (ServerException ex) {
+			JOptionPane.showMessageDialog(this, ex.getMessage());
+		}
+		
+		comboBoxBoss = new JComboBox<>();
+		for (String id : bossList) {
+			comboBoxBoss.addItem(id);
+		}
+		comboBoxBoss.setSelectedIndex(-1);
+		comboBoxBoss.setBounds(284, 269, 227, 31);
+		add(comboBoxBoss);
+		
+		
+		
 		fieldPassword = new JTextField();
 
 		fieldPassword.setFont(new Font("OCR A Extended", Font.BOLD, 12));
@@ -172,10 +196,31 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(spinnerLevel);
 
 		calendar = new JCalendar();
+		calendar.getDayChooser().setBackground(Color.WHITE);
+		calendar.getDayChooser().setWeekdayForeground(Color.WHITE);
+		calendar.setBackground(new Color(0,0,0,0));
 		calendar.setWeekdayForeground(Color.WHITE);
 		calendar.setWeekOfYearVisible(false);
-		calendar.setDecorationBackgroundColor(Color.BLACK);
+		calendar.setDecorationBackgroundColor(new Color(0,0,0,0));
+		calendar.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		// Ubicar y agregar al panel
+
 		calendar.setBounds(600, 100, 300, 300);
+		
+		for (int i = 0; i < calendar.getComponentCount(); i++)  {
+		    if (calendar.getComponent(i) instanceof JDayChooser) {
+		        JDayChooser chooser = ((JDayChooser) calendar.getComponent( i ) );
+		        JPanel panel = (JPanel) chooser.getComponent(0);
+		        // the following line changes the color of the background behind the buttons
+		        panel.setBackground(new Color(0,0,0,0));
+		        // the for loop below changes the color of the buttons themselves
+		        for (int y = 0; y < panel.getComponentCount(); y++) {
+		            panel.getComponent(y).setBackground(Color.BLACK);
+		            panel.getComponent(y).setForeground(Color.WHITE);
+		        }
+		        break; // leave the for loop, we're done
+		    }
+		}
 		calendar.getDayChooser().addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
@@ -210,15 +255,20 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(lblHistory);
 
 		textAreaHistory = new JTextArea();
-		textAreaHistory.setForeground(new Color(255, 255, 255));
-		textAreaHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		textAreaHistory.setRows(100);
+		textAreaHistory.setLineWrap(true);
 
 		textAreaHistory.setBounds(284, 388, 227, 202);
 		textAreaHistory.setOpaque(false);
 		textAreaHistory.setWrapStyleWord(true);
 		textAreaHistory.setLineWrap(true);
 		textAreaHistory.setVisible(false);
+		/*scroll = new JScrollPane (textAreaHistory, 
+				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);*/
 		add(textAreaHistory);
+		//scroll.setVisible(true);
+		//add(scroll);
+		
 
 		textAreaProceduresTransparente = new JTextArea();
 		textAreaProceduresTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
@@ -237,6 +287,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 		for (Continent cont : Continent.values()) {
 			comboBox.addItem(cont);
 		}
+		
 		comboBox.setBounds(284, 388, 227, 20);
 		comboBox.setVisible(false);
 		comboBox.setSelectedIndex(-1);
@@ -257,14 +308,56 @@ public class CreateWorker extends JPanel implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(btnCreate)) {
-			Worker worker = new Worker();
+
+		try {
+			//Add Worker Buttons
+			if (e.getSource().equals(btnCreate)){
+				Worker worker = null;		
+				if(isAgent)
+				{
+					worker = new Agent();
+					((Agent)worker).setHistory(textAreaHistory.getText());
+				}
+				else if(isScientist)
+				{
+					worker = new Scientific();
+					((Scientific)worker).setStudies(textAreaHistory.getText());
+				}
+				else if(isOverseer)
+				{
+					worker = new Overseer();
+					((Overseer)worker).setContinent(Continent.valueOf(comboBox.getSelectedItem().toString()));
+				}
+			
+				String id = LoginableFactory.getLoginable().workerIDCreator(worker);
+				
+				worker.setId(id);
+				worker.setActive(chckbxActive.isSelected());
+				worker.setName(fieldName.getText());
+				worker.setPassword(fieldPassword.getText());
+				worker.setLevel((int)spinnerLevel.getValue());
+				
+				java.sql.Date sqlDate = java.sql.Date.valueOf( fieldEntryDate.getText() );	
+				
+				worker.setDate_Entry(sqlDate);
+				worker.setBossID((String)comboBoxBoss.getSelectedItem());
+				
+				if(isAgent)
+					AgentFactory.getAgentDB().createWorker((Agent)worker);
+				else if(isScientist)
+					ScientificFactory.getScientificDB().createWorker((Scientific)worker);			
+				else if(isOverseer) 
+					OverseerFactory.getOverseerDB().createWorker((Overseer)worker);		
+				
+				JOptionPane.showMessageDialog(this, "Worker created succesfully, ID "+id+" assigned");
 		}
-
-		if (e.getSource().equals(btnReset)) {
-
+		if (e.getSource().equals(btnReset)){
+			isAgent = false;
+			isAgent = false;
+			isAgent = false;
+			
 			fieldName.setText("");
-			fieldBoss.setText("");
+			comboBoxBoss.setSelectedIndex(-1);
 			chckbxActive.setSelected(false);
 			spinnerLevel.setValue(0);
 			fieldPassword.setText("");
@@ -279,14 +372,15 @@ public class CreateWorker extends JPanel implements ActionListener {
 			textAreaProceduresTransparente.setVisible(false);
 		}
 
-		if (e.getSource().equals(btnAgent_1)) {
 
-      isAgent= true;
+		if (e.getSource().equals(btnAgent_1)) {
+			isAgent= true;
+
 			lblHistory.setText("RECORD");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 385, 91, 46);
 			lblHistory.setVisible(true);
-			textAreaHistory.setVisible(true);
+			lblHistory.setVisible(true);
 			btnScientist_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
 
@@ -295,7 +389,8 @@ public class CreateWorker extends JPanel implements ActionListener {
 
 		if (e.getSource().equals(btnScientist_1)) {
 
-      isScientist = true;
+			isScientist = true;
+
 			lblHistory.setText("STUDIES");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 385, 91, 46);
@@ -308,7 +403,9 @@ public class CreateWorker extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource().equals(btnOverseer_1)) {
-      isOverseer = true;
+
+			isOverseer = true;
+
 			lblHistory.setText("CONTINENT");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 375, 91, 46);
@@ -317,6 +414,11 @@ public class CreateWorker extends JPanel implements ActionListener {
 			btnAgent_1.setEnabled(false);
 			btnScientist_1.setEnabled(false);
 			btnCreate.setEnabled(true);
+		}
+		
+		}catch (ServerException ex){
+			JOptionPane.showMessageDialog(this, ex.getMessage());
+
 		}
 	}
 }

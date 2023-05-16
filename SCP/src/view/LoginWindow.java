@@ -13,7 +13,12 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+
+import clases.RotatedLabel;
 import clases.Worker;
+import exceptions.LoginException;
+import main.LoginableFactory;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Color;
@@ -25,7 +30,7 @@ import javax.swing.JButton;
 
 public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 	private static final long serialVersionUID = 1L;
-	private Timer timer;
+	private Timer timer, timer2;
 	private JLabel usernameLabel;
 	private JLabel passwordLabel;
 	private JPanel contentPane;
@@ -33,25 +38,13 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 	private int usery;
 	private int logoy;
 	private JLabel scpLogo;
+	private RotatedLabel scpLogo2;
 	private JLabel background;
-	private ActionListener labelAnim;
+	private ActionListener labelAnim, labelRotation;
 	private JTextField userField;
 	private JPasswordField passwordField;
 	private JButton btnLogIn;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginWindow frame = new LoginWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private double[] size = new double[2];
 	public LoginWindow() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginWindow.class.getResource("/resources/icon.png")));
 
@@ -78,9 +71,8 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		contentPane.add(passwordLabel);
 
 		userField = new JTextField();
-
-	   userField.setForeground(new Color(255, 255, 255));
-		userField.setBackground(new Color(0, 0, 0));
+		userField.setForeground(Color.WHITE);
+		userField.setBackground(Color.BLACK);
 
 		userField.setBounds(400, 1000, 300, 32);
 		userField.setFont(new Font("OCR A Extended", Font.BOLD, 14));
@@ -89,28 +81,23 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		userField.setFocusable(true);
 
 		passwordField = new JPasswordField();
-		passwordField.setForeground(new Color(255, 255, 255));
-		passwordField.setBackground(new Color(0, 0, 0));
+		passwordField.setForeground(Color.WHITE);
+		passwordField.setBackground(Color.BLACK);
 
 		passwordField.setBounds(400, 1200, 300, 33);
 		passwordField.addKeyListener(this);
 		contentPane.add(passwordField);
 
-		scpLogo = new JLabel("scp");
-		scpLogo.setIcon(new ImageIcon(LoginWindow.class.getResource("/resources/MEDIUM_White.png")));
+		scpLogo = new JLabel("");
+		scpLogo.setIcon(new ImageIcon(LoginWindow.class.getResource("/resources/SCPLogoNoIcon.png")));
 		scpLogo.setBounds(100, -550, 800, 800);
 		contentPane.add(scpLogo);
-
-		background = new JLabel("bg");
-		background.setIcon(new ImageIcon(LoginWindow.class.getResource("/resources/background.png")));
-		background.setBounds(0, 0, 1024, 768);
-		contentPane.add(background);
-
-		labelAnim = new LabelAnim();
-		logoy = scpLogo.getY();
-		usery = usernameLabel.getY();
-		timer = new Timer(1, labelAnim);
-
+		
+		scpLogo2 = new RotatedLabel("");
+		scpLogo2.setIcon(new ImageIcon(LoginWindow.class.getResource("/resources/LogoWhite.png")));
+		scpLogo2.setBounds(620, -550, 265, 265);
+		contentPane.add(scpLogo2);
+		
 		btnLogIn = new JButton("LOG IN");
 		btnLogIn.setFont(new Font("OCR A EXTENDED", Font.BOLD, 16));
 		btnLogIn.setBackground(new Color(0, 0, 0));
@@ -119,27 +106,35 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		contentPane.add(btnLogIn);
 		btnLogIn.addActionListener(this);
 
+		background = new JLabel("bg");
+		background.setIcon(new ImageIcon(LoginWindow.class.getResource("/resources/background.png")));
+		background.setBounds(0, 0, 1024, 768);
+		contentPane.add(background);
+
+		labelAnim = new LabelAnim();
+		labelRotation = new LabelRotation();
+		logoy = scpLogo.getY();
+		usery = usernameLabel.getY();
+		timer = new Timer(1, labelAnim);
+		timer2 = new Timer(1, labelRotation);
+
+		
+		    
 		timer.start();
+		//timer2.start();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btnLogIn)) {
-			if (userField.getText().isEmpty() || passwordField.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(btnLogIn, "Username/Password is Empty");
-			} else {
-				String usernameUsuario = userField.getText();
-				String passwordUsuario = passwordField.getText();
-
-				Worker work = new Worker();
-
-				if (work.logIn(usernameUsuario, passwordUsuario)) {
-					MainWindow vMain = new MainWindow(usernameUsuario);
-					vMain.setVisible(true);
-				} else {
-					JOptionPane.showMessageDialog(btnLogIn, "Username/Password Incorrect");
-				}
-			}
+			login();
+		}
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == e.VK_ENTER) {
+			login();
 		}
 	}
 	class LabelAnim implements ActionListener {
@@ -152,10 +147,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		private void moveLogo() {
 			logoy += 5;
 			scpLogo.setLocation(scpLogo.getX(), logoy);
-
-			/*
-			 * if (logoy >= 50) { timer.stop(); }
-			 */
+			scpLogo2.setLocation(scpLogo2.getX(), logoy+250);
 		}
 
 		private void moveLabel() {
@@ -168,37 +160,56 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 
 			if (usery <= 450) {
 				timer.stop();
+				timer2.start();
 			}
+		}
+	}
+	
+	class LabelRotation implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			rotateLabel();
+		}
+		private void rotateLabel() {
+			
+			if(scpLogo2.getAngle() >= 2*3.1416)
+				scpLogo2.setAngle(0);
+			
+			scpLogo2.setLocation(scpLogo2.getX()+1, scpLogo2.getY()+1);
+			scpLogo2.setLocation(scpLogo2.getX()-1, scpLogo2.getY()-1);
+			scpLogo2.setAngle(scpLogo2.getAngle()+0.01);
+			
+			/*size[0]=size[0]+0.001;
+			size[1]=size[1]+0.001;
+			scpLogo.setSizeCustom(size);*/
 		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+
 	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == e.VK_ENTER) {
-			if (userField.getText().isEmpty() || passwordField.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(btnLogIn, "Username/Password is Empty");
-			} else {
-				String usernameUsuario = userField.getText();
-				String passwordUsuario = passwordField.getText();
-
-				Worker work = new Worker();
-
-				if (work.logIn(usernameUsuario, passwordUsuario)) {
-					MainWindow vMain = new MainWindow(usernameUsuario);
-					vMain.setVisible(true);
-				} else {
-					JOptionPane.showMessageDialog(btnLogIn, "Username/Password Incorrect");
-				}
-			}
-		}
-	}
-
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
 
+	}
+	public void login(){
+		try {
+			if (userField.getText().isEmpty() || passwordField.getText().isEmpty()) 
+				throw new Exception("nombre y/o contraseña vacios");
+				
+			String usernameUsuario = userField.getText();
+			String passwordUsuario = passwordField.getText();
+
+			Worker worker = LoginableFactory.getLoginable().logIn(usernameUsuario, passwordUsuario);
+			MainWindow vMain = new MainWindow(worker.getId());
+			vMain.setVisible(true);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(btnLogIn, e.getMessage());
+		}
 	}
 }

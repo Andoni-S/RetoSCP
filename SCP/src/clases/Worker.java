@@ -8,15 +8,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import controller.Loginable;
+import com.mysql.cj.jdbc.CallableStatement;
 
-/**
- * The Worker class, which implements the single method of the Loginable
- * interface
- * 
- * @author Alex
- */
-public class Worker implements Loginable {
+import DBImplementation.DBConnectionController;
+import controller.Loginable;
+import exceptions.LoginException;
+import exceptions.ServerException;
+
+public class Worker{
+
+
 	protected String id;
 	protected String name;
 	protected Date date_Entry;
@@ -24,10 +25,6 @@ public class Worker implements Loginable {
 	protected int level;
 	protected String password;
 	protected String bossID;
-
-	protected Connection con;
-	protected PreparedStatement stmt;
-	protected DBConnectionController conController = new DBConnectionController();
 
 	public String getId() {
 		return id;
@@ -85,167 +82,4 @@ public class Worker implements Loginable {
 		this.bossID = bossID;
 	}
 
-	/**
-	 * A method that verifies that both the user name and password are correct.
-	 * 
-	 * @param usernameUsuario - entered by the user
-	 * @param passwordUsuario - entered by the user
-	 * @return returns a boolean with true or false
-	 */
-	@Override
-	public boolean logIn(String usernameUsuario, String passwordUsuario) {
-		ResultSet rs = null;
-		con = conController.openConnection();
-
-		String OBTENERIDPassWorker = "SELECT ID_Worker,password_Worker FROM Worker WHERE ID_Worker = ?";
-
-		try {
-			stmt = con.prepareStatement(OBTENERIDPassWorker);
-
-			stmt.setString(1, usernameUsuario);
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				setId(rs.getString("ID_Worker"));
-				setPassword(rs.getString("password_Worker"));
-			}
-			
-			conController.closeConnection(stmt,con);
-			
-			if (id != null || password != null) {
-				if (id.equals(usernameUsuario) && password.equals(passwordUsuario)) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return false;
-		
-	}
-
-
-	public Worker showInfo(String id) {
-
-
-	/**
-	 * This method displays the information of a particular Worker
-	 * 
-	 * @param id - entered by the user
-	 * @return it returns the required Worker object
-	 */
-	public Worker showInfo(String id) {
-		ResultSet rs = null;
-		con = conController.openConnection();
-
-
-		String OBTENERIDWorker = "SELECT * FROM Worker WHERE ID_Worker = ?";
-		try {
-			stmt = con.prepareStatement(OBTENERIDWorker);
-
-			stmt.setString(1, id);
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				setId(rs.getString("ID_Worker"));
-				setName(rs.getString("Name_Worker"));
-				setDate_Entry(rs.getDate("Date_Entry"));
-				setActive(rs.getBoolean("Active_Worker"));
-				setLevel(rs.getInt("Level_Worker"));
-				setPassword(rs.getString("password_Worker"));
-				setBossID(rs.getString("ID_Boss"));
-
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		conController.closeConnection(stmt, con);
-
-		return this;
-	}
-
-	/**
-	 * This one serves to get the information of all the Workers
-	 * 
-	 * @return returns an ArrayList with all the Workers in the DB
-	 */
-	public ArrayList<Worker> showAllWorkers() {
-		ResultSet rs = null;
-		con = conController.openConnection();
-		ArrayList<Worker> arrayDeWorkers = new ArrayList<Worker>();
-
-
-		String OBTENERWorker = "SELECT * FROM Worker";
-
-
-		try {
-			stmt = con.prepareStatement(OBTENERWorker);
-
-			// .setString(1, id);
-
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				Worker workie = new Worker();
-				workie.setId(rs.getString("ID_Worker"));
-				workie.setName(rs.getString("Name_Worker"));
-				workie.setDate_Entry(rs.getDate("Date_Entry"));
-
-				arrayDeWorkers.add(workie);
-
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		conController.closeConnection(stmt, con);
-
-		return arrayDeWorkers;
-	}
-
-	/**
-	 * This method verifies that the Worker exists in the database
-	 * 
-	 * @param id_worker - entered by the user
-	 * @return returns true if it exists and false if it does not
-	 */
-
-	public boolean checkWorker(String id_worker) {
-		ResultSet rs = null;
-		con = conController.openConnection();
-
-
-			stmt.setString(1, id_worker);
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				setId(rs.getString("ID_Worker"));
-			}
-
-			if (id != null || password != null) {
-				if (id.equals(id_worker)) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return false;
-
-	}
-	public String workerIDCreator() {
-		//default Worker, not used
-		return "WOR-0000";
-	}
 }

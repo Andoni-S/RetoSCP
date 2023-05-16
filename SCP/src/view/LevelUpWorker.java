@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,6 +15,10 @@ import javax.swing.JPanel;
 
 import clases.Overseer;
 import clases.Worker;
+import exceptions.ServerException;
+import main.LoginableFactory;
+import main.OverseerFactory;
+
 import javax.swing.JComboBox;
 
 /**
@@ -53,12 +58,6 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 	 */
 	public LevelUpWorker() {
 		setBounds(0, 0, 1024, 768);
-
-		// We load all the workers from the database to be able to display them in the
-		// combobox
-
-		Worker work = new Worker();
-		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
 		setLayout(null);
 
 		lblWorker = new JLabel("Select the worker:");
@@ -96,7 +95,6 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		add(lblIdWorker);
 
 		lblDato1 = new JLabel();
-
 		lblDato1.setForeground(new Color(255, 255, 255));
 
 		lblDato1.setFont(new Font("OCR A Extended", Font.BOLD, 16));
@@ -112,7 +110,6 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 
 		lblDato2 = new JLabel();
 		lblDato2.setForeground(new Color(255, 255, 255));
-
 		lblDato2.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato2.setBounds(500, 200, 796, 43);
 		lblDato2.setVisible(false);
@@ -125,7 +122,6 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		add(lblDateEntry);
 
 		lblDato3 = new JLabel();
-
 		lblDato3.setForeground(new Color(255, 255, 255));
 
 		lblDato3.setFont(new Font("OCR A Extended", Font.BOLD, 16));
@@ -141,7 +137,6 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 
 		lblDato4 = new JLabel();
 		lblDato4.setForeground(new Color(255, 255, 255));
-
 		lblDato4.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato4.setBounds(500, 360, 595, 43);
 		lblDato4.setVisible(false);
@@ -155,7 +150,6 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 
 		lblDato5 = new JLabel();
 		lblDato5.setForeground(new Color(255, 255, 255));
-
 		lblDato5.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato5.setBounds(500, 440, 595, 43);
 		lblDato5.setVisible(false);
@@ -169,7 +163,6 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 
 		lblDato6 = new JLabel();
 		lblDato6.setForeground(new Color(255, 255, 255));
-
 		lblDato6.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato6.setBounds(500, 520, 595, 43);
 		lblDato6.setVisible(false);
@@ -187,11 +180,16 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 	 * workers
 	 */
 
+	// This is the method to fill the combobox options with workers
 	private void cargarWorkers() {
-		Worker worky = new Worker();
-		ArrayList<Worker> elArray = worky.showAllWorkers();
+		ArrayList<Worker> arrayDeWorkers = null;
+		try {
+			arrayDeWorkers = LoginableFactory.getLoginable().showAllWorkers();
+		} catch (ServerException e) {
+			JOptionPane.showMessageDialog(null, "Error trying to load the workers");
+		}
 
-		for (Worker w : elArray) {
+		for (Worker w : arrayDeWorkers) {
 			comboBox.addItem(w.getId());
 		}
 	}
@@ -205,84 +203,81 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// If the "show info" button is pressed, the labels with the data corresponding
 		// to the worker selected from the combobox will become visible
-
 		if (e.getSource().equals(btnShowInfo)) {
 			String workerDeletion = (String) comboBox.getSelectedItem();
-			Worker work = new Worker();
+			Worker work = null;
 
-			if (work.checkWorker(workerDeletion)) {
-				work = work.showInfo(workerDeletion);
-				lblDato1.setText(workerDeletion);
-				lblDato1.setVisible(true);
-				lblDato2.setText(work.getName());
-				lblDato2.setVisible(true);
-				lblDato3.setText(work.getDate_Entry().toString());
-				lblDato3.setVisible(true);
-				if (work.isActive())
-					lblDato4.setText("YES");
-				else
-					lblDato4.setText("NO");
-				lblDato4.setVisible(true);
-				if (work.getLevel() == 1)
-					lblDato5.setText("1");
-				else if (work.getLevel() == 2)
-					lblDato5.setText("2");
-				else if (work.getLevel() == 3)
-					lblDato5.setText("3");
-				lblDato5.setVisible(true);
-				lblDato6.setText(work.getBossID());
-				lblDato6.setVisible(true);
-			} else {
-				JOptionPane.showMessageDialog(comboBox, "Please insert an existing ID");
+			try {
+				if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
+					
+					work = LoginableFactory.getLoginable().showInfoDefault(workerDeletion);
+					showInfoWorker(work);					
+				} else {
+					JOptionPane.showMessageDialog(comboBox, "Please insert an existing ID");
+				}
+			} catch (HeadlessException | ServerException e1) {
+				JOptionPane.showMessageDialog(this, e1.getMessage());
 			}
 		}
 
-		// If the "level up" button is clicked, confirmation will be requested and the
-		// worker's level will be added by one, and will be displayed as updated
-
+		// If the "level up" button is clicked, confirmation will be requested and the worker's level will be added by one, and will be displayed as updated
 		if (e.getSource().equals(btnLevelUp)) {
 			String workerDeletion = (String) comboBox.getSelectedItem();
-			Worker work = new Worker();
+			Worker work = null;
+						
+			try {
+				
+				if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
 
-			if (work.checkWorker(workerDeletion)) {
-				work = work.showInfo(workerDeletion);
-				if (work.getLevel() == 3) {
-					JOptionPane.showMessageDialog(null, "The worker is already level 3");
-				} else {
-					int n = JOptionPane.showConfirmDialog(null, "Do you want to level up this worker?", "Confirmation",
+					work = LoginableFactory.getLoginable().showInfoDefault(workerDeletion);
+					showInfoWorker(work);
+					if (work.getLevel() == 3) {
+						JOptionPane.showMessageDialog(null, "The worker is already level 3");
+					} else {
+						
+					
+						int n = JOptionPane.showConfirmDialog(null, "Do you want to level up this worker?", "Confirmation",
 							JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
-					if (n == JOptionPane.YES_OPTION) {
-						Overseer ove = new Overseer();
-						ove.levelUpWorker(work);
-						JOptionPane.showMessageDialog(null, "The worker has been leveled up");
+						if (n == JOptionPane.YES_OPTION) {
+						
+							OverseerFactory.getOverseerDB().levelUpWorker(work);	
+							JOptionPane.showMessageDialog(null, "The worker has been leveled up");
+							work = LoginableFactory.getLoginable().showInfoDefault(workerDeletion);
+							showInfoWorker(work);
 
-						if (work.checkWorker(workerDeletion)) {
-							work = work.showInfo(workerDeletion);
-							lblDato1.setText(workerDeletion);
-							lblDato1.setVisible(true);
-							lblDato2.setText(work.getName());
-							lblDato2.setVisible(true);
-							lblDato3.setText(work.getDate_Entry().toString());
-							lblDato3.setVisible(true);
-							if (work.isActive())
-								lblDato4.setText("YES");
-							else
-								lblDato4.setText("NO");
-							lblDato4.setVisible(true);
-							if (work.getLevel() == 1)
-								lblDato5.setText("1");
-							else if (work.getLevel() == 2)
-								lblDato5.setText("2");
-							else if (work.getLevel() == 3)
-								lblDato5.setText("3");
-							lblDato5.setVisible(true);
-							lblDato6.setText(work.getBossID());
-							lblDato6.setVisible(true);
 						}
 					}
 				}
+			} catch (HeadlessException e1) {
+				JOptionPane.showMessageDialog(this, e1.getMessage());
+			} catch (ServerException e1) {
+				JOptionPane.showMessageDialog(this, e1.getMessage());
 			}
 		}
 	}
+
+	private void showInfoWorker(Worker work) {		
+		lblDato1.setText(work.getId());
+		lblDato1.setVisible(true);
+		lblDato2.setText(work.getName());
+		lblDato2.setVisible(true);
+		lblDato3.setText(work.getDate_Entry().toString());
+		lblDato3.setVisible(true);
+		if (work.isActive())
+			lblDato4.setText("YES");
+		else
+			lblDato4.setText("NO");
+		lblDato4.setVisible(true);
+		if (work.getLevel() == 1)
+			lblDato5.setText("1");
+		else if (work.getLevel() == 2)
+			lblDato5.setText("2");
+		else if (work.getLevel() == 3)
+			lblDato5.setText("3");
+		lblDato5.setVisible(true);
+		lblDato6.setText(work.getBossID());
+		lblDato6.setVisible(true);
+	}
 }
+

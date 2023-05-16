@@ -4,10 +4,14 @@ import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import clases.Agent;
 import clases.Facility;
+import exceptions.ServerException;
+import main.AgentFactory;
+
 import java.awt.Color;
 
 /**
@@ -30,9 +34,15 @@ public class ShowFacility extends JPanel {
 
 	public ShowFacility(String userID) {
 
-  Agent wAge = new Agent();
-		Facility fac;
-		fac = wAge.showAsignedFacility(userID);
+		Agent wAge = new Agent();
+		Facility fac = null;
+		
+		try {
+			fac = AgentFactory.getAgentDB().showAsignedFacility(userID);
+		} catch (ServerException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+
 		setLayout(null);
 
 
