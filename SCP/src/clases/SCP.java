@@ -10,6 +10,12 @@ import java.util.ArrayList;
 import acs.Risk;
 import acs.SecondaryC;
 
+/**
+ * SCP class, which will contain the necessary attributes, Getters and Setters
+ * and methods
+ * 
+ * @author Alex
+ */
 public class SCP {
 	private String scp_id;
 	private String related_scp_id;
@@ -115,9 +121,12 @@ public class SCP {
 		this.secondary = secondary;
 	}
 
-
-	/** Mostrar toda la informacion de un SCP */
-
+	/**
+	 * This method executes a query to display all the information corresponding to
+	 * an SCP
+	 * 
+	 * @param id_SCP - entered by the user
+	 */
 	public void showInfo(String id_SCP) {
 		ResultSet rs = null;
 		con = conController.openConnection();
@@ -144,12 +153,15 @@ public class SCP {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-    }
-		
+		}
+
 	}
-	// This method returns an array of all SCPs, and is used, for example, to load
-	// the table with the data
+
+	/**
+	 * Used to display all SCPs in the table of the DB
+	 * 
+	 * @return returns an ArrayList containing all SCPs
+	 */
 	public ArrayList<SCP> showAllSCP() {
 		ResultSet rs = null;
 		con = conController.openConnection();
@@ -177,11 +189,16 @@ public class SCP {
 
 		conController.closeConnection(stmt, con);
 
-
 		return arrayDeSCP;
 	}
 
-	// This method is used to check if the SCP exists in the database
+	/**
+	 * This method verifies that the SCP entered by the user actually exists in the
+	 * database
+	 * 
+	 * @param id_scp - entered by the user
+	 * @return returns true if found or false if not
+	 */
 	public boolean checkSCP(String id_scp) {
 		ResultSet rs = null;
 		con = conController.openConnection();
@@ -213,5 +230,4 @@ public class SCP {
 
 		return false;
 	}
-
 }

@@ -4,11 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import controller.AgentController;
-import controller.Loginable;
-	
 
+/**
+ * Agent class that inherits from Worker and implements the AgentController
+ * interface
+ * 
+ * @author Alex
+ */
 public class Agent extends Worker implements AgentController {
 	private String id_facility;
 	private String history;
@@ -33,6 +36,13 @@ public class Agent extends Worker implements AgentController {
 		this.history = history;
 	}
 
+	/**
+	 * A method that finds a worker from its ID using an SQL statement and returns
+	 * it
+	 * 
+	 * @param id - entered by the user
+	 * @return returns the Agent object to display
+	 */
 	@Override
 	public Worker showInfo(String id) {
 		super.showInfo(id);
@@ -59,7 +69,13 @@ public class Agent extends Worker implements AgentController {
 		return this;
 	}
 
-	// This method is used to display the agent's assigned installation
+	/**
+	 * This method returns an object of type Facility which will be assigned to a
+	 * specific Agent
+	 * 
+	 * @param ID_Worker - entered by the user
+	 * @return returns the Facility object, which is assigned to the Agent
+	 */
 	@Override
 	public Facility showAsignedFacility(String ID_Worker) {
 		Facility fac = null;

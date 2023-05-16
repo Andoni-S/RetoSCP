@@ -1,19 +1,20 @@
 package clases;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import controller.Loginable;
-import clases.DBConnectionController;
 
+/**
+ * The Worker class, which implements the single method of the Loginable
+ * interface
+ * 
+ * @author Alex
+ */
 public class Worker implements Loginable {
-
 	protected String id;
 	protected String name;
 	protected Date date_Entry;
@@ -28,6 +29,7 @@ public class Worker implements Loginable {
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -43,6 +45,7 @@ public class Worker implements Loginable {
 	public Date getDate_Entry() {
 		return date_Entry;
 	}
+
 	public void setDate_Entry(Date date_Entry) {
 		this.date_Entry = date_Entry;
 	}
@@ -79,6 +82,13 @@ public class Worker implements Loginable {
 		this.bossID = bossID;
 	}
 
+	/**
+	 * A method that verifies that both the user name and password are correct.
+	 * 
+	 * @param usernameUsuario - entered by the user
+	 * @param passwordUsuario - entered by the user
+	 * @return returns a boolean with true or false
+	 */
 	@Override
 	public boolean logIn(String usernameUsuario, String passwordUsuario) {
 		ResultSet rs = null;
@@ -112,8 +122,14 @@ public class Worker implements Loginable {
 
 		return false;
 	}
-	public Worker showInfo(String id) {
 
+	/**
+	 * This method displays the information of a particular Worker
+	 * 
+	 * @param id - entered by the user
+	 * @return it returns the required Worker object
+	 */
+	public Worker showInfo(String id) {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
@@ -133,7 +149,8 @@ public class Worker implements Loginable {
 				setPassword(rs.getString("password_Worker"));
 				setBossID(rs.getString("ID_Boss"));
 
-		} }catch (SQLException e) {
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		conController.closeConnection(stmt, con);
@@ -141,6 +158,11 @@ public class Worker implements Loginable {
 		return this;
 	}
 
+	/**
+	 * This one serves to get the information of all the Workers
+	 * 
+	 * @return returns an ArrayList with all the Workers in the DB
+	 */
 	public ArrayList<Worker> showAllWorkers() {
 		ResultSet rs = null;
 		con = conController.openConnection();
@@ -150,8 +172,6 @@ public class Worker implements Loginable {
 
 		try {
 			stmt = con.prepareStatement(OBTENERprop);
-
-			//.setString(1, id);
 
 			rs = stmt.executeQuery();
 
@@ -173,7 +193,12 @@ public class Worker implements Loginable {
 		return arrayDeWorkers;
 	}
 
-	// This method is used to check if the worker exists in the database
+	/**
+	 * This method verifies that the Worker exists in the database
+	 * 
+	 * @param id_worker - entered by the user
+	 * @return returns true if it exists and false if it does not
+	 */
 	public boolean checkWorker(String id_worker) {
 		ResultSet rs = null;
 		con = conController.openConnection();

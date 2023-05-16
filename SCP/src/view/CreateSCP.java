@@ -4,38 +4,29 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-
-import com.toedter.calendar.JCalendar;
-
 import acs.Containment;
-import acs.Continent;
 import acs.Disruption;
 import acs.Risk;
 import acs.SecondaryC;
-import clases.Agent;
-import clases.Overseer;
 import clases.SCP;
-import clases.Worker;
-
 import javax.swing.JTextField;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.JSeparator;
 
+/**
+ * CreateSCP is a JPanel and implements the ActionListener to listen to buttons,
+ * and is responsible for adding an SCP to the DB
+ * 
+ * @author Alex
+ *
+ */
 public class CreateSCP extends JPanel implements ActionListener {
 	// We declare the necessary labels, textArea, buttons, and comboBoxes
 	private static final long serialVersionUID = 1L;
@@ -50,6 +41,10 @@ public class CreateSCP extends JPanel implements ActionListener {
 	private JComboBox<Risk> comboBoxRisk;
 	private JComboBox<SecondaryC> comboBoxSecondary;
 
+	/**
+	 * This is the constructor of the window, where all the labels, buttons, etc.
+	 * are added
+	 */
 	public CreateSCP() {
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
@@ -260,9 +255,13 @@ public class CreateSCP extends JPanel implements ActionListener {
 
 	}
 
+	/**
+	 * actionPerformed method listening to btnCreate and btnReset buttons
+	 * 
+	 * @param e - ActionEvent type variable
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// If you click on "Create", a new SCP is created
 		if (e.getSource().equals(btnCreate)) {
 			if (fieldId.getText().equals("") || fieldRelated.getText().equals("")
 					|| fieldIdFacility.getText().equals("") || fieldName.getText().equals("")
@@ -272,7 +271,7 @@ public class CreateSCP extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(null, "There is an empty field");
 			} else {
 				SCP scp = new SCP();
-				
+
 				scp.setScp_id(fieldId.getText());
 				scp.setRelated_scp_id(fieldRelated.getText());
 				scp.setFacility_id(fieldIdFacility.getText());
@@ -283,12 +282,10 @@ public class CreateSCP extends JPanel implements ActionListener {
 				scp.setDisruption((Disruption) comboBoxDisruption.getSelectedItem());
 				scp.setRisk((Risk) comboBoxRisk.getSelectedItem());
 				scp.setSecondary((SecondaryC) comboBoxSecondary.getSelectedItem());
-				
-				
+
 			}
 		}
 
-		// If you click on "Reset", all data entered so far will be deleted
 		if (e.getSource().equals(btnReset)) {
 			fieldId.setText("");
 			fieldRelated.setText("");

@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,11 +16,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import clases.Overseer;
 import clases.SCP;
-import clases.Worker;
 
+/**
+ * The DeleteSCP window is a JPanel implementing ActionListener
+ * 
+ * @author Alex
+ */
 public class DeleteSCP extends JPanel implements ActionListener {
 	// We declare the required labels, buttons, and table
 	private JTable tablaSCP;
@@ -32,14 +34,13 @@ public class DeleteSCP extends JPanel implements ActionListener {
 	private JButton btnDelete;
 	private JLabel background;
 
+	/**
+	 * In the window constructor is where all the visual components of the window
+	 * are added
+	 */
 	public DeleteSCP() {
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
-
-		// We collect all the workers in an array in order to fill the table with the
-		// data
-		SCP scp = new SCP();
-		ArrayList<SCP> arrayDeSCP = scp.showAllSCP();
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(90, 100, 800, 359);
@@ -73,7 +74,6 @@ public class DeleteSCP extends JPanel implements ActionListener {
 
 		scrollPane.setViewportView(tablaSCP);
 
-		// We call the fillTable() method to fill in the table
 		fillTable();
 
 		lblSCP = new JLabel("Insert the ID of the SCP:");
@@ -112,13 +112,17 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		add(background);
 	}
 
-	// Method for emptying the table after deletion
+	/**
+	 * The emptyTable() method empties the entire table
+	 */
 	public void emptyTable() {
 		DefaultTableModel model = (DefaultTableModel) tablaSCP.getModel();
 		model.setRowCount(0);
 	}
 
-	// Method to fill in the table with the data of all workers
+	/**
+	 * The fillTable() method loads the table with the data from the SCPs
+	 */
 	public void fillTable() {
 		SCP scp = new SCP();
 		ArrayList<SCP> arrayDeSCP = scp.showAllSCP();
@@ -135,6 +139,11 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		tablaSCP.setDefaultEditor(Object.class, null);
 	}
 
+	/**
+	 * actionPerformed method listening to btnShowInfo and btnDelete buttons
+	 * 
+	 * @param e - ActionEvent type variable
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// If the "Show Info" button is pressed, it will display a ShowInfo2 type window

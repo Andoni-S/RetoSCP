@@ -1,44 +1,46 @@
 package view;
 
 import java.awt.Font;
-import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import clases.Agent;
 import clases.Facility;
 import java.awt.Color;
-import java.awt.Dimension;
 
+/**
+ * The JPanel named ShowFacility will display the Facility assigned to an agent
+ * 
+ * @author Alex
+ *
+ */
 public class ShowFacility extends JPanel {
 	private JLabel lblIdFacility, lblNameFacility, lblLevelFacility;
 	private JLabel background;
 
-	// This class is used to display the assigned facility when logging in as an
-	// agent
+	/**
+	 * This is the constructor of this window
+	 * 
+	 * @param userID
+	 */
 	public ShowFacility(String userID) {
 		Agent wAge = new Agent();
 		Facility fac;
 		fac = wAge.showAsignedFacility(userID);
 		setLayout(null);
 
-		// We create the labels and take the necessary data from the respective agent:
-		// 1st label
 		lblIdFacility = new JLabel("ID Facility:           " + wAge.getId_facility());
 		lblIdFacility.setForeground(new Color(255, 255, 255));
 		lblIdFacility.setFont(new Font("OCR A Extended", Font.BOLD, 40));
 		lblIdFacility.setBounds(130, 110, 1500, 43);
 		add(lblIdFacility);
 
-		// 2nd label
 		lblNameFacility = new JLabel("Name Facility:         " + fac.getFacility_name());
 		lblNameFacility.setForeground(new Color(255, 255, 255));
 		lblNameFacility.setFont(new Font("OCR A Extended", Font.BOLD, 40));
 		lblNameFacility.setBounds(130, 310, 796, 43);
 		add(lblNameFacility);
 
-		// 3rd label
 		lblLevelFacility = new JLabel("Level Facility:        " + String.format("%d", fac.getFacility_level()));
 		lblLevelFacility.setForeground(new Color(255, 255, 255));
 		lblLevelFacility.setFont(new Font("OCR A Extended", Font.BOLD, 40));

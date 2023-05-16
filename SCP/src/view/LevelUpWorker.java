@@ -5,26 +5,22 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
 import clases.Overseer;
 import clases.Worker;
 import javax.swing.JComboBox;
 
+/**
+ * LevelUpWorker is also JPanel and will level up workers
+ * 
+ * @author Alex
+ */
 public class LevelUpWorker extends JPanel implements ActionListener {
-	// This class will display a window for upgrading a worker when logged in as an
-	// overseer
-
-	// First, we declare all the labels and buttons we want to display in our window
 	private JLabel lblWorker;
 	private JButton btnShowInfo;
 	private JButton btnLevelUp;
@@ -44,11 +40,13 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 	private JLabel lblDato5;
 	private JLabel lblDato6;
 
+	/**
+	 * This is the window constructor, where all the elements of the window are
+	 * instantiated
+	 */
 	public LevelUpWorker() {
 		setBounds(0, 0, 1024, 768);
 
-		// We load all the workers from the database to be able to display them in the
-		// combobox
 		Worker work = new Worker();
 		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
 		setLayout(null);
@@ -167,7 +165,10 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		add(background);
 	}
 
-	// This is the method to fill the combobox options with workers
+	/**
+	 * The following method takes care of loading the comboBox with the IDs of all
+	 * workers
+	 */
 	private void cargarWorkers() {
 		Worker worky = new Worker();
 		ArrayList<Worker> elArray = worky.showAllWorkers();
@@ -177,6 +178,11 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * actionPerformed method listening to btnShowInfo and btnLevelUp buttons
+	 * 
+	 * @param e - ActionEvent type variable
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// If the "show info" button is pressed, the labels with the data corresponding
@@ -223,7 +229,6 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 				if (work.getLevel() == 3) {
 					JOptionPane.showMessageDialog(null, "The worker is already level 3");
 				} else {
-
 					int n = JOptionPane.showConfirmDialog(null, "Do you want to level up this worker?", "Confirmation",
 							JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 

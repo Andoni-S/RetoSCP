@@ -6,23 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-
 import com.toedter.calendar.JCalendar;
-
 import acs.Continent;
-import acs.Disruption;
-import clases.Agent;
-import clases.Overseer;
 import clases.Worker;
-
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -30,6 +21,12 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 
+/**
+ * The JPanel CreateWorker also implements the ActionListener, and its role is
+ * to make it possible to create new workers
+ * 
+ * @author Alex
+ */
 public class CreateWorker extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JButton btnAgent_1, btnOverseer_1, btnScientist_1, btnReset, btnCreate;
@@ -43,6 +40,10 @@ public class CreateWorker extends JPanel implements ActionListener {
 	private JComboBox<Continent> comboBox;
 	JTextArea textAreaProceduresTransparente = null;
 
+	/**
+	 * This is the window constructor, inside which the labels and buttons are
+	 * added, as well as the calendar
+	 */
 	public CreateWorker() {
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
@@ -157,12 +158,10 @@ public class CreateWorker extends JPanel implements ActionListener {
 		spinnerLevel.setBounds(294, 231, 30, 20);
 		add(spinnerLevel);
 
-		// Instanciar Componente
 		calendar = new JCalendar();
 		calendar.setWeekdayForeground(Color.WHITE);
 		calendar.setWeekOfYearVisible(false);
 		calendar.setDecorationBackgroundColor(Color.BLACK);
-		// Ubicar y agregar al panel
 		calendar.setBounds(600, 100, 300, 300);
 		calendar.getDayChooser().addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
@@ -210,14 +209,14 @@ public class CreateWorker extends JPanel implements ActionListener {
 		textAreaProceduresTransparente = new JTextArea();
 		textAreaProceduresTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		textAreaProceduresTransparente.setBounds(284, 388, 227, 202);
-		textAreaProceduresTransparente.setBackground(new Color(0,0,0,80));
+		textAreaProceduresTransparente.setBackground(new Color(0, 0, 0, 80));
 		textAreaProceduresTransparente.setEditable(false);
 		textAreaProceduresTransparente.setWrapStyleWord(true);
 		textAreaProceduresTransparente.setEnabled(false);
 		textAreaProceduresTransparente.setLineWrap(true);
 		textAreaProceduresTransparente.setVisible(false);
 		add(textAreaProceduresTransparente);
-		
+
 		comboBox = new JComboBox<>();
 		comboBox.setBackground(new Color(0, 0, 0));
 		comboBox.setForeground(new Color(255, 255, 255));
@@ -236,9 +235,14 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(background);
 	}
 
+	/**
+	 * actionPerformed method listening to btnCreate, btnReset, btnAgent_1,
+	 * btnScientist_1, btnOverseer_1 buttons
+	 * 
+	 * @param e - ActionEvent type variable
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// Add Worker Buttons
 		if (e.getSource().equals(btnCreate)) {
 			Worker worker = new Worker();
 		}
@@ -261,7 +265,6 @@ public class CreateWorker extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource().equals(btnAgent_1)) {
-
 			lblHistory.setText("RECORD");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 385, 91, 46);
@@ -269,12 +272,11 @@ public class CreateWorker extends JPanel implements ActionListener {
 			textAreaHistory.setVisible(true);
 			btnScientist_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
-			
-			textAreaProceduresTransparente.setVisible(true);		
+
+			textAreaProceduresTransparente.setVisible(true);
 		}
 
 		if (e.getSource().equals(btnScientist_1)) {
-
 			lblHistory.setText("STUDIES");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 385, 91, 46);
@@ -282,13 +284,11 @@ public class CreateWorker extends JPanel implements ActionListener {
 			textAreaHistory.setVisible(true);
 			btnAgent_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
-			
+
 			textAreaProceduresTransparente.setVisible(true);
 		}
 
-
 		if (e.getSource().equals(btnOverseer_1)) {
-
 			lblHistory.setText("CONTINENT");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 375, 91, 46);

@@ -1,20 +1,18 @@
 package clases;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
-
-import acs.Containment;
 import acs.Continent;
 import controller.OverseerController;
 
+/**
+ * Overseer class that inherits from Worker and implements the methods of the
+ * interface named OverseerController
+ * 
+ * @author Alex
+ */
 public class Overseer extends Worker implements OverseerController {
-
 	private Connection con;
 	private PreparedStatement stmt;
 	private DBConnectionController conController = new DBConnectionController();
@@ -48,35 +46,14 @@ public class Overseer extends Worker implements OverseerController {
 
 	}
 
-	@Override
-	public Worker showInfo(String id) {
-		super.showInfo(id);
-
-		ResultSet rs = null;
-		con = conController.openConnection();
-		String OBTAINcontinent = "SELECT Continent FROM Overseer WHERE ID_Overseer = ?";
-
-		try {
-			stmt = con.prepareStatement(OBTAINcontinent);
-			stmt.setString(1, id);
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				setContinent(Continent.valueOf(rs.getString("Continent")));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		conController.closeConnection(stmt, con);
-
-		return this;
-	}
-
-	// This method is used to level up the worker
+	/**
+	 * The following method increments by 1 the Level_Worker attribute of a Worker
+	 * that it finds using a user-entered ID
+	 * 
+	 * @param work - user-entered Worker object
+	 */
 	@Override
 	public void levelUpWorker(Worker work) {
-		ResultSet rs = null;
 		con = conController.openConnection();
 		String UPDATEworker = "UPDATE WORKER SET Level_Worker = Level_Worker + 1 WHERE ID_Worker=?";
 
@@ -92,27 +69,14 @@ public class Overseer extends Worker implements OverseerController {
 
 	}
 
-	@Override
-	public void deleteWorker() {
-		ResultSet rs = null;
-		con = conController.openConnection();
-
-		String BORRARwork = "DELETE FROM Worker WHERE ID_Worker = ?";
-
-		try {
-			stmt = con.prepareStatement(BORRARwork);
-
-			stmt.setString(1, id);
-			rs = stmt.executeQuery();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	// This method deletes an SCP from its ID
+	/**
+	 * Method used to remove an SCP from the SCPs table in the database from the
+	 * attribute ID_SCP
+	 * 
+	 * @param idScp - user-entered String variable
+	 */
 	@Override
 	public void deleteSCP(String idScp) {
-		ResultSet rs = null;
 		con = conController.openConnection();
 
 		String DELETEscp = "DELETE FROM scp WHERE ID_SCP = ?";
@@ -128,13 +92,15 @@ public class Overseer extends Worker implements OverseerController {
 		}
 
 		conController.closeConnection(stmt, con);
-
 	}
 
-	// And this is used to delete a worker from its ID
+	/**
+	 * This method deletes a Worker from its ID
+	 * 
+	 * @param idWorker - entered by the user
+	 */
 	@Override
 	public void deleteWorker(String idWorker) {
-		ResultSet rs = null;
 		con = conController.openConnection();
 
 		String BORRARwork = "DELETE FROM Worker WHERE ID_Worker = ?";
