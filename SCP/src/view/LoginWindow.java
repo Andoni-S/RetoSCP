@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import clases.Worker;
 import javax.swing.JLabel;
@@ -77,6 +78,10 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		contentPane.add(passwordLabel);
 
 		userField = new JTextField();
+
+	   userField.setForeground(new Color(255, 255, 255));
+		userField.setBackground(new Color(0, 0, 0));
+
 		userField.setBounds(400, 1000, 300, 32);
 		userField.setFont(new Font("OCR A Extended", Font.BOLD, 14));
 		contentPane.add(userField);
@@ -84,6 +89,9 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		userField.setFocusable(true);
 
 		passwordField = new JPasswordField();
+		passwordField.setForeground(new Color(255, 255, 255));
+		passwordField.setBackground(new Color(0, 0, 0));
+
 		passwordField.setBounds(400, 1200, 300, 33);
 		passwordField.addKeyListener(this);
 		contentPane.add(passwordField);
@@ -134,7 +142,6 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 			}
 		}
 	}
-
 	class LabelAnim implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -167,7 +174,6 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-
 	}
 
 	@Override

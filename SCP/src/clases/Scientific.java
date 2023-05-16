@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import acs.Containment;
-import acs.Discruption;
+import acs.Disruption;
 import acs.Risk;
 import acs.SecondaryC;
 import controller.ScientificController;
@@ -31,14 +31,17 @@ public class Scientific extends Worker implements ScientificController {
 
 	@Override
 	public Worker showInfo(String id) {
+
 		super.showInfo(id);
 
 		ResultSet rs = null;
 		con = conController.openConnection();
+
 		String OBTAINstudies = "SELECT Studies FROM Scientist WHERE ID_Scientist = ?";
 
 		try {
 			stmt = con.prepareStatement(OBTAINstudies);
+
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
 
@@ -54,17 +57,23 @@ public class Scientific extends Worker implements ScientificController {
 		return this;
 	}
 
+
+	/**
+	 * Meter en un array de SCP todos los scp que han sido asignados a el científico
+	 */
 	@Override
 	public ArrayList<SCP> showAsignedSCP(String id) {
 		ArrayList<SCP> scp_list = new ArrayList<SCP>();
 
 		ResultSet rs = null;
 		con = conController.openConnection();
+
 		SCP scp = new SCP();
 		String OBTAINscp = "Select * from scp where ID_SCP in (Select ID_SCP from research where ID_Scientist LIKE ?";
 
 		try {
 			stmt = con.prepareStatement(OBTAINscp);
+
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
 
@@ -77,7 +86,7 @@ public class Scientific extends Worker implements ScientificController {
 				scp.setScp_procedures(rs.getString("Procedures"));
 				scp.setScp_level(rs.getInt("Level_SCP"));
 				scp.setContainment(Containment.valueOf(rs.getString("Containment")));
-				scp.setDisruption(Discruption.valueOf(rs.getString("Disruption")));
+				scp.setDisruption(Disruption.valueOf(rs.getString("Disruption")));
 				scp.setRisk(Risk.valueOf(rs.getString("Risk")));
 				scp.setSecondary(SecondaryC.valueOf(rs.getString("SecondaryC")));
 				scp_list.add(scp);

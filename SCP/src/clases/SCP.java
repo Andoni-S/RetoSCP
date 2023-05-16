@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import acs.Containment;
-import acs.Discruption;
+import acs.Disruption;
+import java.util.ArrayList;
 import acs.Risk;
 import acs.SecondaryC;
 
@@ -19,9 +21,12 @@ public class SCP {
 	private String scp_description;
 	private int scp_level;
 	private Containment containment;
-	private Discruption disruption;
+	private Disruption disruption;
 	private Risk risk;
 	private SecondaryC secondary;
+	private Connection con;
+	private PreparedStatement stmt;
+	private DBConnectionController conController = new DBConnectionController();
 
 	private Connection con;
 	private PreparedStatement stmt;
@@ -91,11 +96,12 @@ public class SCP {
 		this.containment = containment;
 	}
 
-	public Discruption getDisruption() {
+	public Disruption getDisruption() {
 		return disruption;
 	}
 
-	public void setDisruption(Discruption disruption) {
+	public void setDisruption(Disruption disruption) {
+
 		this.disruption = disruption;
 	}
 
@@ -115,15 +121,12 @@ public class SCP {
 		this.secondary = secondary;
 	}
 
+
 	public ArrayList<SCP> showAllSCP() {
 		ResultSet rs = null;
 		con = conController.openConnection();
 		ArrayList<SCP> arrayDeSCP = new ArrayList<SCP>();
 
-		String OBTENERSCPs = "SELECT * FROM scp";
-
-		try {
-			stmt = con.prepareStatement(OBTENERSCPs);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -145,6 +148,7 @@ public class SCP {
 		return arrayDeSCP;
 	}
 
+	// This method is used to check if the SCP exists in the database
 	public boolean checkSCP(String id_scp) {
 		ResultSet rs = null;
 		con = conController.openConnection();
@@ -177,3 +181,5 @@ public class SCP {
 		return false;
 	}
 }
+	
+

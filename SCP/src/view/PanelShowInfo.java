@@ -6,7 +6,7 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,9 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import clases.Agent;
+import clases.Facility;
 import clases.Overseer;
+import clases.SCP;
 import clases.Scientific;
 import clases.Worker;
 
@@ -101,6 +102,9 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		add(lblBoss);
 
 		textFieldId = new JTextField(usernameUsuario);
+		textFieldId.setForeground(new Color(255, 255, 255));
+		textFieldId.setBackground(new Color(0, 0, 0));
+
 		textFieldId.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
 		textFieldId.setEditable(false);
 		textFieldId.setBounds(400, 55, 231, 30);
@@ -108,6 +112,8 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		textFieldId.setColumns(10);
 
 		textFieldName = new JTextField(worker.getName());
+		textFieldName.setForeground(new Color(255, 255, 255));
+		textFieldName.setBackground(new Color(0, 0, 0));
 		textFieldName.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
 		textFieldName.setEditable(false);
 		textFieldName.setColumns(10);
@@ -115,6 +121,9 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		add(textFieldName);
 
 		textFieldDate = new JTextField(worker.getDate_Entry().toString());
+
+		textFieldDate.setForeground(new Color(255, 255, 255));
+		textFieldDate.setBackground(new Color(0, 0, 0));
 		textFieldDate.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
 		textFieldDate.setEditable(false);
 		textFieldDate.setColumns(10);
@@ -135,6 +144,8 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		add(lblLevelNumber);
 
 		textFieldBoss = new JTextField(worker.getBossID());
+		textFieldBoss.setForeground(new Color(255, 255, 255));
+		textFieldBoss.setBackground(new Color(0, 0, 0));
 		textFieldBoss.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
 		textFieldBoss.setEditable(false);
 		textFieldBoss.setColumns(10);
@@ -201,8 +212,10 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			lblHistory.setBounds(300, 370, 500, 40);
 			lblHistory.setForeground(Color.WHITE);
 			add(lblHistory);
+
 			lblProfileImg.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/profileOverseer.gif")));
 			btnAddScp = new JButton("Add SCP");
+
 			btnAddScp.setBounds(750, 30, 200, 40);
 			btnAddScp.setBackground(Color.black);
 			btnAddScp.setForeground(Color.white);
@@ -217,6 +230,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnAddWorker.setFont(new Font("OCR A Extended", Font.BOLD, 15));
 			btnAddWorker.addActionListener(this);
 			add(btnAddWorker);
+
 
 			btnAsignAgent = new JButton("ASSIGN AGENT");
 			btnAsignAgent.setBounds(750, 230, 200, 40);
@@ -250,6 +264,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnDeleteWorker.addActionListener(this);
 			add(btnDeleteWorker);
 
+
 			btnAsignScientist = new JButton("ASSIGN SCIENTIST");
 			btnAsignScientist.setBounds(750, 630, 200, 40);
 			btnAsignScientist.setBackground(Color.black);
@@ -272,6 +287,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			panelShowFacility = new ShowFacility(userID);
 			tabbedPane.addTab("Tab", null, panelShowFacility, "Panel");
 			container.add(tabbedPane, BorderLayout.CENTER);
+
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
@@ -290,7 +306,6 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
-
 		if (e.getSource().equals(btnAsignScientist)) {
 			JComponent panelAssignSCPtoScientist = null;
 			panelAssignSCPtoScientist = new AssignSCPtoScientist();
@@ -332,6 +347,6 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 				tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 				tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 			}
-		}
+  }
 	}
 

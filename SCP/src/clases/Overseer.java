@@ -2,7 +2,6 @@ package clases;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import acs.Continent;
@@ -30,7 +29,6 @@ public class Overseer extends Worker implements OverseerController {
 
 	@Override
 	public void addWorker() {
-
 	}
 
 	@Override
@@ -78,8 +76,19 @@ public class Overseer extends Worker implements OverseerController {
 	}
 
 	@Override
-	public void levelUpWorker(Worker work) {
+	public void deleteSCP(String idScp) {
 		ResultSet rs = null;
+		con = conController.openConnection();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	// This method is used to level up the worker
+	@Override
+	public void levelUpWorker(Worker work) {
 		con = conController.openConnection();
 		String UPDATEworker = "UPDATE WORKER SET Level_Worker = Level_Worker + 1 WHERE ID_Worker=?";
 
@@ -95,29 +104,10 @@ public class Overseer extends Worker implements OverseerController {
 
 	}
 
-	@Override
-	public void deleteSCP(String idScp) {
-		ResultSet rs = null;
-		con = conController.openConnection();
-
-		String DELETEscp = "DELETE FROM scp WHERE ID_SCP = ?";
-
-		try {
-			stmt = con.prepareStatement(DELETEscp);
-
-			stmt.setString(1, idScp);
-			stmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		conController.closeConnection(stmt, con);
-	}
-
+	// And this is used to delete a worker from its ID
 	@Override
 	public void deleteWorker(String idWorker) {
-		ResultSet rs = null;
+
 		con = conController.openConnection();
 
 		String BORRARwork = "DELETE FROM Worker WHERE ID_Worker = ?";
@@ -132,75 +122,6 @@ public class Overseer extends Worker implements OverseerController {
 		}
 
 		conController.closeConnection(stmt, con);
-
-  }
-  @Override
-	public void createWorker() {
-		
-		ResultSet rs = null;
-		con = conController.openConnection();
-
-		try {
-			CallableStatement cst = con.prepareCall("{CALL insertOverseer(?, ?, ?, ?, ?, ?, ? ,?)}");
-			
-			cst.setString(1,id);
-			cst.setString(2,name);
-			cst.setDate(3, date_Entry);
-			cst.setBoolean(4, active);
-			cst.setInt(5, level);
-			cst.setString(6, password);
-			cst.setString(7, bossID);
-			cst.setString(8, continent.toString());
-			cst.execute();
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		conController.closeConnection(stmt, con);
-	}
-  	@Override
-	public String workerIDCreator() {
-		ResultSet rs = null;
-		con = conController.openConnection();
-		String id = "OVE-";
-		
-		
-		String OBTENERIDAgent = "select count(ID_Overseer) AS count FROM OVERSEER;";
-
-		try {
-			stmt = con.prepareStatement(OBTENERIDAgent);
-
-			//.setString(1, id);
-			rs = stmt.executeQuery();
-
-			if (rs.next()) {
-				id = id+String.format("%04d", rs.getInt("count")+1);
-				
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		conController.closeConnection(stmt, con);
-
-		System.out.println(id);
-		return id;
-	}
-
-	@Override
-	public void deleteSCP() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteWorker() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
@@ -239,4 +160,54 @@ public class Overseer extends Worker implements OverseerController {
 		
 	}
 
+	public void addSCP(SCP scp) {
+
+		con = conController.openConnection();
+
+		String ADDscp = "INSERT INTO SCP (ID_SCP, ID_RelatedSCP, ID_Facility, Name_SCP, Procedures, Description_SCP, Level_SCP, Containment, Disruption, Risk, SecondaryC) VALUES (?,?,(SELECT ID_Facility FROM FACILITY WHERE Name_Facility=?),?,?,?,?,?,?,?,?)";
+
+		try {
+			stmt = con.prepareStatement(ADDscp);
+			stmt.setString(1, scp.getScp_id());
+			if(scp.getRelated_scp_id().equals("NONE"))
+				stmt.setNull(2, Types.VARCHAR);
+			else
+				stmt.setString(2, scp.getRelated_scp_id());
+			System.out.println(scp.getFacility_id());
+			stmt.setString(3, scp.getFacility_id());
+			stmt.setString(4, scp.getScp_name());
+			stmt.setString(5, scp.getScp_procedures());
+			stmt.setString(6, scp.getScp_description());
+			stmt.setInt(7, scp.getScp_level());
+			stmt.setString(8, scp.getContainment().toString());
+			stmt.setString(9, scp.getDisruption().toString());
+			stmt.setString(10, scp.getRisk().toString());
+			stmt.setString(11, scp.getSecondary().toString());
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		conController.closeConnection(stmt, con);
+
+	}
+	public void deleteSCP(String idScp) {
+		con = conController.openConnection();
+
+		String DELETEscp = "DELETE FROM scp WHERE ID_SCP = ?";
+
+		try {
+			stmt = con.prepareStatement(DELETEscp);
+
+			stmt.setString(1, idScp);
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		conController.closeConnection(stmt, con);
+
+	}
 }

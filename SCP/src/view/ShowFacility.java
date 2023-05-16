@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Font;
 
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,10 +18,14 @@ public class ShowFacility extends JPanel {
 
 	public ShowFacility(String userID) {
 
-		Agent wAge = new Agent();
+  Agent wAge = new Agent();
 		Facility fac;
 		fac = wAge.showAsignedFacility(userID);
 		setLayout(null);
+
+
+		// We create the labels and take the necessary data from the respective agent:
+		// 1st label
 
 		lblIdFacility = new JLabel("ID Facility:           " + wAge.getId_facility());
 		lblIdFacility.setForeground(new Color(255, 255, 255));
@@ -28,11 +33,16 @@ public class ShowFacility extends JPanel {
 		lblIdFacility.setBounds(130, 110, 1500, 43);
 		add(lblIdFacility);
 
+		// 2nd label
+
 		lblNameFacility = new JLabel("Name Facility:         " + fac.getFacility_name());
 		lblNameFacility.setForeground(new Color(255, 255, 255));
 		lblNameFacility.setFont(new Font("OCR A Extended", Font.BOLD, 40));
 		lblNameFacility.setBounds(130, 310, 796, 43);
 		add(lblNameFacility);
+
+
+		// 3rd label
 
 		lblLevelFacility = new JLabel("Level Facility:        " + String.format("%d", fac.getFacility_level()));
 		lblLevelFacility.setForeground(new Color(255, 255, 255));

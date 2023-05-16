@@ -7,15 +7,6 @@ public interface OverseerController {
 	void addSCP();
 	void addWorker();
 
-	//MODIFY
-	void asignSCPtoScientific(String scientificID, String scpID);
-	void asignAgentToFacility1(String agentID, String facilityID);
-	void levelUpWorker1(Worker worker);
-	//DELETE
-	void deleteSCP();
-	void deleteWorker();
-	
-
 	// MODIFY
 	void asignSCPtoScientific();
 	void asignAgentToFacility();

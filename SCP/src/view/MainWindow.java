@@ -3,6 +3,9 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -19,6 +22,11 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
 public class MainWindow extends JFrame implements ActionListener {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	//private final JPanel contentPanel = new JPanel();
 	public JTabbedPane tabbedPane;
@@ -66,15 +74,16 @@ public class MainWindow extends JFrame implements ActionListener {
 		
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
-		/*tabbedPane.setUI(new BasicTabbedPaneUI() {  
+
+		tabbedPane.setUI(new BasicTabbedPaneUI() {  
 		    @Override  
 		    protected int calculateTabAreaHeight(int tab_placement, int run_count, int max_tab_height) {  
 		        /*if (tabbedPane.getTabCount() > 1)
 		            return super.calculateTabAreaHeight(tab_placement, run_count, max_tab_height);  
-		        else  
+		        else  */
 		            return 0;  
 		    }  
-		});*/  		
+		});		
 		//desabilita el cambiar a una tab expecifica
 		//tabbedPane.setEnabledAt(1, false);
 		//hace invisible las tabs
@@ -138,7 +147,6 @@ public class MainWindow extends JFrame implements ActionListener {
 			tabbedPane.addTab("Add SCP", newPanel);
 		}
 		if (e.getSource().equals(btnAddWorker)) {
-			
 		}
 		/*if (e.getSource().equals(btnAssignScientist)) {
 

@@ -10,10 +10,7 @@ public class Facility {
 	private String facility_id;
 	private String facility_name;
 	private int facility_level;
-	
-	private Connection con;
-	private PreparedStatement stmt;
-	private DBConnectionController conController = new DBConnectionController();
+
 
 	public String getFacility_id() {
 		return facility_id;

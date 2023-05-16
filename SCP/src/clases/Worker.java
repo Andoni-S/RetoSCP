@@ -7,11 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-
-
 import controller.Loginable;
+import clases.DBConnectionController;
 
 public class Worker implements Loginable {
 
@@ -125,6 +124,7 @@ public class Worker implements Loginable {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
+
 		String OBTENERIDWorker = "SELECT * FROM Worker WHERE ID_Worker = ?";
 		try {
 			stmt = con.prepareStatement(OBTENERIDWorker);
@@ -142,7 +142,6 @@ public class Worker implements Loginable {
 				setBossID(rs.getString("ID_Boss"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		conController.closeConnection(stmt, con);
@@ -154,6 +153,7 @@ public class Worker implements Loginable {
 		ResultSet rs = null;
 		con = conController.openConnection();
 		ArrayList<Worker> arrayDeWorkers = new ArrayList<Worker>();
+
 
 		String OBTENERWorker = "SELECT * FROM Worker";
 
@@ -182,14 +182,11 @@ public class Worker implements Loginable {
 		return arrayDeWorkers;
 	}
 
+
 	public boolean checkWorker(String id_worker) {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
-		String OBTENERIDWorker = "SELECT ID_Worker FROM Worker WHERE ID_Worker = ?";
-
-		try {
-			stmt = con.prepareStatement(OBTENERIDWorker);
 
 			stmt.setString(1, id_worker);
 			rs = stmt.executeQuery();
@@ -212,9 +209,7 @@ public class Worker implements Loginable {
 		}
 
 		return false;
-	}
-	public void createWorker() {
-		
+
 	}
 	public String workerIDCreator() {
 		//default Worker, not used

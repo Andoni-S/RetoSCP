@@ -1,6 +1,4 @@
 package clases;
-
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import controller.AgentController;
+import controller.Loginable;
+
 
 public class Agent extends Worker implements AgentController {
 	private String id_facility;
