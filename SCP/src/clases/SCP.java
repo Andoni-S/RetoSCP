@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.ArrayList;
 import acs.Containment;
 import acs.Disruption;
 import java.util.ArrayList;
@@ -22,6 +24,10 @@ public class SCP {
 	private Disruption disruption;
 	private Risk risk;
 	private SecondaryC secondary;
+	private Connection con;
+	private PreparedStatement stmt;
+	private DBConnectionController conController = new DBConnectionController();
+
 	private Connection con;
 	private PreparedStatement stmt;
 	private DBConnectionController conController = new DBConnectionController();
@@ -116,49 +122,11 @@ public class SCP {
 	}
 
 
-	/** Mostrar toda la informacion de un SCP */
-
-	public SCP showInfo(String id_SCP) {
-		ResultSet rs = null;
-		con = conController.openConnection();
-
-		String OBTENERprop = "SELECT * FROM SCP WHERE ID_SCP = ?";
-		try {
-			stmt = con.prepareStatement(OBTENERprop);
-
-			stmt.setString(1, id_SCP);
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				setScp_id(rs.getString("ID_SCP"));
-				setScp_name(rs.getString("Name_SCP"));
-				setRelated_scp_id(rs.getString("ID_RelatedSCP"));
-				setFacility_id(rs.getString("ID_Facility"));
-				setScp_procedures(rs.getString("Procedures"));
-				setScp_description(rs.getString("Description_SCP"));
-				setScp_level(rs.getInt("Level_SCP"));
-				setContainment(Containment.valueOf(rs.getString("Containment")));
-				setDisruption(Disruption.valueOf(rs.getString("Disruption")));
-				setRisk(Risk.valueOf(rs.getString("Risk")));
-				setSecondary(SecondaryC.valueOf(rs.getString("SecondaryC")));
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-    }
-		return null;
-	}
-	// This method returns an array of all SCPs, and is used, for example, to load
-	// the table with the data
 	public ArrayList<SCP> showAllSCP() {
 		ResultSet rs = null;
 		con = conController.openConnection();
 		ArrayList<SCP> arrayDeSCP = new ArrayList<SCP>();
 
-		String OBTENERprop = "SELECT * FROM scp";
-
-		try {
-			stmt = con.prepareStatement(OBTENERprop);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -177,7 +145,6 @@ public class SCP {
 
 		conController.closeConnection(stmt, con);
 
-
 		return arrayDeSCP;
 	}
 
@@ -186,10 +153,10 @@ public class SCP {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
-		String OBTENERprop1 = "SELECT ID_SCP FROM scp WHERE ID_SCP = ?";
+		String OBTENERIDSCP = "SELECT ID_SCP FROM scp WHERE ID_SCP = ?";
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop1);
+			stmt = con.prepareStatement(OBTENERIDSCP);
 
 			stmt.setString(1, id_scp);
 			rs = stmt.executeQuery();

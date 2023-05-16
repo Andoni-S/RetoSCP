@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -20,10 +22,19 @@ import javax.swing.table.DefaultTableModel;
 
 import clases.Overseer;
 import clases.SCP;
+
 import clases.Worker;
 
 public class DeleteSCP extends JPanel implements ActionListener {
 	// We declare the required labels, buttons, and table
+
+
+public class DeleteSCP extends JPanel implements ActionListener {
+
+
+	/**
+	 * Create the panel.
+	 */
 	private JTable tablaSCP;
 	private DefaultTableModel model;
 	private JLabel lblSCP;
@@ -36,11 +47,15 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
 
+
 		// We collect all the workers in an array in order to fill the table with the
 		// data
 		SCP scp = new SCP();
 		ArrayList<SCP> arrayDeSCP = scp.showAllSCP();
 
+
+		SCP scp = new SCP();
+		ArrayList<SCP> arrayDeSCP = scp.showAllSCP();
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(90, 100, 800, 359);
 		add(scrollPane);
@@ -67,6 +82,7 @@ public class DeleteSCP extends JPanel implements ActionListener {
 			}
 		});
 
+
 		model.addColumn("ID");
 		model.addColumn("Name");
 		model.addColumn("Level");
@@ -74,6 +90,7 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		scrollPane.setViewportView(tablaSCP);
 
 		// We call the fillTable() method to fill in the table
+
 		fillTable();
 
 		lblSCP = new JLabel("Insert the ID of the SCP:");
@@ -83,8 +100,10 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		add(lblSCP);
 
 		textSCP = new JTextField();
+
 		textSCP.setForeground(new Color(255, 255, 255));
 		textSCP.setBackground(new Color(0, 0, 0));
+
 		textSCP.setBounds(450, 527, 275, 25);
 		textSCP.setFont(new Font("OCR A Extended", Font.BOLD, 14));
 		add(textSCP);
@@ -112,7 +131,9 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		add(background);
 	}
 
+
 	// Method for emptying the table after deletion
+
 	public void emptyTable() {
 		DefaultTableModel model = (DefaultTableModel) tablaSCP.getModel();
 		model.setRowCount(0);
@@ -137,8 +158,10 @@ public class DeleteSCP extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		// If the "Show Info" button is pressed, it will display a ShowInfo2 type window
 		// with the data of the selected SCP
+
 		if (e.getSource().equals(btnShowInfo)) {
 			if (textSCP.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(tablaSCP, "Empty field. Please enter an ID");
@@ -154,13 +177,17 @@ public class DeleteSCP extends JPanel implements ActionListener {
 			}
 		}
 
+
 		// If the user clicks on "Delete", a confirmation message will be displayed and,
 		// if confirmed, the worker will be deleted
+
 		if (e.getSource().equals(btnDelete)) {
 			if (textSCP.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(tablaSCP, "Empty field. Please enter an ID");
 			} else {
-				int n = JOptionPane.showConfirmDialog(null, "Do you want to delete this SCP?", "Confirmation",
+
+				int n = JOptionPane.showConfirmDialog(null, "Do you want to delete this worker?", "Confirmation",
+
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				if (n == JOptionPane.YES_OPTION) {
@@ -170,12 +197,15 @@ public class DeleteSCP extends JPanel implements ActionListener {
 					if (sc.checkSCP(SCPDeletion)) {
 						Overseer ove = new Overseer();
 						ove.deleteSCP(sc.getScp_id());
-						JOptionPane.showMessageDialog(null, "The SCP has been deleted");
+
+						JOptionPane.showMessageDialog(tablaSCP, "The SCP has been deleted");
 						emptyTable();
+						fillTable();
 						fillTable();
 						textSCP.setText("");
 					} else {
-						JOptionPane.showMessageDialog(null, "Please, insert an existing ID");
+						JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID");
+
 					}
 				}
 			}

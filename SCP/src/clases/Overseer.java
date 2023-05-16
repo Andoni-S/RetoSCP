@@ -2,8 +2,6 @@ package clases;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
-import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import acs.Continent;
@@ -31,17 +29,25 @@ public class Overseer extends Worker implements OverseerController {
 
 	@Override
 	public void addWorker() {
-
 	}
 
 	@Override
-	public void asignSCPtoScientific() {
 
-	}
-
-	@Override
-	public void asignAgentToFacility() {
-
+	public void asignSCPtoScientific(String scientificID, String scpID) {
+		
+		PreparedStatement stmt = null;
+		con = conController.openConnection();
+		
+		try{
+			stmt = con.prepareStatement("INSERT IGNORE INTO RESEARCH(ID_SCP, ID_Scientist) VALUES(?, ?)");
+			stmt.setString(1, scpID);
+			stmt.setString(2, scientificID);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		conController.closeConnection(stmt, con);
 	}
 
 	@Override
@@ -68,31 +74,17 @@ public class Overseer extends Worker implements OverseerController {
 
 		return this;
 	}
-	
-	public ArrayList<String> showAllFacility() {
-		// TODO Auto-generated method stub
 
+	@Override
+	public void deleteSCP(String idScp) {
 		ResultSet rs = null;
 		con = conController.openConnection();
-		ArrayList<String> facility_list = new ArrayList<String>();
-
-		String OBTENER_SCP = "Select Name_Facility from facility";
-		try {
-			stmt = con.prepareStatement(OBTENER_SCP);
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				//String facility;
-				facility_list.add(rs.getString("Name_Facility"));
-			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		conController.closeConnection(stmt, con);
-		return facility_list;
 	}
 	// This method is used to level up the worker
 	@Override
@@ -130,6 +122,42 @@ public class Overseer extends Worker implements OverseerController {
 		}
 
 		conController.closeConnection(stmt, con);
+	}
+	
+	@Override
+	public void levelUpWorker1(Worker worker) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void asignAgentToFacility1(String agentID, String facilityID) {
+		PreparedStatement stmt = null;
+		con = conController.openConnection();
+		
+		try{
+			stmt = con.prepareStatement("INSERT IGNORE INTO Agent(ID_Agent, ID_Facility) VALUES(?, ?)");
+			stmt.setString(1, agentID);
+			stmt.setString(2, facilityID);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		conController.closeConnection(stmt, con);
+		
+	}
+
+	@Override
+	public void asignSCPtoScientific() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void asignAgentToFacility() {
+		
+		
 	}
 
 	public void addSCP(SCP scp) {

@@ -1,15 +1,11 @@
 package view;
 
 import java.awt.EventQueue;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,8 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Image;
 
 import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
@@ -84,8 +78,10 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		contentPane.add(passwordLabel);
 
 		userField = new JTextField();
-	    userField.setForeground(new Color(255, 255, 255));
+
+	   userField.setForeground(new Color(255, 255, 255));
 		userField.setBackground(new Color(0, 0, 0));
+
 		userField.setBounds(400, 1000, 300, 32);
 		userField.setFont(new Font("OCR A Extended", Font.BOLD, 14));
 		contentPane.add(userField);
@@ -95,6 +91,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		passwordField = new JPasswordField();
 		passwordField.setForeground(new Color(255, 255, 255));
 		passwordField.setBackground(new Color(0, 0, 0));
+
 		passwordField.setBounds(400, 1200, 300, 33);
 		passwordField.addKeyListener(this);
 		contentPane.add(passwordField);

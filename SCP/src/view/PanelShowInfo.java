@@ -104,6 +104,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		textFieldId = new JTextField(usernameUsuario);
 		textFieldId.setForeground(new Color(255, 255, 255));
 		textFieldId.setBackground(new Color(0, 0, 0));
+
 		textFieldId.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
 		textFieldId.setEditable(false);
 		textFieldId.setBounds(400, 55, 231, 30);
@@ -120,6 +121,7 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 		add(textFieldName);
 
 		textFieldDate = new JTextField(worker.getDate_Entry().toString());
+
 		textFieldDate.setForeground(new Color(255, 255, 255));
 		textFieldDate.setBackground(new Color(0, 0, 0));
 		textFieldDate.setFont(new Font("OCR A Extended", Font.PLAIN, 12));
@@ -211,7 +213,9 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			lblHistory.setForeground(Color.WHITE);
 			add(lblHistory);
 
-			btnAddScp = new JButton("ADD SCP");
+			lblProfileImg.setIcon(new ImageIcon(MainWindow.class.getResource("/resources/profileOverseer.gif")));
+			btnAddScp = new JButton("Add SCP");
+
 			btnAddScp.setBounds(750, 30, 200, 40);
 			btnAddScp.setBackground(Color.black);
 			btnAddScp.setForeground(Color.white);
@@ -227,7 +231,8 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnAddWorker.addActionListener(this);
 			add(btnAddWorker);
 
-			btnAsignAgent = new JButton("ASSIGN SCIENTIST");
+
+			btnAsignAgent = new JButton("ASSIGN AGENT");
 			btnAsignAgent.setBounds(750, 230, 200, 40);
 			btnAsignAgent.setBackground(Color.black);
 			btnAsignAgent.setForeground(Color.white);
@@ -259,7 +264,8 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			btnDeleteWorker.addActionListener(this);
 			add(btnDeleteWorker);
 
-			btnAsignScientist = new JButton("ASSIGN FACILITY");
+
+			btnAsignScientist = new JButton("ASSIGN SCIENTIST");
 			btnAsignScientist.setBounds(750, 630, 200, 40);
 			btnAsignScientist.setBackground(Color.black);
 			btnAsignScientist.setForeground(Color.white);
@@ -281,34 +287,17 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			panelShowFacility = new ShowFacility(userID);
 			tabbedPane.addTab("Tab", null, panelShowFacility, "Panel");
 			container.add(tabbedPane, BorderLayout.CENTER);
+
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
-		/** Mostrar SCP */
 		if (e.getSource().equals(btnAsigned)) {
-			Scientific sci = new Scientific();
-			ArrayList<SCP> scp_list = sci.showAsignedSCP(userID);
 
-			JComponent panelShowSCP = null;
-			panelShowSCP = new PanelShowScp(scp_list);
-			tabbedPane.addTab("Tab", null, panelShowSCP, "Panel");
-			container.add(tabbedPane, BorderLayout.CENTER);
-			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
 		if (e.getSource().equals(btnAddScp)) {
-			JComponent panelCreateWorker = null;
-			SCP scp = new SCP();
-			Overseer ove = new Overseer();
-			ArrayList<SCP> scp_list = scp.showAllSCP();
-			ArrayList<String> facility_list = ove.showAllFacility();
-			
-			panelCreateWorker = new CreateSCP(scp_list, facility_list);
-			tabbedPane.addTab("Tab", null, panelCreateWorker, "Panel");
-			container.add(tabbedPane, BorderLayout.CENTER);
-			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+
 		}
+
 		if (e.getSource().equals(btnAddWorker)) {
 			JComponent panelCreateWorker = null;
 			panelCreateWorker = new CreateWorker();
@@ -317,40 +306,47 @@ public class PanelShowInfo extends JPanel implements ActionListener {
 			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
-
 		if (e.getSource().equals(btnAsignScientist)) {
-
-		}
-
-		if (e.getSource().equals(btnAsignAgent)) {
-
-		}
-
-		if (e.getSource().equals(btnLevelUpWorker)) {
-			JComponent panelLevelUp = null;
-			panelLevelUp = new LevelUpWorker();
-			tabbedPane.addTab("Tab", null, panelLevelUp, "Panel");
-			container.add(tabbedPane, BorderLayout.CENTER);
-			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			JComponent panelAssignSCPtoScientist = null;
+			panelAssignSCPtoScientist = new AssignSCPtoScientist();
+			tabbedPane.addTab("Tab", null, panelAssignSCPtoScientist, "Panel");
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 		}
+		
 
-		if (e.getSource().equals(btnDeleteScp)) {
-			JComponent panelDeleteSCP = null;
-			panelDeleteSCP = new DeleteSCP();
-			tabbedPane.addTab("Tab", null, panelDeleteSCP, "Panel");
-			container.add(tabbedPane, BorderLayout.CENTER);
-			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
-		}
+			if (e.getSource().equals(btnAsignAgent)) {
+				JComponent panelAssignAgentToFacility = null;
+				panelAssignAgentToFacility = new AssignAgentToFacility();
+				tabbedPane.addTab("Tab", null, panelAssignAgentToFacility, "Panel");
+				tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+			}
 
-		if (e.getSource().equals(btnDeleteWorker)) {
-			JComponent panelDeleteWorker = null;
-			panelDeleteWorker = new DeleteWorker();
-			tabbedPane.addTab("Tab", null, panelDeleteWorker, "Panel");
-			container.add(tabbedPane, BorderLayout.CENTER);
-			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
-		}
+			if (e.getSource().equals(btnLevelUpWorker)) {
+				JComponent panelLevelUp = null;
+				panelLevelUp = new LevelUpWorker();
+				tabbedPane.addTab("Tab", null, panelLevelUp, "Panel");
+				container.add(tabbedPane, BorderLayout.CENTER);
+				tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+				tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+			}
+
+			if (e.getSource().equals(btnDeleteScp)) {
+				JComponent panelDeleteSCP = null;
+				panelDeleteSCP = new DeleteSCP();
+				tabbedPane.addTab("Tab", null, panelDeleteSCP, "Panel");
+				container.add(tabbedPane, BorderLayout.CENTER);
+				tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+				tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+			}
+
+			if (e.getSource().equals(btnDeleteWorker)) {
+				JComponent panelDeleteWorker = null;
+				panelDeleteWorker = new DeleteWorker();
+				tabbedPane.addTab("Tab", null, panelDeleteWorker, "Panel");
+				container.add(tabbedPane, BorderLayout.CENTER);
+				tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+				tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+			}
+  }
 	}
-}
+
