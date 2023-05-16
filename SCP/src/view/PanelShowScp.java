@@ -2,14 +2,10 @@ package view;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
 import clases.SCP;
 import clases.Scientific;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.Color;
@@ -82,10 +78,9 @@ public class PanelShowScp extends JPanel {
 		lbGoBack.setIcon(new ImageIcon(PanelShowScp.class.getResource("/resources/ArroyGoBack64.png")));
 		lbGoBack.setBounds(675, 600, 64, 64);
 		add(lbGoBack);
-		// if (scp_list.get(scp_1)!=0) {
 		lbGoBack.setVisible(true);
-		// } else {
 		lbGoBack.setVisible(false);
+
 		// Lugar donde va la informacion
 
 		id_scp = new JTextArea(scp_1.getScp_id());
@@ -144,7 +139,7 @@ public class PanelShowScp extends JPanel {
 		level_scp.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
 		level_scp.setEditable(false);
 		level_scp.setEnabled(false);
-		level_scp.setBackground(new Color(0, 0, 0, 80));
+		level_scp.setBackground(new Color(0, 0, 0));
 		level_scp.setForeground(new Color(255, 255, 255));
 		level_scp.setBounds(697, 79, 270, 22);
 		level_scp.setOpaque(false);
@@ -192,16 +187,16 @@ public class PanelShowScp extends JPanel {
 		add(description_scp);
 
 		cbRelatedSCP = new JComboBox<String>();
+		cbRelatedSCP.setBackground(new Color(0, 0, 0));
 		cbRelatedSCP.setForeground(new Color(255, 255, 255));
 		for (SCP scp : scp_list) {
 			cbRelatedSCP.addItem(scp.getScp_id());
 		}
+		cbRelatedSCP.setBounds(697, 166, 270, 27);
+		cbRelatedSCP.addItem("NONE");
 		cbRelatedSCP.setSelectedItem(scp_1.getRelated_scp_id());
 		cbRelatedSCP.setFont(new Font("OCR A Extended", Font.PLAIN, 15));
-		cbRelatedSCP.setBounds(697, 166, 270, 27);
-		cbRelatedSCP.setBackground(Color.BLACK);
 		cbRelatedSCP.setEnabled(false);
-		cbRelatedSCP.setEditable(false);
 		add(cbRelatedSCP);
 
 		JTextArea description_background = new JTextArea((String) null);
@@ -423,7 +418,11 @@ public class PanelShowScp extends JPanel {
 		scp_1.setFacility_id(facility_scp.getText());
 		scp_1.setScp_procedures(procedure_scp.getText());
 		scp_1.setScp_description(description_scp.getText());
-		scp_1.setRelated_scp_id((String) cbRelatedSCP.getSelectedItem());
+		if (cbRelatedSCP.getSelectedItem().equals(" ")) {
+			scp_1.setRelated_scp_id(null);
+		} else {
+			scp_1.setRelated_scp_id((String) cbRelatedSCP.getSelectedItem());
+		}
 
 	}
 

@@ -1,10 +1,12 @@
 package clases;
 
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import controller.Loginable;
 
@@ -22,6 +24,7 @@ public class Worker implements Loginable {
 	protected int level;
 	protected String password;
 	protected String bossID;
+
 	protected Connection con;
 	protected PreparedStatement stmt;
 	protected DBConnectionController conController = new DBConnectionController();
@@ -94,10 +97,10 @@ public class Worker implements Loginable {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
-		String OBTENERprop1 = "SELECT ID_Worker, password_Worker FROM Worker WHERE ID_Worker = ?";
+		String OBTENERIDPassWorker = "SELECT ID_Worker,password_Worker FROM Worker WHERE ID_Worker = ?";
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop1);
+			stmt = con.prepareStatement(OBTENERIDPassWorker);
 
 			stmt.setString(1, usernameUsuario);
 			rs = stmt.executeQuery();
@@ -106,7 +109,9 @@ public class Worker implements Loginable {
 				setId(rs.getString("ID_Worker"));
 				setPassword(rs.getString("password_Worker"));
 			}
-
+			
+			conController.closeConnection(stmt,con);
+			
 			if (id != null || password != null) {
 				if (id.equals(usernameUsuario) && password.equals(passwordUsuario)) {
 					return true;
@@ -121,7 +126,12 @@ public class Worker implements Loginable {
 		}
 
 		return false;
+		
 	}
+
+
+	public Worker showInfo(String id) {
+
 
 	/**
 	 * This method displays the information of a particular Worker
@@ -133,9 +143,10 @@ public class Worker implements Loginable {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
-		String OBTENERprop = "SELECT * FROM Worker WHERE ID_Worker = ?";
+
+		String OBTENERIDWorker = "SELECT * FROM Worker WHERE ID_Worker = ?";
 		try {
-			stmt = con.prepareStatement(OBTENERprop);
+			stmt = con.prepareStatement(OBTENERIDWorker);
 
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
@@ -168,10 +179,14 @@ public class Worker implements Loginable {
 		con = conController.openConnection();
 		ArrayList<Worker> arrayDeWorkers = new ArrayList<Worker>();
 
-		String OBTENERprop = "SELECT * FROM Worker";
+
+		String OBTENERWorker = "SELECT * FROM Worker";
+
 
 		try {
-			stmt = con.prepareStatement(OBTENERprop);
+			stmt = con.prepareStatement(OBTENERWorker);
+
+			// .setString(1, id);
 
 			rs = stmt.executeQuery();
 
@@ -180,6 +195,7 @@ public class Worker implements Loginable {
 				workie.setId(rs.getString("ID_Worker"));
 				workie.setName(rs.getString("Name_Worker"));
 				workie.setDate_Entry(rs.getDate("Date_Entry"));
+
 				arrayDeWorkers.add(workie);
 
 			}
@@ -199,14 +215,11 @@ public class Worker implements Loginable {
 	 * @param id_worker - entered by the user
 	 * @return returns true if it exists and false if it does not
 	 */
+
 	public boolean checkWorker(String id_worker) {
 		ResultSet rs = null;
 		con = conController.openConnection();
 
-		String OBTENERprop1 = "SELECT ID_Worker FROM Worker WHERE ID_Worker = ?";
-
-		try {
-			stmt = con.prepareStatement(OBTENERprop1);
 
 			stmt.setString(1, id_worker);
 			rs = stmt.executeQuery();
@@ -229,5 +242,10 @@ public class Worker implements Loginable {
 		}
 
 		return false;
+
+	}
+	public String workerIDCreator() {
+		//default Worker, not used
+		return "WOR-0000";
 	}
 }

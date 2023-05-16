@@ -2,6 +2,8 @@ package acs;
 
 public enum SecondaryC {
 
+
 APOLLYON,ARCHON,CERNUNNOS,HIEMAL,TIAMAT,TICONDEROGA,THAUMIEL;
+
 
 }

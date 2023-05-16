@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+
 import clases.Overseer;
 import clases.Worker;
 import javax.swing.JComboBox;
@@ -21,6 +22,12 @@ import javax.swing.JComboBox;
  * @author Alex
  */
 public class LevelUpWorker extends JPanel implements ActionListener {
+
+	// This class will display a window for upgrading a worker when logged in as an
+	// overseer
+
+	// First, we declare all the labels and buttons we want to display in our window
+
 	private JLabel lblWorker;
 	private JButton btnShowInfo;
 	private JButton btnLevelUp;
@@ -46,6 +53,9 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 	 */
 	public LevelUpWorker() {
 		setBounds(0, 0, 1024, 768);
+
+		// We load all the workers from the database to be able to display them in the
+		// combobox
 
 		Worker work = new Worker();
 		ArrayList<Worker> arrayDeWorkers = work.showAllWorkers();
@@ -86,7 +96,9 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		add(lblIdWorker);
 
 		lblDato1 = new JLabel();
+
 		lblDato1.setForeground(new Color(255, 255, 255));
+
 		lblDato1.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato1.setBounds(500, 120, 1500, 43);
 		lblDato1.setVisible(false);
@@ -100,6 +112,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 
 		lblDato2 = new JLabel();
 		lblDato2.setForeground(new Color(255, 255, 255));
+
 		lblDato2.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato2.setBounds(500, 200, 796, 43);
 		lblDato2.setVisible(false);
@@ -112,7 +125,9 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		add(lblDateEntry);
 
 		lblDato3 = new JLabel();
+
 		lblDato3.setForeground(new Color(255, 255, 255));
+
 		lblDato3.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato3.setBounds(500, 280, 595, 43);
 		lblDato3.setVisible(false);
@@ -126,6 +141,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 
 		lblDato4 = new JLabel();
 		lblDato4.setForeground(new Color(255, 255, 255));
+
 		lblDato4.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato4.setBounds(500, 360, 595, 43);
 		lblDato4.setVisible(false);
@@ -139,6 +155,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 
 		lblDato5 = new JLabel();
 		lblDato5.setForeground(new Color(255, 255, 255));
+
 		lblDato5.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato5.setBounds(500, 440, 595, 43);
 		lblDato5.setVisible(false);
@@ -152,6 +169,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 
 		lblDato6 = new JLabel();
 		lblDato6.setForeground(new Color(255, 255, 255));
+
 		lblDato6.setFont(new Font("OCR A Extended", Font.BOLD, 16));
 		lblDato6.setBounds(500, 520, 595, 43);
 		lblDato6.setVisible(false);
@@ -164,11 +182,11 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 		background.setBounds(0, 0, 1024, 768);
 		add(background);
 	}
-
 	/**
 	 * The following method takes care of loading the comboBox with the IDs of all
 	 * workers
 	 */
+
 	private void cargarWorkers() {
 		Worker worky = new Worker();
 		ArrayList<Worker> elArray = worky.showAllWorkers();
@@ -187,6 +205,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// If the "show info" button is pressed, the labels with the data corresponding
 		// to the worker selected from the combobox will become visible
+
 		if (e.getSource().equals(btnShowInfo)) {
 			String workerDeletion = (String) comboBox.getSelectedItem();
 			Worker work = new Worker();
@@ -220,6 +239,7 @@ public class LevelUpWorker extends JPanel implements ActionListener {
 
 		// If the "level up" button is clicked, confirmation will be requested and the
 		// worker's level will be added by one, and will be displayed as updated
+
 		if (e.getSource().equals(btnLevelUp)) {
 			String workerDeletion = (String) comboBox.getSelectedItem();
 			Worker work = new Worker();

@@ -7,5 +7,4 @@ public interface ScientificController {
 
 	ArrayList<SCP> showAsignedSCP(String id);
 
-	boolean modifySCP(SCP scp);
 }

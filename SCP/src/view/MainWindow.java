@@ -1,35 +1,23 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 import com.toedter.calendar.JCalendar;
 
-import clases.Agent;
-import clases.Overseer;
-import clases.Scientific;
 import clases.Worker;
 
 import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
@@ -67,6 +55,8 @@ public class MainWindow extends JFrame implements ActionListener {
 		setBounds(100, 100, 1024, 768);
 		//adapta la ventana a la pantalla
 		//setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
+		//String RISK = "/resources/AMIDA.png";
 		
 		getContentPane().setLayout(new BorderLayout());
 		
@@ -157,7 +147,6 @@ public class MainWindow extends JFrame implements ActionListener {
 			tabbedPane.addTab("Add SCP", newPanel);
 		}
 		if (e.getSource().equals(btnAddWorker)) {
-
 		}
 		/*if (e.getSource().equals(btnAssignScientist)) {
 

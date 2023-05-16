@@ -1,10 +1,15 @@
 package clases;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.ArrayList;
+
 import controller.AgentController;
+import controller.Loginable;
+
+
 
 /**
  * Agent class that inherits from Worker and implements the AgentController
@@ -20,6 +25,9 @@ public class Agent extends Worker implements AgentController {
 	private PreparedStatement stmt;
 	private DBConnectionController conController = new DBConnectionController();
 
+	/**
+	 * Getters and setters
+	 */
 	public String getId_facility() {
 		return id_facility;
 	}
@@ -68,7 +76,6 @@ public class Agent extends Worker implements AgentController {
 
 		return this;
 	}
-
 	/**
 	 * This method returns an object of type Facility which will be assigned to a
 	 * specific Agent
@@ -104,4 +111,90 @@ public class Agent extends Worker implements AgentController {
 
 		return fac;
 	}
+	@Override
+	public void createWorker() {
+		
+		con = conController.openConnection();
+
+		try {
+			CallableStatement cst = con.prepareCall("{CALL insertAgent(?, ?, ?, ?, ?, ?, ? ,?)}");
+			
+			cst.setString(1,id);
+			cst.setString(2,name);
+			cst.setDate(3, date_Entry);
+			cst.setBoolean(4, active);
+			cst.setInt(5, level);
+			cst.setString(6, password);
+			cst.setString(7, bossID);
+			cst.setString(8, history);
+			cst.execute();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		conController.closeConnection(stmt, con);
+	}
+	@Override
+	public String workerIDCreator() {
+		ResultSet rs = null;
+		con = conController.openConnection();
+		String id = "AGE-";
+		
+		
+		String OBTENERIDAgent = "select count(ID_Agent) AS count FROM AGENT;";
+
+		try {
+			stmt = con.prepareStatement(OBTENERIDAgent);
+
+			//.setString(1, id);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				id = id+String.format("%04d", rs.getInt("count")+1);
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		conController.closeConnection(stmt, con);
+
+		
+		return id;
+	}
+	
+	public ArrayList<Agent> showAllAgents() {
+		ResultSet rs = null;
+		con = conController.openConnection();
+		ArrayList<Agent> arrayAgents= new ArrayList<Agent>();
+
+		String OBTENERSCPs = "SELECT * FROM agent";
+
+		try {
+			stmt = con.prepareStatement(OBTENERSCPs);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Agent agent = new Agent();
+				agent.setId(rs.getString("ID_Agent"));
+				agent.setId_facility(rs.getString("ID_Facility"));
+				agent.setHistory(rs.getString("Record"));
+
+				arrayAgents.add(agent);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		conController.closeConnection(stmt, con);
+
+		return arrayAgents;
+	}
 }
+
