@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import exceptions.CreateException;
+import exceptions.ServerException;
 
 public class DBConnectionController {
 	private ResourceBundle configFile;
@@ -21,29 +21,29 @@ public class DBConnectionController {
 		pass = configFile.getString("PASSWORD");
 	}
 
-	public Connection openConnection() {
+	public Connection openConnection() throws ServerException {
 		Connection con = null;
 		try {
 			con = DriverManager.getConnection(url, user, pass);
 		} catch (SQLException e) {
-
+			throw new ServerException(e.getMessage());
 		}
 		return con;
 	}
 
-	public void closeConnection(PreparedStatement stmt, Connection con) {
+	public void closeConnection(PreparedStatement stmt, Connection con) throws ServerException {
 		if (stmt != null) {
 			try {
 				stmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new ServerException(e.getMessage());
 			}
 		}
 		if (con != null) {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new ServerException(e.getMessage());
 			}
 		}
 	}

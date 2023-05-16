@@ -42,6 +42,3 @@ public class RotatedLabel extends JLabel {
       }
 	
 }
-   /*public static void main(String[] args) {
-      new RotateJLabelTest();
-   }*/

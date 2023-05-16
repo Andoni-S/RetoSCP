@@ -268,18 +268,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(textAreaHistory);
 		//scroll.setVisible(true);
 		//add(scroll);
-		
 
-		textAreaProceduresTransparente = new JTextArea();
-		textAreaProceduresTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
-		textAreaProceduresTransparente.setBounds(284, 388, 227, 202);
-		textAreaProceduresTransparente.setBackground(new Color(0, 0, 0, 80));
-		textAreaProceduresTransparente.setEditable(false);
-		textAreaProceduresTransparente.setWrapStyleWord(true);
-		textAreaProceduresTransparente.setEnabled(false);
-		textAreaProceduresTransparente.setLineWrap(true);
-		textAreaProceduresTransparente.setVisible(false);
-		add(textAreaProceduresTransparente);
 
 		comboBox = new JComboBox<>();
 		comboBox.setBackground(new Color(0, 0, 0));
@@ -369,7 +358,6 @@ public class CreateWorker extends JPanel implements ActionListener {
 			btnOverseer_1.setEnabled(true);
 			btnAgent_1.setEnabled(true);
 			btnScientist_1.setEnabled(true);
-			textAreaProceduresTransparente.setVisible(false);
 		}
 
 

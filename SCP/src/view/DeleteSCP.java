@@ -41,8 +41,6 @@ public class DeleteSCP extends JPanel implements ActionListener {
 	// We declare the required labels, buttons, and table
 
 
-public class DeleteSCP extends JPanel implements ActionListener {
-
 
 
 	/**

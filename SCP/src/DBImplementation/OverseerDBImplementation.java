@@ -277,9 +277,9 @@ public class OverseerDBImplementation implements OverseerControllable{
 
 			con = conController.openConnection();
 		
-			stmt = con.prepareStatement("INSERT IGNORE INTO Agent(ID_Agent, ID_Facility) VALUES(?, ?)");
-			stmt.setString(1, agentID);
-			stmt.setString(2, facilityID);
+			stmt = con.prepareStatement("UPDATE AGENT SET ID_Facility = ? WHERE ID_Agent = ?");
+			stmt.setString(1, facilityID);
+			stmt.setString(2, agentID);
 			stmt.executeUpdate();
 		
 			conController.closeConnection(stmt, con);
@@ -304,7 +304,6 @@ public class OverseerDBImplementation implements OverseerControllable{
 				stmt.setNull(2, Types.VARCHAR);
 			else
 				stmt.setString(2, scp.getRelated_scp_id());
-			System.out.println(scp.getFacility_id());
 			stmt.setString(3, scp.getFacility_id());
 			stmt.setString(4, scp.getScp_name());
 			stmt.setString(5, scp.getScp_procedures());
