@@ -1,7 +1,6 @@
 package clases;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import com.mysql.cj.jdbc.CallableStatement;
 
 import DBImplementation.DBConnectionController;
@@ -18,6 +16,7 @@ import exceptions.LoginException;
 import exceptions.ServerException;
 
 public class Worker{
+
 
 	protected String id;
 	protected String name;
@@ -82,4 +81,5 @@ public class Worker{
 	public void setBossID(String bossID) {
 		this.bossID = bossID;
 	}
+
 }

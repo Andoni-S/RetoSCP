@@ -1,13 +1,11 @@
 package view;
 
 import java.awt.Font;
-import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import clases.Agent;
 import clases.Facility;
@@ -15,12 +13,24 @@ import exceptions.ServerException;
 import main.AgentFactory;
 
 import java.awt.Color;
-import java.awt.Dimension;
 
+/**
+ * The JPanel named ShowFacility will display the Facility assigned to an agent
+ * 
+ * @author Alex
+ *
+ */
 public class ShowFacility extends JPanel {
 
 	private JLabel lblIdFacility, lblNameFacility, lblLevelFacility;
 	private JLabel background;
+
+
+	/**
+	 * This is the constructor of this window
+	 * 
+	 * @param userID
+	 */
 
 	public ShowFacility(String userID) {
 
@@ -32,7 +42,9 @@ public class ShowFacility extends JPanel {
 		} catch (ServerException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
+
 		setLayout(null);
+
 
 		lblIdFacility = new JLabel("ID Facility:           " + wAge.getId_facility());
 		lblIdFacility.setForeground(new Color(255, 255, 255));
@@ -45,6 +57,7 @@ public class ShowFacility extends JPanel {
 		lblNameFacility.setFont(new Font("OCR A Extended", Font.BOLD, 40));
 		lblNameFacility.setBounds(130, 310, 796, 43);
 		add(lblNameFacility);
+
 
 		lblLevelFacility = new JLabel("Level Facility:        " + String.format("%d", fac.getFacility_level()));
 		lblLevelFacility.setForeground(new Color(255, 255, 255));

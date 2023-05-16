@@ -1,16 +1,21 @@
 package clases;
 
+
 import java.sql.CallableStatement;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import DBImplementation.DBConnectionController;
-import controller.AgentControllable;
-import controller.Loginable;
-
+/**
+ * Agent class that inherits from Worker
+ * interface
+ * 
+ * @author Alex
+ */
 public class Agent extends Worker {
+
 	private String id_facility;
 	private String history;
 
@@ -18,6 +23,9 @@ public class Agent extends Worker {
 	private PreparedStatement stmt;
 	private DBConnectionController conController = new DBConnectionController();
 
+	/**
+	 * Getters and setters
+	 */
 	public String getId_facility() {
 		return id_facility;
 	}
@@ -34,3 +42,4 @@ public class Agent extends Worker {
 		this.history = history;
 	}
 }
+

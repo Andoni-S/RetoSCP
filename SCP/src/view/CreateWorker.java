@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 
@@ -22,6 +23,7 @@ import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDayChooser;
 
 import acs.Continent;
+
 import clases.Agent;
 import clases.Overseer;
 import clases.Scientific;
@@ -32,6 +34,8 @@ import main.LoginableFactory;
 import main.OverseerFactory;
 import main.ScientificFactory;
 
+
+import clases.Worker;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -39,6 +43,12 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 
+/**
+ * The JPanel CreateWorker also implements the ActionListener, and its role is
+ * to make it possible to create new workers
+ * 
+ * @author Alex
+ */
 public class CreateWorker extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JButton btnAgent_1, btnOverseer_1, btnScientist_1, btnReset, btnCreate;
@@ -51,7 +61,9 @@ public class CreateWorker extends JPanel implements ActionListener {
 	private JTextArea textAreaHistory;
 	private JScrollPane scroll;
 	private JComboBox<Continent> comboBox;
+
 	private JComboBox<String> comboBoxBoss;
+
 
 	private boolean isScientist = false, isAgent = false, isOverseer = false;
 	//private JXDatePicker datePicker;
@@ -121,12 +133,18 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(lblBossID);
 
 		fieldName = new JTextField();
+		fieldName.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		fieldName.setForeground(new Color(255, 255, 255));
+		fieldName.setBackground(new Color(0, 0, 0));
+
 		fieldName.setBounds(284, 123, 227, 33);
 		add(fieldName);
 		fieldName.setColumns(10);
 
 		fieldEntryDate = new JTextField();
+
 		fieldEntryDate.setEditable(false);
+
 		fieldEntryDate.setColumns(10);
 		fieldEntryDate.setBounds(600, 430, 300, 33);
 		add(fieldEntryDate);
@@ -154,6 +172,10 @@ public class CreateWorker extends JPanel implements ActionListener {
 		
 		
 		fieldPassword = new JTextField();
+
+		fieldPassword.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		fieldPassword.setForeground(new Color(255, 255, 255));
+		fieldPassword.setBackground(new Color(0, 0, 0));
 		fieldPassword.setColumns(10);
 		fieldPassword.setBounds(284, 327, 227, 33);
 		add(fieldPassword);
@@ -165,11 +187,14 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(lblPassword);
 
 		spinnerLevel = new JSpinner();
+
+		spinnerLevel.setForeground(new Color(255, 255, 255));
+		spinnerLevel.setBackground(new Color(0, 0, 0));
+
 		spinnerLevel.setModel(new SpinnerNumberModel(0, 0, 3, 1));
 		spinnerLevel.setBounds(294, 231, 30, 20);
 		add(spinnerLevel);
 
-		// Instanciar Componente
 		calendar = new JCalendar();
 		calendar.getDayChooser().setBackground(Color.WHITE);
 		calendar.getDayChooser().setWeekdayForeground(Color.WHITE);
@@ -179,6 +204,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 		calendar.setDecorationBackgroundColor(new Color(0,0,0,0));
 		calendar.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 		// Ubicar y agregar al panel
+
 		calendar.setBounds(600, 100, 300, 300);
 		
 		for (int i = 0; i < calendar.getComponentCount(); i++)  {
@@ -231,7 +257,11 @@ public class CreateWorker extends JPanel implements ActionListener {
 		textAreaHistory = new JTextArea();
 		textAreaHistory.setRows(100);
 		textAreaHistory.setLineWrap(true);
+
 		textAreaHistory.setBounds(284, 388, 227, 202);
+		textAreaHistory.setOpaque(false);
+		textAreaHistory.setWrapStyleWord(true);
+		textAreaHistory.setLineWrap(true);
 		textAreaHistory.setVisible(false);
 		/*scroll = new JScrollPane (textAreaHistory, 
 				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);*/
@@ -240,7 +270,20 @@ public class CreateWorker extends JPanel implements ActionListener {
 		//add(scroll);
 		
 
+		textAreaProceduresTransparente = new JTextArea();
+		textAreaProceduresTransparente.setFont(new Font("OCR A Extended", Font.BOLD, 12));
+		textAreaProceduresTransparente.setBounds(284, 388, 227, 202);
+		textAreaProceduresTransparente.setBackground(new Color(0, 0, 0, 80));
+		textAreaProceduresTransparente.setEditable(false);
+		textAreaProceduresTransparente.setWrapStyleWord(true);
+		textAreaProceduresTransparente.setEnabled(false);
+		textAreaProceduresTransparente.setLineWrap(true);
+		textAreaProceduresTransparente.setVisible(false);
+		add(textAreaProceduresTransparente);
+
 		comboBox = new JComboBox<>();
+		comboBox.setBackground(new Color(0, 0, 0));
+		comboBox.setForeground(new Color(255, 255, 255));
 		for (Continent cont : Continent.values()) {
 			comboBox.addItem(cont);
 		}
@@ -257,6 +300,12 @@ public class CreateWorker extends JPanel implements ActionListener {
 		add(background);
 	}
 
+	/**
+	 * actionPerformed method listening to btnCreate, btnReset, btnAgent_1,
+	 * btnScientist_1, btnOverseer_1 buttons
+	 * 
+	 * @param e - ActionEvent type variable
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -320,10 +369,13 @@ public class CreateWorker extends JPanel implements ActionListener {
 			btnOverseer_1.setEnabled(true);
 			btnAgent_1.setEnabled(true);
 			btnScientist_1.setEnabled(true);
+			textAreaProceduresTransparente.setVisible(false);
 		}
+
 
 		if (e.getSource().equals(btnAgent_1)) {
 			isAgent= true;
+
 			lblHistory.setText("RECORD");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 385, 91, 46);
@@ -331,11 +383,14 @@ public class CreateWorker extends JPanel implements ActionListener {
 			lblHistory.setVisible(true);
 			btnScientist_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
+
 			btnCreate.setEnabled(true);
 		}
 
 		if (e.getSource().equals(btnScientist_1)) {
+
 			isScientist = true;
+
 			lblHistory.setText("STUDIES");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 385, 91, 46);
@@ -343,11 +398,14 @@ public class CreateWorker extends JPanel implements ActionListener {
 			textAreaHistory.setVisible(true);
 			btnAgent_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
+
 			btnCreate.setEnabled(true);
 		}
 
 		if (e.getSource().equals(btnOverseer_1)) {
+
 			isOverseer = true;
+
 			lblHistory.setText("CONTINENT");
 			lblHistory.setFont(new Font("OCR A Extended", Font.BOLD, 12));
 			lblHistory.setBounds(203, 375, 91, 46);
@@ -360,6 +418,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 		
 		}catch (ServerException ex){
 			JOptionPane.showMessageDialog(this, ex.getMessage());
+
 		}
 	}
 }

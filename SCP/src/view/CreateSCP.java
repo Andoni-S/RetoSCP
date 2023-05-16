@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,22 +16,33 @@ import acs.Containment;
 import acs.Disruption;
 import acs.Risk;
 import acs.SecondaryC;
+
 import clases.Facility;
 import clases.Overseer;
 import clases.SCP;
 import exceptions.ServerException;
 import main.OverseerFactory;
 
+
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
+
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JSeparator;
+
+/**
+ * CreateSCP is a JPanel and implements the ActionListener to listen to buttons,
+ * and is responsible for adding an SCP to the DB
+ * 
+ * @author Alex
+ *
+ */
 
 public class CreateSCP extends JPanel implements ActionListener {
 	// We declare the necessary labels, textArea, buttons, and comboBoxes
@@ -60,11 +73,17 @@ public class CreateSCP extends JPanel implements ActionListener {
 	String facility_1;
 	ArrayList<SCP> scp_list;
 	ArrayList<Facility> facility_list;
+
 	private JScrollPane scrollProcedure,scrollDescription;
 	private JTextArea textAreaProcedure;
 	private JTextArea lbTitle;
 
+  /**
+	 * This is the constructor of the window, where all the labels, buttons, etc.
+	 * are added
+	 */
 	public CreateSCP(ArrayList<SCP> scp_list_, ArrayList<Facility> facility_list2) {
+
 
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
@@ -73,6 +92,7 @@ public class CreateSCP extends JPanel implements ActionListener {
 		scp_1 = scp_list.get(0);
 		facility_list = facility_list2;
 		facility_1 = facility_list.get(0).getFacility_id();
+
 		
 		lbTitle = new JTextArea ("CREATE NEW SCP");
 		lbTitle.setFont(new Font("Chiller", Font.BOLD, 80));
@@ -127,6 +147,7 @@ public class CreateSCP extends JPanel implements ActionListener {
 		CBIDFacility.setForeground(new Color(0, 0, 0));
 		for (Facility fac : facility_list) {
 			CBIDFacility.addItem(fac.getFacility_id());
+
 		}
 		CBIDFacility.setBounds(220, 217, 295, 33);
 		CBIDFacility.setSelectedItem(scp_1.getRelated_scp_id());
@@ -238,6 +259,7 @@ public class CreateSCP extends JPanel implements ActionListener {
 		comboBoxDisruption = new JComboBox<>();
 		comboBoxDisruption.setBackground(new Color(255, 255, 255));
 		comboBoxDisruption.setForeground(new Color(0, 0, 0));
+
 		for (Disruption disr : Disruption.values()) {
 			comboBoxDisruption.addItem(disr);
 		}
@@ -354,17 +376,8 @@ public class CreateSCP extends JPanel implements ActionListener {
 		background.setBounds(0, 0, 1040, 712);
 		background.setIcon(new ImageIcon(CreateSCP.class.getResource("/resources/background2.1.png")));
 		add(background);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+
 	}
 
 	protected void UpdateCombo() {
@@ -380,6 +393,7 @@ public class CreateSCP extends JPanel implements ActionListener {
 		lbDisruption.setIcon(new ImageIcon(CreateSCP.class.getResource(disruption)));
 		lbRisk.setIcon(new ImageIcon(CreateSCP.class.getResource(risk)));
 		lbSecondary.setIcon(new ImageIcon(CreateSCP.class.getResource(secondary)));
+
 	}
 
 	@Override
@@ -388,11 +402,13 @@ public class CreateSCP extends JPanel implements ActionListener {
 		if (e.getSource().equals(btnCreate)) {
 			if (fieldId.getText().equals("") || CBlIdRelated.getSelectedItem().equals(" ")
 					|| CBIDFacility.getSelectedItem().equals(" ") || fieldName.getText().equals("")
+
 					|| textAreaProcedures.getText().equals("") || textAreaDescription.getText().equals("")
 					|| comboBoxContainment.getSelectedIndex() == -1 || comboBoxDisruption.getSelectedIndex() == -1
 					|| comboBoxRisk.getSelectedIndex() == -1 || comboBoxSecondary.getSelectedIndex() == -1) {
 				JOptionPane.showMessageDialog(null, "There is an empty field");
 			} else {
+
 				SCP scpC = new SCP();
 				scpC.setScp_id(fieldId.getText());			
 				if(CBlIdRelated.getSelectedItem().toString().equals("NONE")) {
@@ -421,6 +437,7 @@ public class CreateSCP extends JPanel implements ActionListener {
 		}
 
 		// If you click on "Reset", all data entered so far will be deleted
+
 		if (e.getSource().equals(btnReset)) {
 			fieldId.setText("");
 			CBlIdRelated.setSelectedItem(" ");

@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.sql.PreparedStatement;
+
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -21,9 +23,11 @@ import javax.swing.table.DefaultTableModel;
 
 import clases.Facility;
 import clases.Overseer;
+
 import exceptions.ServerException;
 import main.AgentFactory;
 import main.OverseerFactory;
+
 import clases.Agent;
 
 /**
@@ -116,6 +120,7 @@ public class AssignAgentToFacility extends JPanel implements ActionListener {
 		modelAgent = new DefaultTableModel();
 		modelAgent.addColumn("ID_Agent");
 		tableAgent.setBackground(new Color(35,35,35,0));
+
 		tableAgent.setForeground(new Color(255, 255, 255));
 		tableAgent.setOpaque(false);
 		tableAgent.setShowGrid(false);
@@ -124,6 +129,7 @@ public class AssignAgentToFacility extends JPanel implements ActionListener {
 		tableAgent.getTableHeader().setFont(new Font("OCR A Extended", Font.PLAIN, 25));
 		tableAgent.setRowHeight(tableAgent.getRowHeight()+15);
 		tableAgent.getColumnModel().getColumn(0).setPreferredWidth(0);
+
 		tableAgent.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(final MouseEvent e) {
@@ -151,14 +157,17 @@ public class AssignAgentToFacility extends JPanel implements ActionListener {
 		modelFacility = new DefaultTableModel();
 		modelFacility.addColumn("ID_Facility");
 		tableFacility.setBackground(new Color(35,35,35,0));
+
 		tableFacility.setForeground(new Color(255, 255, 255));
 		tableFacility.setOpaque(false);
 		tableFacility.setShowGrid(false);
 		tableFacility.setModel(modelFacility);
+
 		tableFacility.setFont(new Font("OCR A Extended", Font.PLAIN, 25));
 		tableFacility.getTableHeader().setFont(new Font("OCR A Extended", Font.PLAIN, 25));
 		tableFacility.setRowHeight(tableFacility.getRowHeight()+15);
 		tableFacility.getColumnModel().getColumn(0).setPreferredWidth(0);
+
 		tableFacility.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(final MouseEvent e) {
@@ -215,6 +224,7 @@ public class AssignAgentToFacility extends JPanel implements ActionListener {
 	public void fillTableAgent() {
 		
 		Agent agent = new Agent();
+
 		
 		
 		ArrayList<Agent> arrayAgents = null
@@ -225,6 +235,7 @@ public class AssignAgentToFacility extends JPanel implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 
 		for (Agent age : arrayAgents) {
 			Object[] fila = new Object[1];
@@ -242,6 +253,7 @@ public class AssignAgentToFacility extends JPanel implements ActionListener {
 	 * Gets the data from the database puts it on an arrayList and shows everything on a table.
 	 */
 	public void fillTableFacility() {
+
 		ArrayList<Facility> arrayFacilities = null;
 		
 		try {
@@ -260,12 +272,12 @@ public class AssignAgentToFacility extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 
-		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(btnAssign)) {
+
 
 			try {
 				OverseerFactory.getOverseerDB().asignAgentToFacility(txtAgent.getText(), txtFacility.getText());
@@ -277,4 +289,5 @@ public class AssignAgentToFacility extends JPanel implements ActionListener {
 		}
 
 	}
+
 }

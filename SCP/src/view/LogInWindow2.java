@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
 import clases.Worker;
 
 import javax.swing.JTextField;

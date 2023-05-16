@@ -8,6 +8,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,15 +22,27 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import clases.Overseer;
 import clases.SCP;
+
+
 import clases.Worker;
 import exceptions.EmptyFieldException;
 import exceptions.ServerException;
 import main.OverseerFactory;
 
+
+/**
+ * The DeleteSCP window is a JPanel implementing ActionListener
+ * 
+ * @author Alex
+ */
 public class DeleteSCP extends JPanel implements ActionListener {
+	// We declare the required labels, buttons, and table
+
+
+public class DeleteSCP extends JPanel implements ActionListener {
+
 
 
 	/**
@@ -40,6 +57,10 @@ public class DeleteSCP extends JPanel implements ActionListener {
 	private JButton btnDelete;
 	private JLabel background;
 
+	/**
+	 * In the window constructor is where all the visual components of the window
+	 * are added
+	 */
 	public DeleteSCP() {
 		setBounds(0, 0, 1024, 768);
 		setLayout(null);
@@ -50,6 +71,7 @@ public class DeleteSCP extends JPanel implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -72,6 +94,7 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		tablaSCP.getTableHeader().setFont(new Font("OCR A Extended", Font.PLAIN, 25));
 		tablaSCP.setRowHeight(tablaSCP.getRowHeight()+15);
 		tablaSCP.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(final MouseEvent e) {
 				if (e.getClickCount() == 1) {
@@ -89,6 +112,10 @@ public class DeleteSCP extends JPanel implements ActionListener {
 
 		scrollPane.setViewportView(tablaSCP);
 
+
+		// We call the fillTable() method to fill in the table
+
+
 		fillTable();
 
 		lblSCP = new JLabel("Insert the ID of the SCP:");
@@ -98,6 +125,10 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		add(lblSCP);
 
 		textSCP = new JTextField();
+
+		textSCP.setForeground(new Color(255, 255, 255));
+		textSCP.setBackground(new Color(0, 0, 0));
+
 		textSCP.setBounds(450, 527, 275, 25);
 		textSCP.setFont(new Font("OCR A Extended", Font.BOLD, 14));
 		add(textSCP);
@@ -125,11 +156,19 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		add(background);
 	}
 
+
+	/**
+	 * The emptyTable() method empties the entire table
+	 */
+
 	public void emptyTable() {
 		DefaultTableModel model = (DefaultTableModel) tablaSCP.getModel();
 		model.setRowCount(0);
 	}
 
+	/**
+	 * The fillTable() method loads the table with the data from the SCPs
+	 */
 	public void fillTable() {
 		try {
 
@@ -155,10 +194,19 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * actionPerformed method listening to btnShowInfo and btnDelete buttons
+	 * 
+	 * @param e - ActionEvent type variable
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
-			
+
+		// If the "Show Info" button is pressed, it will display a ShowInfo2 type window
+		// with the data of the selected SCP
+
+
 		if (e.getSource().equals(btnShowInfo)) {
 			if (textSCP.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(tablaSCP, "Empty field. Please enter an ID");
@@ -174,19 +222,27 @@ public class DeleteSCP extends JPanel implements ActionListener {
 			}
 		}
 
+
+		// If the user clicks on "Delete", a confirmation message will be displayed and,
+		// if confirmed, the worker will be deleted
+
 		if (e.getSource().equals(btnDelete)) {
 						
 			if (textSCP.getText().trim().isEmpty()) {
 				throw new EmptyFieldException("Empty field. Please enter an ID");
 			} else {
+
 				int n = JOptionPane.showConfirmDialog(null, "Do you want to delete this worker?", "Confirmation",
+
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 				if (n == JOptionPane.YES_OPTION) {
 					String SCPDeletion = textSCP.getText();
 
+
 					if (OverseerFactory.getOverseerDB().checkSCP(SCPDeletion)) {					
 						OverseerFactory.getOverseerDB().deleteSCP(SCPDeletion);
+
 						JOptionPane.showMessageDialog(tablaSCP, "The SCP has been deleted");
 						emptyTable();
 						fillTable();
@@ -196,6 +252,7 @@ public class DeleteSCP extends JPanel implements ActionListener {
 						JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID", "FATAL ERROR", JOptionPane.ERROR_MESSAGE);				
 				} else {
 					JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID");
+
 				}
 			}
 			

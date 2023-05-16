@@ -18,6 +18,7 @@ public class Scientific extends Worker{
 
 	private String studies;
 	
+
 	private Connection con;
 	private PreparedStatement stmt;
 	private DBConnectionController conController = new DBConnectionController();

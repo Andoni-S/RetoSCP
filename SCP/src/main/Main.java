@@ -2,15 +2,16 @@ package main;
 
 import java.awt.Color;
 import java.awt.Font;
+
 import java.util.Locale;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+
 import javax.swing.plaf.FontUIResource;
 
 import view.LoginWindow;
-import view.MainWindow;
 
 public class Main {
 
@@ -26,6 +27,7 @@ public class Main {
 		LoginWindow vMain = new LoginWindow();
 		vMain.setVisible(true);
 		
+
 	}
-	
+
 }

@@ -1,15 +1,11 @@
 package view;
 
 import java.awt.EventQueue;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,8 +23,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Image;
 
 import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
@@ -79,6 +73,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		userField = new JTextField();
 		userField.setForeground(Color.WHITE);
 		userField.setBackground(Color.BLACK);
+
 		userField.setBounds(400, 1000, 300, 32);
 		userField.setFont(new Font("OCR A Extended", Font.BOLD, 14));
 		contentPane.add(userField);
@@ -88,6 +83,7 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 		passwordField = new JPasswordField();
 		passwordField.setForeground(Color.WHITE);
 		passwordField.setBackground(Color.BLACK);
+
 		passwordField.setBounds(400, 1200, 300, 33);
 		passwordField.addKeyListener(this);
 		contentPane.add(passwordField);
@@ -175,7 +171,6 @@ public class LoginWindow extends JFrame implements ActionListener, KeyListener {
 			
 			rotateLabel();
 		}
-
 		private void rotateLabel() {
 			
 			if(scpLogo2.getAngle() >= 2*3.1416)

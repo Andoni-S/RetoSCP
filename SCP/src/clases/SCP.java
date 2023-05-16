@@ -4,16 +4,25 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
+
 import java.util.Enumeration;
 
 import DBImplementation.DBConnectionController;
 import acs.Containment;
 import acs.Disruption;
+
 import acs.Risk;
 import acs.SecondaryC;
 import exceptions.ServerException;
 
+/**
+ * SCP class, which will contain the necessary attributes, Getters and Setters
+ * and methods
+ * 
+ * @author Alex
+ */
 public class SCP {
 	private String scp_id;
 	private String related_scp_id;
@@ -26,6 +35,9 @@ public class SCP {
 	private Disruption disruption;
 	private Risk risk;
 	private SecondaryC secondary;
+	private Connection con;
+	private PreparedStatement stmt;
+	private DBConnectionController conController = new DBConnectionController();
 
 	private Connection con;
 	private PreparedStatement stmt;
@@ -119,3 +131,5 @@ public class SCP {
 		this.secondary = secondary;
 	}
 }
+	
+

@@ -1,39 +1,32 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 import com.toedter.calendar.JCalendar;
 
-import clases.Agent;
-import clases.Overseer;
-import clases.Scientific;
 import clases.Worker;
 
 import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 
 public class MainWindow extends JDialog implements ActionListener {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	//private final JPanel contentPanel = new JPanel();
 	public JTabbedPane tabbedPane;
@@ -75,12 +68,13 @@ public class MainWindow extends JDialog implements ActionListener {
 		JComponent panelOverseer = null;
 		//panelOverseer = makePanelOverseer("Panel Overseer");
 		panelOverseer = new PanelShowInfo(worker, usernameUsuario, tabbedPane, getContentPane());
-		tabbedPane.addTab("Tab", null, panelOverseer, "Panel");     
+		tabbedPane.addTab("Tab", null, panelOverseer, "Panel"); 
 		
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
+
 		/*tabbedPane.setUI(new BasicTabbedPaneUI() {  
 		    @Override  
 		    protected int calculateTabAreaHeight(int tab_placement, int run_count, int max_tab_height) {  
@@ -90,6 +84,7 @@ public class MainWindow extends JDialog implements ActionListener {
 		            return 0;  
 		    }  
 		});	*/
+
 		//desabilita el cambiar a una tab expecifica
 		//tabbedPane.setEnabledAt(1, false);
 		//hace invisible las tabs
@@ -153,7 +148,6 @@ public class MainWindow extends JDialog implements ActionListener {
 			tabbedPane.addTab("Add SCP", newPanel);
 		}
 		if (e.getSource().equals(btnAddWorker)) {
-
 		}
 		/*if (e.getSource().equals(btnAssignScientist)) {
 
