@@ -257,9 +257,10 @@ public class CreateWorker extends JPanel implements ActionListener {
 		textAreaHistory = new JTextArea();
 		textAreaHistory.setRows(100);
 		textAreaHistory.setLineWrap(true);
-
+		textAreaHistory.setForeground(Color.WHITE);
+		textAreaHistory.setBackground(Color.BLACK);
 		textAreaHistory.setBounds(284, 388, 227, 202);
-		textAreaHistory.setOpaque(false);
+		textAreaHistory.setOpaque(true);
 		textAreaHistory.setWrapStyleWord(true);
 		textAreaHistory.setLineWrap(true);
 		textAreaHistory.setVisible(false);
@@ -371,7 +372,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 			lblHistory.setVisible(true);
 			btnScientist_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
-
+			textAreaHistory.setVisible(true);
 			btnCreate.setEnabled(true);
 		}
 
@@ -386,7 +387,7 @@ public class CreateWorker extends JPanel implements ActionListener {
 			textAreaHistory.setVisible(true);
 			btnAgent_1.setEnabled(false);
 			btnOverseer_1.setEnabled(false);
-
+			textAreaHistory.setVisible(true);
 			btnCreate.setEnabled(true);
 		}
 

@@ -42,7 +42,6 @@ public class DeleteWorker extends JPanel implements ActionListener {
 	private DefaultTableModel model;
 	private JLabel lblWorker;
 	private JTextField textWorker;
-	private JButton btnShowInfo;
 	private JButton btnDelete;
 	private JLabel background;
 
@@ -135,19 +134,11 @@ public class DeleteWorker extends JPanel implements ActionListener {
 		add(textWorker);
 		textWorker.setColumns(10);
 
-		btnShowInfo = new JButton("Show Info");
-		btnShowInfo.setBackground(new Color(0, 0, 0));
-		btnShowInfo.setForeground(new Color(255, 255, 255));
-		btnShowInfo.setFont(new Font("OCR A Extended", Font.BOLD, 15));
-		btnShowInfo.setBounds(771, 485, 120, 45);
-		add(btnShowInfo);
-		btnShowInfo.addActionListener(this);
-
 		btnDelete = new JButton("Delete");
 		btnDelete.setForeground(new Color(255, 255, 255));
 		btnDelete.setBackground(new Color(0, 0, 0));
 		btnDelete.setFont(new Font("OCR A Extended", Font.BOLD, 16));
-		btnDelete.setBounds(771, 545, 120, 45);
+		btnDelete.setBounds(771, 515, 120, 45);
 		add(btnDelete);
 		btnDelete.addActionListener(this);
 
@@ -190,23 +181,6 @@ public class DeleteWorker extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		try {
-			
-		
-		if (e.getSource().equals(btnShowInfo)) {
-			if (textWorker.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Empty field. Please enter an ID");
-			} else {
-				String workerDeletion = textWorker.getText();
-				Worker work = new Worker();
-
-				
-				if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
-
-				} else {
-					JOptionPane.showMessageDialog(null, "Please insert an existing ID");
-				}
-			}
-		}
 
 		if (e.getSource().equals(btnDelete)) {
 			if (textWorker.getText().trim().isEmpty()) {

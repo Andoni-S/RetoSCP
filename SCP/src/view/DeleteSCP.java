@@ -51,7 +51,6 @@ public class DeleteSCP extends JPanel implements ActionListener {
 	private DefaultTableModel model;
 	private JLabel lblSCP;
 	private JTextField textSCP;
-	private JButton btnShowInfo;
 	private JButton btnDelete;
 	private JLabel background;
 
@@ -132,19 +131,11 @@ public class DeleteSCP extends JPanel implements ActionListener {
 		add(textSCP);
 		textSCP.setColumns(10);
 
-		btnShowInfo = new JButton("Show Info");
-		btnShowInfo.setBackground(new Color(0, 0, 0));
-		btnShowInfo.setForeground(new Color(255, 255, 255));
-		btnShowInfo.setFont(new Font("OCR A Extended", Font.BOLD, 15));
-		btnShowInfo.setBounds(771, 485, 120, 45);
-		add(btnShowInfo);
-		btnShowInfo.addActionListener(this);
-
 		btnDelete = new JButton("Delete");
 		btnDelete.setForeground(new Color(255, 255, 255));
 		btnDelete.setBackground(new Color(0, 0, 0));
 		btnDelete.setFont(new Font("OCR A Extended", Font.BOLD, 16));
-		btnDelete.setBounds(771, 545, 120, 45);
+		btnDelete.setBounds(771, 515, 120, 45);
 		add(btnDelete);
 		btnDelete.addActionListener(this);
 
@@ -193,34 +184,13 @@ public class DeleteSCP extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * actionPerformed method listening to btnShowInfo and btnDelete buttons
+	 * actionPerformed method listening to btnDelete
 	 * 
 	 * @param e - ActionEvent type variable
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
-
-		// If the "Show Info" button is pressed, it will display a ShowInfo2 type window
-		// with the data of the selected SCP
-
-
-		if (e.getSource().equals(btnShowInfo)) {
-			if (textSCP.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(tablaSCP, "Empty field. Please enter an ID");
-			} else {
-				String scpDeletion = textSCP.getText();
-				SCP sc = new SCP();
-
-				if (OverseerFactory.getOverseerDB().checkSCP(scpDeletion)) {
-
-				} else {
-					JOptionPane.showMessageDialog(tablaSCP, "Please, insert an existing ID");
-				}
-			}
-		}
-
-
 		// If the user clicks on "Delete", a confirmation message will be displayed and,
 		// if confirmed, the worker will be deleted
 
@@ -230,7 +200,7 @@ public class DeleteSCP extends JPanel implements ActionListener {
 				throw new EmptyFieldException("Empty field. Please enter an ID");
 			} else {
 
-				int n = JOptionPane.showConfirmDialog(null, "Do you want to delete this worker?", "Confirmation",
+				int n = JOptionPane.showConfirmDialog(null, "Do you want to delete this SCP?", "Confirmation",
 
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
