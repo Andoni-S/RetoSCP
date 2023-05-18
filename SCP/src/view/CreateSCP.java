@@ -410,12 +410,12 @@ public class CreateSCP extends JPanel implements ActionListener {
 		// If you click on "Reset", all data entered so far will be deleted
 		if (e.getSource().equals(btnReset)) {
 			fieldId.setText("");
-			CBlIdRelated.setSelectedItem(" ");
-			CBIDFacility.setSelectedItem(" ");
 			fieldName.setText("");
 			textAreaProcedure.setText("");
 			textAreaDescription.setText("");
 			spinnerLevel.setValue(0);
+			CBlIdRelated.setSelectedIndex(-1);
+			CBIDFacility.setSelectedIndex(-1);
 			comboBoxContainment.setSelectedIndex(-1);
 			comboBoxDisruption.setSelectedIndex(-1);
 			comboBoxRisk.setSelectedIndex(-1);
