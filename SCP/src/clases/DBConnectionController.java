@@ -8,11 +8,19 @@ import java.util.ResourceBundle;
 
 import exceptions.ServerException;
 
+/**
+ * This class is used to connect with the database
+ */
 public class DBConnectionController {
 	private ResourceBundle configFile;
 	private String url;
 	private String user;
 	private String pass;
+
+	/**
+	 * Constructs a new DBConnectionController object. Initializes the configuration
+	 * file and retrieves the connection details from the file.
+	 */
 
 	public DBConnectionController() {
 		configFile = ResourceBundle.getBundle("model.config");
@@ -20,6 +28,13 @@ public class DBConnectionController {
 		user = configFile.getString("USER");
 		pass = configFile.getString("PASSWORD");
 	}
+
+	/**
+	 * Opens a connection to the database.
+	 *
+	 * @return The opened database connection.
+	 * @throws ServerException if an error occurs while establishing the connection.
+	 */
 
 	public Connection openConnection() throws ServerException {
 		Connection con = null;
@@ -30,6 +45,15 @@ public class DBConnectionController {
 		}
 		return con;
 	}
+
+	/**
+	 * Closes the provided prepared statement and database connection.
+	 *
+	 * @param stmt The prepared statement to close.
+	 * @param con  The database connection to close.
+	 * @throws ServerException if an error occurs while closing the statement or
+	 *                         connection.
+	 */
 
 	public void closeConnection(PreparedStatement stmt, Connection con) throws ServerException {
 		if (stmt != null) {

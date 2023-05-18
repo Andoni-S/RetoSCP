@@ -191,11 +191,10 @@ public class DeleteWorker extends JPanel implements ActionListener {
 
 				if (n == JOptionPane.YES_OPTION) {
 					String workerDeletion = textWorker.getText();
-					Worker work = new Worker();
 
 					if (LoginableFactory.getLoginable().checkWorker(workerDeletion)) {
 						
-						OverseerFactory.getOverseerDB().deleteWorker(work.getId());
+						OverseerFactory.getOverseerDB().deleteWorker(workerDeletion);
 						JOptionPane.showMessageDialog(null, "The worker has been deleted");
 						emptyTable();
 						fillTable();

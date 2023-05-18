@@ -343,8 +343,8 @@ public class CreateWorker extends JPanel implements ActionListener {
 		}
 		if (e.getSource().equals(btnReset)){
 			isAgent = false;
-			isAgent = false;
-			isAgent = false;
+			isScientist = false;
+			isOverseer = false;
 			
 			fieldName.setText("");
 			comboBoxBoss.setSelectedIndex(-1);

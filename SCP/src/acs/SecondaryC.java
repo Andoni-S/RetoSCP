@@ -1,5 +1,9 @@
 package acs;
 
+/**
+*The SecondaryC enum represents different secondary classifications.
+*/
+
 public enum SecondaryC {
 
 
