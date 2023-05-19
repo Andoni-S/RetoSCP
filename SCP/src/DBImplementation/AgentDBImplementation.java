@@ -1,3 +1,4 @@
+
 package DBImplementation;
 
 import java.sql.CallableStatement;
@@ -6,32 +7,40 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import acs.Continent;
 import clases.Agent;
 import clases.Facility;
-import clases.Overseer;
 import clases.Worker;
 import controller.AgentControllable;
 import exceptions.ServerException;
 
-public class AgentDBImplementation implements AgentControllable{
+/**
+ * 
+ * This class provides implementation for the AgentControllable interface and
+ * handles database operations related to agents.
+ */
+public class AgentDBImplementation implements AgentControllable {
 
 	protected Connection con;
 	protected PreparedStatement stmt;
 	protected DBConnectionController conController = new DBConnectionController();
-	
+
+	/**
+	 * Retrieves the facility assigned to a specific worker.
+	 *
+	 * @param idWorker the ID of the worker
+	 * @return the facility assigned to the worker
+	 * @throws ServerException if an error occurs on the server
+	 */
 	@Override
 	public Facility showAsignedFacility(String idWorker) throws ServerException {
 		Facility fac = null;
 
 		ResultSet rs = null;
 		try {
-			
-		con = conController.openConnection();
-		String OBTAINfacility = "SELECT * FROM FACILITY WHERE ID_Facility = (SELECT ID_Facility FROM agent WHERE ID_Agent = ?)";
 
-		
+			con = conController.openConnection();
+			String OBTAINfacility = "SELECT * FROM FACILITY WHERE ID_Facility = (SELECT ID_Facility FROM agent WHERE ID_Agent = ?)";
+
 			stmt = con.prepareStatement(OBTAINfacility);
 
 			stmt.setString(1, idWorker);
@@ -52,6 +61,13 @@ public class AgentDBImplementation implements AgentControllable{
 		return fac;
 	}
 
+	/**
+	 * Retrieves the information of a specific worker.
+	 *
+	 * @param id the ID of the worker
+	 * @return the worker's information
+	 * @throws ServerException if an error occurs on the server
+	 */
 	@Override
 	public Worker showInfo(String id) throws ServerException {
 		ResultSet rs = null;
@@ -84,17 +100,22 @@ public class AgentDBImplementation implements AgentControllable{
 		return age;
 	}
 
+	/**
+	 * Creates a new worker using the data of an agent.
+	 *
+	 * @param age the agent from which to obtain the data to create the worker
+	 * @throws ServerException if an error occurs on the server
+	 */
 	@Override
 	public void createWorker(Agent age) throws ServerException {
-		ResultSet rs = null;
-		
+
 		try {
 			con = conController.openConnection();
-			
+
 			CallableStatement cst = con.prepareCall("{CALL insertAgent(?, ?, ?, ?, ?, ?, ? ,?)}");
-			
-			cst.setString(1,age.getId());
-			cst.setString(2,age.getName());
+
+			cst.setString(1, age.getId());
+			cst.setString(2, age.getName());
 			cst.setDate(3, age.getDate_Entry());
 			cst.setBoolean(4, age.isActive());
 			cst.setInt(5, age.getLevel());
@@ -102,40 +123,19 @@ public class AgentDBImplementation implements AgentControllable{
 			cst.setString(7, age.getBossID());
 			cst.setString(8, age.getHistory());
 			cst.execute();
-						
-			conController.closeConnection(stmt, con);
-		} catch (SQLException e) {
-			throw new ServerException(e.getMessage());
-		}	
-	}
-	/*@Override
-	public ArrayList<String> showAllFacility() throws ServerException {
-		
-		ResultSet rs = null;
-		ArrayList<String> facility_list = null;
-		try {
-		
-			con = conController.openConnection();
-			facility_list = new ArrayList<String>();
-
-			String OBTENER_SCP = "Select Name_Facility from facility";
-		
-			stmt = con.prepareStatement(OBTENER_SCP);
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				//String facility;
-				facility_list.add(rs.getString("Name_Facility"));
-			}
 
 			conController.closeConnection(stmt, con);
-		
 		} catch (SQLException e) {
 			throw new ServerException(e.getMessage());
 		}
-		
-		return facility_list;
-	}*/
+	}
+
+	/**
+	 * Retrieves a list of all facilities.
+	 *
+	 * @return a list of all facilities
+	 * @throws ServerException if an error occurs on the server
+	 */
 	public ArrayList<Facility> showAllFacilities() throws ServerException {
 		ResultSet rs = null;
 		ArrayList<Facility> arrayFacilities = null;
@@ -145,7 +145,6 @@ public class AgentDBImplementation implements AgentControllable{
 
 			String OBTENERSCPs = "SELECT * FROM facility";
 
-		
 			stmt = con.prepareStatement(OBTENERSCPs);
 			rs = stmt.executeQuery();
 
@@ -158,26 +157,32 @@ public class AgentDBImplementation implements AgentControllable{
 				arrayFacilities.add(facility);
 
 			}
-		
+
 			conController.closeConnection(stmt, con);
 
 		} catch (SQLException e) {
 			throw new ServerException(e.getMessage());
 		}
 
-		
 		return arrayFacilities;
 	}
+
+	/**
+	 * Retrieves a list of all agents.
+	 *
+	 * @return a list of all agents
+	 * @throws ServerException if an error occurs on the server
+	 */
 	public ArrayList<Agent> showAllAgents() throws ServerException {
 		ResultSet rs = null;
 		ArrayList<Agent> arrayAgents = null;
 		try {
-			
+
 			con = conController.openConnection();
-			arrayAgents= new ArrayList<Agent>();
+			arrayAgents = new ArrayList<Agent>();
 
 			String OBTENERSCPs = "SELECT * FROM agent";
-		
+
 			stmt = con.prepareStatement(OBTENERSCPs);
 			rs = stmt.executeQuery();
 
@@ -190,13 +195,14 @@ public class AgentDBImplementation implements AgentControllable{
 				arrayAgents.add(agent);
 
 			}
-			
+
 			conController.closeConnection(stmt, con);
 
 		} catch (SQLException e) {
 			throw new ServerException(e.getMessage());
 		}
-		
+
 		return arrayAgents;
+
 	}
 }

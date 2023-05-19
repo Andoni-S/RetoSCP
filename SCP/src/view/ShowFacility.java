@@ -22,6 +22,10 @@ import java.awt.Color;
  */
 public class ShowFacility extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel lblIdFacility, lblNameFacility, lblLevelFacility;
 	private JLabel background;
 
@@ -34,7 +38,6 @@ public class ShowFacility extends JPanel {
 
 	public ShowFacility(String userID) {
 
-		Agent wAge = new Agent();
 		Facility fac = null;
 		
 		try {
@@ -45,7 +48,7 @@ public class ShowFacility extends JPanel {
 
 		setLayout(null);
 
-		lblIdFacility = new JLabel("ID Facility:  " + wAge.getId_facility());
+		lblIdFacility = new JLabel("ID Facility:  " + fac.getFacility_id());
 		lblIdFacility.setForeground(new Color(255, 255, 255));
 		lblIdFacility.setFont(new Font("OCR A Extended", Font.BOLD, 40));
 		lblIdFacility.setBounds(130, 110, 1500, 43);

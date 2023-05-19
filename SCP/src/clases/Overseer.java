@@ -1,33 +1,35 @@
 package clases;
 
-import java.sql.SQLException;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
-import DBImplementation.DBConnectionController;
-import acs.Containment;
-
 import acs.Continent;
-import controller.OverseerControllable;
+
+/**
+ * Overseer class that inherits from the Worker interface. Represents an
+ * overseer.
+ * 
+ * @author Andoni
+ */
 public class Overseer extends Worker {
 
-
-	private Connection con;
-	private PreparedStatement stmt;
-	private DBConnectionController conController = new DBConnectionController();
+	/**
+	 * * This class extends the Worker class and adds the functionality of an
+	 * overseer. Overseers have a continent associated with them.
+	 */
 	public Continent continent;
 
+	/**
+	 * Retrieves the continent associated with the overseer.
+	 * 
+	 * @return the continent associated with the overseer
+	 */
 	public Continent getContinent() {
 		return continent;
 	}
 
+	/**
+	 * Sets the continent associated with the overseer.
+	 * 
+	 * @param continent the continent associated with the overseer
+	 */
 	public void setContinent(Continent continent) {
 		this.continent = continent;
 	}
